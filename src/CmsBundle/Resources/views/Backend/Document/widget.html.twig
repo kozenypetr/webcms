@@ -1,0 +1,21 @@
+
+<div id="widget-fom-box">
+    {{ form_start(form, {'attr': {'action': path('cms_edit_widget', {'id': widget.id}), 'id': 'widget-edit-form', 'novalidate': 'novalidate' }}) }}
+
+    <div class="row">
+        <div class="col-md-3 col-md-push-9">
+            <h4>Responzivní zobrazení</h4>
+            {{ form_row(form.class_md) }}
+            {{ form_row(form.class_sm) }}
+            {{ form_row(form.class_xs) }}
+            {{ form_row(form.class_lg) }}
+        </div>
+        <div class="col-md-9 col-md-pull-3">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+
+    <div style="display: none;"><input type="submit" value="Odeslat" /></div>
+
+    {{ form_end(form) }}
+</div>

@@ -1,0 +1,7 @@
+<div class="container region region-{{ name }}" data-region="{{ name }}">
+    <div class="row">
+    {% for widget in widgets %}
+        {{ cms_widget(widget) }}
+    {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,40 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ document.name }}{% endblock %}
+
+{% block body %}
+
+    {{ cms_region(document, 'head', 'global') }}
+
+    {{ cms_region(document, 'content') }}
+
+    {{ cms_region(document, 'foot', 'global') }}
+
+    <!-- Large modal -->
+    <div class="modal fade" id="cms-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="cms-modal-label">New message</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít </button>
+                    <button id="modal-save-button" type="button" class="btn btn-primary">Uložit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div id="cms-toolbar">
+        <span class="edit-mode-toggle">Editační režim</span>
+        <div class="box-template draggable drag-drop">BOX</div>
+    </div>
+
+
+
+{% endblock %}
