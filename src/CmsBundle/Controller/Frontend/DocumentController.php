@@ -17,7 +17,7 @@ class DocumentController extends Controller
                 ->getRepository('CmsBundle:Document')
                 ->findOneByUrl($url);
 
-        return $this->render('CmsBundle:Frontend/Document:show.html.twig', array(
+        return $this->render('CmsBundle:Frontend/Templates:onecolumn.html.twig', array(
             'document' => $document
         ));
     }

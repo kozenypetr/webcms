@@ -32,13 +32,36 @@ var cmsBox = {
                 200: function(data) {
                     $('#box-' + box_id + ' .box-inner').append(data.widgetHtml);
                     // pridame widget do boxu
-                    cmsWidget.addWidget('#widget-' + data.id);
+                    cmsWidget.initWidget('#widget-' + data.id);
                     // zobrazime editaci boxu
                     cmsWidget.openEditDialog(data.id);
                 }
             }
         });
     },
+
+
+    __addWidgetDrag: function(e)
+    {
+      e.preventDefault();
+
+      var box_id = $(this).data('box-id');
+
+      $.ajax({
+        type: "GET",
+        url: $(this).attr('href'),
+        statusCode: {
+          200: function(data) {
+            $('#box-' + box_id + ' .box-inner').append(data.widgetHtml);
+            // pridame widget do boxu
+            cmsWidget.initWidget('#widget-' + data.id);
+            // zobrazime editaci boxu
+            cmsWidget.openEditDialog(data.id);
+          }
+        }
+      });
+    },
+
 
     __addContextMenu: function(selector)
     {
@@ -96,7 +119,7 @@ var cmsWidget = {
 
     widgetInEdit: null,
 
-    addWidget: function(selector)
+    initWidget: function(selector)
     {
         this.__addEvents(selector);
         this.__addContextMenu(selector);
@@ -136,17 +159,17 @@ var cmsWidget = {
                     $('#cms-modal-label').text('Editace obsahu');
 
                     tinymce.init({
-                      selector: '#widget-edit-form textarea',
+                      selector: '#widget-edit-form textarea.tiny',
                       themes: "modern",
-                      height : "350"
+                      height : "200"
                     });
 
                     modal.modal();
 
                     modal.on('hidden.bs.modal', function () {
-                      if ($("#form_html").length && tinymce.get('form_html'))
+                      if ($("textarea.tiny").length/* && tinymce.get('form_html')*/)
                       {
-                        tinymce.remove("#form_html");
+                        tinymce.remove("textarea.tiny");
                       }
                     })
                 }
@@ -224,8 +247,8 @@ var cms = {
     init: function()
     {
         cms.__addEvents();
-        cmsBox.addBox('.box');
-        cmsWidget.addWidget('.widget');
+        // cmsBox.addBox('.box');
+        cmsWidget.initWidget('.widget');
         // cmsContextMenu.init();
     },
 
@@ -242,6 +265,7 @@ var cms = {
 
 $( document ).ready( cms.init );
 
+/*
 $( document ).ready(function() {
   interact('.box-template').draggable();
 
@@ -249,15 +273,83 @@ $( document ).ready(function() {
     accept: '.box-template',
   });
 });
+*/
 
 $( function() {
 
-  $( '.region .row' ).sortable({ items: ".widget", revert: false, cursor: "move", placeholder: 'emptydiv col-md-12', handle: ".widget-toolbar .drag"});
+  $( '.region .row' ).sortable({
+    items: ".widget",
+    revert: false,
+    cursor: "move",
+    placeholder: 'emptydiv col-md-12',
+    handle: ".widget-toolbar .drag",
+    receive: function(event, ui) {
+        // zde prijde pridani widgetu - ajax + vlozeni widgetu do DOMu
+        // var new_item  = $(this).data().uiSortable.currentItem;
+
+        /*
+        console.log(event);
+        console.log(ui);
+        console.log($( this ).context.childNodes);
+
+        console.log($( this ).context.childNodes.length);
+        for (var i = 0; i < $( this ).context.childNodes.length; i++)
+        {
+            if ($( this ).context.childNodes[i]['nodeName'] == 'SPAN')
+            {
+
+            }
+        }*/
+
+        // console.log(new_item.next().attr('id'));
+        //console.log(ui.item);
+        //console.log($('#box-drag').prev());
+        //console.log($('#box-drag').next().data('widget-id'));
+        // console.log(ui);
+        // ui.helper.replaceWith('<div id="widget-1" data-widget-id="1" class="widget col-md-12"><div class="widget-content"><h1>Nadpis stránky sadas</h1></div></div>');
+        var $helper = ui.helper;
+        var $widget  = $helper.data('widget');
+        // console.log(ui.helper.parent());
+        // console.log(event.target.parentElement.data('region'));
+
+        // predame informace - region, sort, document_id,
+        $.ajax({
+          type: 'POST',
+          data: {
+            document_id: adminParam['document_id'],
+            region: $(this).parent().data('region'),
+            region_type: $(this).parent().data('type'),
+            prev: $('#box-drag').prev().data('widget-id'),
+            next: $('#box-drag').next().data('widget-id'),
+            widget: $widget
+          },
+          // url: admin_urls['col_new'] + '?area_id=' + area_id + '&layout_id=' + layout_id + '&page_id=' + page_id + '&location=' + location + '&ph=' + ph,
+          // url: $(ui.item).attr('href') + '?col_id=' + col_id + '&prev_col=' + new_item.prev().attr('col-id') + '&' + droppable.sortable( "serialize" ),
+          url: adminUrl['widget_add'],
+          cache: false,
+          async: false,
+          success: function(data) {
+            // alert(data);
+            // new_item.replaceWith(data);
+            // alert(droppable.sortable( "serialize", { key: "sort" } ));
+            $helper.replaceWith(data.widgetHtml);
+
+            cmsWidget.initWidget('#widget-' + data.id);
+          }
+        });
+
+    }
+  });
+
 
   $( ".box-template" ).draggable({
     connectToSortable: ".region .row",
     revert: "invalid",
-    cursor: 'move'
+    cursor: 'move',
+    helper: function()
+    {
+      return $('<span id="box-drag" data-widget="' + $(this).data('widget')  + '" class="draggable-helper btn btn-danger btn-sm">' + $(this).html() + '</span>');
+    },
   });
 
 

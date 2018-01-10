@@ -17,11 +17,14 @@ use CmsBundle\Entity\Widget;
 abstract class Base
 {
     protected $em;
+
     protected $formFactory;
 
     protected $parameters;
 
     protected $type = 'Base'; // nutne prepsat v nastaveni konkretniho widgetu
+
+    protected $template;
 
     public function __construct($em, $formFactory)
     {
@@ -87,11 +90,11 @@ abstract class Base
 
     public function getTemplate()
     {
-        $class = strtolower(get_class($this));
+        // $class = strtolower(get_class($this));
 
-        $template = 'CmsBundle:Widget:editor.html.twig';
+        // $template = 'CmsBundle:Widget:editor.html.twig';
 
-        return $template;
+        return $this->template;
     }
 
     /**

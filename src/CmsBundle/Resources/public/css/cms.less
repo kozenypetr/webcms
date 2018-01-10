@@ -53,6 +53,10 @@
       display: block;
     }
   }
+
+  .drag {
+    cursor: move;
+  }
 }
 
 
@@ -62,7 +66,10 @@
   .region {
     border: dashed #aaa 1px;
     margin-bottom: 2px;
-    min-height: 40px;
+
+    .row {
+      min-height: 40px;
+    }
   }
 
   .widget {
@@ -107,8 +114,9 @@ body {
 }
 
 .emptydiv {
-  height: 15px;
+  height: 30px;
   border: dotted #aaa 1px;
+  background: #2b669a;
 }
 
 

@@ -64,13 +64,7 @@ class CmsExtension extends \Twig_Extension
             $widgets = $document->getRegionWidgets($name);
         }
 
-        return $twig->render('CmsBundle:Frontend/Document:region.html.twig', array('name' => $name, 'document' => $document, 'widgets' => $widgets));
-    }
-
-
-    public function cmsBoxFunction(\Twig_Environment $twig, Box $box)
-    {
-        return $twig->render('CmsBundle:Frontend/Document:box.html.twig', array('box' => $box));
+        return $twig->render('CmsBundle:Frontend/Document:region.html.twig', array('name' => $name, 'type' => $type, 'document' => $document, 'widgets' => $widgets));
     }
 
 

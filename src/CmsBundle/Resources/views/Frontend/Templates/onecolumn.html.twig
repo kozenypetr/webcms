@@ -1,0 +1,13 @@
+{% extends "CmsBundle:Frontend/Document:show.html.twig" %}
+
+{% block body %}
+<div class="document" data-document-id="{{ document.id }}">
+
+    {{ cms_region(document, 'head', 'global') }}
+
+    {{ cms_region(document, 'content') }}
+
+    {{ cms_region(document, 'foot', 'global') }}
+
+</div>
+{% endblock body %}

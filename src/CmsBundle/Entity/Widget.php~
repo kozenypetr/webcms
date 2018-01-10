@@ -75,11 +75,12 @@ class Widget
 
 
 
-    /**
+    /*
      * @ORM\ManyToOne(targetEntity="Box", inversedBy="widgets")
      * @ORM\JoinColumn(name="box_id", referencedColumnName="id")
-     */
+     *
     private $box;
+    */
 
     /**
      * Get id
@@ -162,30 +163,6 @@ class Widget
     public function getHtml()
     {
         return $this->html;
-    }
-
-    /**
-     * Set box
-     *
-     * @param \CmsBundle\Entity\Box $box
-     *
-     * @return Widget
-     */
-    public function setBox(\CmsBundle\Entity\Box $box = null)
-    {
-        $this->box = $box;
-
-        return $this;
-    }
-
-    /**
-     * Get box
-     *
-     * @return \CmsBundle\Entity\Box
-     */
-    public function getBox()
-    {
-        return $this->box;
     }
 
     public function toArray()

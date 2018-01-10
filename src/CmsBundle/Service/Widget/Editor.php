@@ -12,8 +12,10 @@ class Editor extends Base
 
     protected $type = 'Editor';
 
+    protected $template = 'CmsBundle:Widget:editor.html.twig';
+
     protected $default = array(
-        'html' => "<p>Odstavec</p>",
+        'html' => "<p>Editor</p>",
     );
 
     protected function configureForm($form)
@@ -22,6 +24,7 @@ class Editor extends Base
             ->add('html', TextareaType::class, array(
                 'label'=>'Text',
                 'constraints' => array(new Assert\NotBlank()),
+                'attr' => ['class' => 'tiny'],
             ));
     }
 

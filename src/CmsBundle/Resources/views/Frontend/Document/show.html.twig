@@ -2,14 +2,7 @@
 
 {% block title %}{{ document.name }}{% endblock %}
 
-{% block body %}
-
-    {{ cms_region(document, 'head', 'global') }}
-
-    {{ cms_region(document, 'content') }}
-
-    {{ cms_region(document, 'foot', 'global') }}
-
+{% block cms %}
     <!-- Large modal -->
     <div class="modal fade" id="cms-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog modal-lg" role="document">
@@ -32,9 +25,18 @@
     <!-- Toolbar -->
     <div id="cms-toolbar">
         <span class="edit-mode-toggle">Editační režim</span>
-        <div class="box-template draggable drag-drop">BOX</div>
+        <span class="box-template draggable drag-drop" data-widget="cms.widget.editor">HTML editor</span>
+        <span class="box-template draggable drag-drop" data-widget="cms.widget.news">Novinka</span>
     </div>
 
+    <script type="text/javascript">
+      var adminUrl = Array();
+      adminUrl['widget_add']  = '{{ path('cms_widget_add') }}';
 
+      var adminParam = Array();
+      adminParam['document_id']  = '{{ document.id }}';
+      adminParam['url']          = '{{ document.url }}';
+
+    </script>
 
 {% endblock %}

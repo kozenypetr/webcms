@@ -3,6 +3,7 @@
 namespace CmsBundle\Controller\Backend;
 
 
+use CmsBundle\Entity\Document;
 use CmsBundle\Form\WidgetType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -64,65 +65,68 @@ class DocumentController extends Controller
 
 
     /**
-     * @Route("/cms-add/widget/{id}", name="cms_add_widget")
+     * @Route("/cms/widget/add", name="cms_widget_add")
      */
-    public function widgetAddAction(Request $request, Box $box)
+    public function widgetAddAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $documentId = $request->get('document_id');
+        $region = $request->get('region');
+        $regionType = $request->get('region_type');
+        $prev = $request->get('prev');
+        $next = $request->get('next');
+        $service = $request->get('widget');
+
+        // nastavime razeni novemu boxu
+        $sort = $prev?($prev + 1):1;
+        if ($next)
+        {
+          $oNext = $document = $this->getDoctrine()
+                                    ->getRepository(Widget::class)
+                                    ->find((int)$next);
+
+          $qb = $em->createQueryBuilder();
+
+          $q = $qb->update('CmsBundle\Entity\Widget', 'w')
+            ->set('w.sort', 'w.sort + 1')
+            //->set(array('w.sort' => DB::expr('w.sort + 1')))
+            ->where('w.region = ?1')
+            ->andWhere('w.document = ?2')
+            ->andWhere('w.sort >= ?3')
+            ->setParameter(1, $region)
+            ->setParameter(2, $documentId)
+            ->setParameter(3, $oNext->getSort())
+            ->getQuery();
+
+          $p = $q->execute();
+        }
+
+        $document = $this->getDoctrine()
+                          ->getRepository(Document::class)
+                          ->find($documentId);
+
         $widget = new Widget();
 
-        $widget->setBox($box);
         $widget->setTag('div');
-        $widget->setHtml('');
-        $widget->setSort(10);
-        $widget->setParameters($this->get('cms.widget.editor')->getDefault());
-        $widget->setService('cms.widget.editor');
+        $widget->setHtml('RRR');
+        $widget->setSort($sort);
+        $widget->setRegion($region);
+        if ($regionType == 'page')
+        {
+          $widget->setDocument($document);
+        }
+        $widget->setParameters($this->get($service)->getDefault());
+        $widget->setService($service);
 
-        $em = $this->getDoctrine()->getManager();
+
         $em->persist($widget);
         $em->flush();
 
-        $widgetHtml = $this->get('templating')->render($this->get('cms.widget.editor')->getTemplate(), array('widget' => $widget));
+        $widgetHtml = $this->get('templating')->render($this->get($service)->getTemplate(), array('widget' => $widget));
 
         return new JsonResponse(array('id' => $widget->getId(), 'widgetHtml' => $widgetHtml));
     }
 
 
-    /**
-     * @Route("/cms-edit/box/{id}", name="cms_edit_box")
-     */
-    public function boxAction(Request $request, Box $box)
-    {
-        $form = $this->createForm(BoxType::class, $box, array(
-            'action' => $this->generateUrl('cms_edit_box', array('id' => $box->getId())),
-            'method' => 'POST',
-        ));
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $box = $form->getData();
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($box);
-            $em->flush();
-
-            return new JsonResponse($box->toArray());
-        }
-
-        $form->add('submit', SubmitType::class, array(
-            'label' => 'Uložit',
-            'attr'  => array('class' => 'btn btn-default pull-right')
-        ));
-
-        return $this->render('CmsBundle:Backend/Document:box.html.twig', array(
-            'box' => $box,
-            'form' => $form->createView()
-        ));
-    }
-
-    public function boxSaveAction()
-    {
-
-    }
 }

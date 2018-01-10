@@ -16,6 +16,12 @@ services:
         tags:
             -  { name: cms.widget }
 
+     cms.widget.news:
+             class:        CmsBundle\Service\Widget\News
+             arguments:    ['@doctrine.orm.entity_manager', '@form.factory']
+             tags:
+                 -  { name: cms.widget }
+
      app.twig.cms:
         class: CmsBundle\Twig\CmsExtension
         arguments:    ['@doctrine.orm.entity_manager', '@cms.manager.widget']

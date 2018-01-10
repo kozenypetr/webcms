@@ -15,7 +15,6 @@
             'assets/vendors/tinymce/skins/lightgray/content.min.css'
 
             'assets/jquery-ui/css/jquery-ui.css'
-
             '@CmsBundle/Resources/public/css/cms.less'
             %}
             <link rel="stylesheet" href="{{ asset_url }}" />
@@ -29,7 +28,12 @@
     <body>
         {% block body %}
 
-        {% endblock %}
+        {% endblock body %}
+
+        {% block cms %}
+
+        {% endblock cms %}
+
         {% block javascripts %}
             {% javascripts
             'assets/vendors/jquery/dist/jquery.js'

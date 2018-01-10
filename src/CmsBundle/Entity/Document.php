@@ -39,6 +39,7 @@ class Document
 
     /**
      * @ORM\OneToMany(targetEntity="Widget", mappedBy="document")
+     * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $widgets;
 
