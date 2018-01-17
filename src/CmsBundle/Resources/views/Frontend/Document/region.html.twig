@@ -1,7 +1,14 @@
-<div class="container region region-{{ name }}" data-region="{{ name }}" data-type="{{ type }}">
+<div id="{{ id }}" class="region {{ id }} {{ class }}" data-region="{{ name }}">
     <div class="row">
     {% for widget in widgets %}
         {{ cms_widget(widget) }}
     {% endfor %}
+    </div>
+
+    <div class="region-toolbar">
+        <span>region ({{ name }})</span>
+        <a href="{{  path('cms_region_edit', {'id': document.id, 'name': name }) }}" class="region-edit" data-region-name="{{ name }}">
+            <i class="fa fa-pencil-square" aria-hidden="true"></i>
+        </a>
     </div>
 </div>

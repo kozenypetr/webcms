@@ -50,21 +50,30 @@ class CmsExtension extends \Twig_Extension
      * @param string $type
      * @return string HTMl regionu
      */
-    public function cmsRegionFunction(\Twig_Environment $twig, Document $document, $name, $type = 'page')
+    public function cmsRegionFunction(\Twig_Environment $twig, Document $document, $name)
     {
-        // return $page->getName() . ' - ' . $page->getId();
-        if ($type == 'global')
+        if (preg_match('/^global\./', $name))
         {
             // budeme hleda radky podle nazvu regionu
-            $widgets = $this->em->getRepository('CmsBundle:Widget')->findByRegion($name);
+            $widgets = $this->em->getRepository('CmsBundle:Widget')->findByRegion($name, array('sort' => 'ASC'));
+            $region  = $this->em->getRepository('CmsBundle:Region')->findOneByName($name);
         }
         else
         {
             // budeme hledat radky pro stranku
             $widgets = $document->getRegionWidgets($name);
+            $region  = $this->em->getRepository('CmsBundle:Region')->findOneBy(['document' => $document, 'name' => $name]);
         }
 
-        return $twig->render('CmsBundle:Frontend/Document:region.html.twig', array('name' => $name, 'type' => $type, 'document' => $document, 'widgets' => $widgets));
+        return $twig->render('CmsBundle:Frontend/Document:region.html.twig',
+                             array('name' => $name,
+                                   'id' => 'region-' . str_replace('.', '-', $name),
+                                   'class' => $region?$region->getFullClass():'col-md-12',
+                                   'document' => $document,
+                                   'region'   => $region,
+                                   'widgets'  => $widgets)
+        );
+
     }
 
 
@@ -72,7 +81,7 @@ class CmsExtension extends \Twig_Extension
     {
         $service = $this->wm->getWidget($widget->getService());
 
-        return $twig->render($service->getTemplate(), array('widget' => $widget));
+        return $twig->render($service->getTemplate(), array('widget' => $widget, 'title' => $service->getTitle()));
     }
 
 }

@@ -1,13 +1,15 @@
 {% extends "CmsBundle:Frontend/Document:show.html.twig" %}
 
 {% block body %}
-<div class="document" data-document-id="{{ document.id }}">
+<div class="document container" data-document-id="{{ document.id }}">
+    <div class="row">
+    {{ cms_region(document, 'global.head') }}
 
-    {{ cms_region(document, 'head', 'global') }}
+    {{ cms_region(document, 'page.content') }}
 
-    {{ cms_region(document, 'content') }}
+    {{ cms_region(document, 'page.content2') }}
 
-    {{ cms_region(document, 'foot', 'global') }}
-
+    {{ cms_region(document, 'global.foot') }}
+    </div>
 </div>
 {% endblock body %}

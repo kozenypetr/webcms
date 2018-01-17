@@ -12,6 +12,8 @@ class Editor extends Base
 
     protected $type = 'Editor';
 
+    protected $title = 'HTML';
+
     protected $template = 'CmsBundle:Widget:editor.html.twig';
 
     protected $default = array(

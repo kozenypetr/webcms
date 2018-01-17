@@ -1,5 +1,5 @@
 // TOOLBARS
-.widget-toolbar, .box-toolbar {
+.widget-toolbar, .region-toolbar {
   display: none;
   z-index: 1000;
   position: absolute;
@@ -17,7 +17,7 @@
   }
 }
 
-.box-toolbar {
+.region-toolbar {
   left: 0;
   bottom: 0;
 }
@@ -35,10 +35,10 @@
 }
 
 // BOX
-.box {
+.region {
   position: relative;
   &:hover {
-    .box-toolbar {
+    .region-toolbar {
       display: block;
     }
   }
@@ -77,7 +77,7 @@
     min-height: 25px;
   }
 
-  .widget-toolbar, .box-toolbar {
+  .widget-toolbar, .region-toolbar {
     display: block;
   }
 }

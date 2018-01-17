@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Page
  *
- * @ORM\Table(name="document_type")
- * @ORM\Entity(repositoryClass="CmsBundle\Repository\DocumentTypeRepository")
+ * @ORM\Table(name="document_category")
+ * @ORM\Entity(repositoryClass="CmsBundle\Repository\DocumentCategoryRepository")
  */
-class DocumentType
+class DocumentCategory
 {
     /**
      * @var int
@@ -50,7 +50,7 @@ class DocumentType
      *
      * @param string $name
      *
-     * @return DocumentType
+     * @return DocumentCategory
      */
     public function setName($name)
     {
@@ -74,7 +74,7 @@ class DocumentType
      *
      * @param string $sid
      *
-     * @return DocumentType
+     * @return DocumentCategory
      */
     public function setSid($sid)
     {

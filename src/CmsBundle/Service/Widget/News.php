@@ -10,7 +10,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class News extends Base
 {
 
-    protected $type = 'Novinka';
+  protected $type = 'Novinka';
+
+  protected $title = 'Novinka';
 
   protected $template = 'CmsBundle:Widget:news.html.twig';
 

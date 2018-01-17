@@ -1,4 +1,4 @@
-{% extends "::base.html.twig" %}
+{% extends "CmsBundle::base.html.twig" %}
 
 {% block title %}{{ document.name }}{% endblock %}
 
@@ -27,16 +27,20 @@
         <span class="edit-mode-toggle">Editační režim</span>
         <span class="box-template draggable drag-drop" data-widget="cms.widget.editor">HTML editor</span>
         <span class="box-template draggable drag-drop" data-widget="cms.widget.news">Novinka</span>
+
+        <span class="document-new">Přidat stránku</span>
     </div>
 
     <script type="text/javascript">
       var adminUrl = Array();
       adminUrl['widget_add']  = '{{ path('cms_widget_add') }}';
+      adminUrl['widget_sort'] = '{{ path('cms_widget_sort') }}';
+
+      adminUrl['document_add'] = '{{ path('cms_widget_sort') }}';
 
       var adminParam = Array();
       adminParam['document_id']  = '{{ document.id }}';
       adminParam['url']          = '{{ document.url }}';
 
     </script>
-
 {% endblock %}

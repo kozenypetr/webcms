@@ -43,6 +43,10 @@ class Document
      */
     private $widgets;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Region", mappedBy="document")
+     */
+    private $regions;
 
     /**
      * Get id
@@ -167,4 +171,38 @@ class Document
         return $widgets;
     }
 
+
+    /**
+     * Add region
+     *
+     * @param \CmsBundle\Entity\Region $region
+     *
+     * @return Document
+     */
+    public function addRegion(\CmsBundle\Entity\Region $region)
+    {
+        $this->regions[] = $region;
+
+        return $this;
+    }
+
+    /**
+     * Remove region
+     *
+     * @param \CmsBundle\Entity\Region $region
+     */
+    public function removeRegion(\CmsBundle\Entity\Region $region)
+    {
+        $this->regions->removeElement($region);
+    }
+
+    /**
+     * Get regions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRegions()
+    {
+        return $this->regions;
+    }
 }

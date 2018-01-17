@@ -24,6 +24,8 @@ abstract class Base
 
     protected $type = 'Base'; // nutne prepsat v nastaveni konkretniho widgetu
 
+    protected $title = 'Widget';
+
     protected $template;
 
     public function __construct($em, $formFactory)
@@ -81,6 +83,8 @@ abstract class Base
     }
 
 
+
+
     public function setParameters(array $parameters)
     {
         $this->parameters = $parameters;
@@ -95,6 +99,11 @@ abstract class Base
         // $template = 'CmsBundle:Widget:editor.html.twig';
 
         return $this->template;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**

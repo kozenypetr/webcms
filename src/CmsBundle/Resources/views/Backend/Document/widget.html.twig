@@ -1,16 +1,16 @@
 
-<div id="widget-fom-box">
-    {{ form_start(form, {'attr': {'action': path('cms_edit_widget', {'id': widget.id}), 'id': 'widget-edit-form', 'novalidate': 'novalidate' }}) }}
+<div id="modal-form-box">
+    {{ form_start(form, {'attr': {'action': path('cms_widget_edit', {'id': widget.id}), 'id': 'modal-edit-form', 'novalidate': 'novalidate' }}) }}
 
     <div class="row">
-        <div class="col-md-3 col-md-push-9">
+        <div class="col-md-4 col-md-push-8">
             <h4>Responzivní zobrazení</h4>
             {{ form_row(form.class_md) }}
             {{ form_row(form.class_sm) }}
             {{ form_row(form.class_xs) }}
             {{ form_row(form.class_lg) }}
         </div>
-        <div class="col-md-9 col-md-pull-3">
+        <div class="col-md-8 col-md-pull-4">
             {{ form_widget(form) }}
         </div>
     </div>
