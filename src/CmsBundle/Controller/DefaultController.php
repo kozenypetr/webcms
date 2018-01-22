@@ -2,6 +2,7 @@
 
 namespace CmsBundle\Controller;
 
+use CmsBundle\Entity\Document;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -16,9 +17,9 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $page = new Page();
-        $page->setName('Prvni stranka');
-        $page->setUrl('prvni-stranka');
+        $page = new Document();
+        $page->setName('Homepage');
+        $page->setUrl('');
 
         $em->persist($page);
 

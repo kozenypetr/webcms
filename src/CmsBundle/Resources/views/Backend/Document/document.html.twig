@@ -2,7 +2,44 @@
 <div id="modal-form-box">
     {{ form_start(form, {'attr': {'action': path('cms_document_add'), 'id': 'modal-edit-form', 'novalidate': 'novalidate' }}) }}
 
+    <div class="row">
+        <div class="col-md-4 col-md-push-8">
+            <h4>SEO</h4>
+
+        </div>
+        <div class="col-md-8 col-md-pull-4">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Základní informace</a></li>
+                <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">SEO</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Rezerva</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="basic">
+                    <div class="col-md-6">
+                        {{ form_row(form.name) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.url) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.parent) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.category) }}
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="seo">...</div>
+                <div role="tabpanel" class="tab-pane" id="messages">...</div>
+            </div>
+
+
+
+        </div>
+    </div>
+
     <div style="display: none;"><input type="submit" value="Odeslat" /></div>
 
     {{ form_end(form) }}
+
 </div>

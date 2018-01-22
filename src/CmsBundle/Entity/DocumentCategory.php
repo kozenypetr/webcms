@@ -35,6 +35,12 @@ class DocumentCategory
      */
     private $sid;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="Document", mappedBy="category")
+     */
+    private $documents;
+
     /**
      * Get id
      *
@@ -91,5 +97,46 @@ class DocumentCategory
     public function getSid()
     {
         return $this->sid;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add document
+     *
+     * @param \CmsBundle\Entity\Document $document
+     *
+     * @return DocumentCategory
+     */
+    public function addDocument(\CmsBundle\Entity\Document $document)
+    {
+        $this->documents[] = $document;
+
+        return $this;
+    }
+
+    /**
+     * Remove document
+     *
+     * @param \CmsBundle\Entity\Document $document
+     */
+    public function removeDocument(\CmsBundle\Entity\Document $document)
+    {
+        $this->documents->removeElement($document);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
     }
 }

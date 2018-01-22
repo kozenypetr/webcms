@@ -28,7 +28,9 @@
         <span class="box-template draggable drag-drop" data-widget="cms.widget.editor">HTML editor</span>
         <span class="box-template draggable drag-drop" data-widget="cms.widget.news">Novinka</span>
 
-        <span class="document-new">Přidat stránku</span>
+        <a href="{{ path('cms_document_add') }}" class="modal-form document-new">Přidat stránku</a>
+
+        {{ render(controller('CmsBundle:Backend/Document:list')) }}
     </div>
 
     <script type="text/javascript">
@@ -36,7 +38,7 @@
       adminUrl['widget_add']  = '{{ path('cms_widget_add') }}';
       adminUrl['widget_sort'] = '{{ path('cms_widget_sort') }}';
 
-      adminUrl['document_add'] = '{{ path('cms_widget_sort') }}';
+      adminUrl['document_add'] = '{{ path('cms_document_add') }}';
 
       var adminParam = Array();
       adminParam['document_id']  = '{{ document.id }}';

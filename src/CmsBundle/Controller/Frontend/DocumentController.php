@@ -9,7 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class DocumentController extends Controller
 {
     /**
-     * @Route("/{url}")
+     * @Route("/", name="cms_homepage", defaults={"url": ""},)
+     * @Route("/{url}", name="cms_page")
      */
     public function showAction($url)
     {

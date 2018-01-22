@@ -1,3 +1,69 @@
+var cmsDocument = {
+    init: function()
+    {
+        $('.document-new').click(this.__loadCreateForm);
+    },
+
+    /**
+     * Nacteni formulare pro editaci widgetu
+     * @param e
+     * @private
+     */
+    __loadCreateForm: function(e)
+    {
+        e.preventDefault();
+        // nacteme formular pro editaci widgetu
+        cms.ajax($(this).attr('href'), 'GET', cmsDocument.__loadCreateFormSuccess);
+    },
+
+    /**
+     * Uspesne nacteni formulare pro editaci widgetu = zobrazeni modal okna
+     * @param data
+     * @private
+     */
+    __loadCreateFormSuccess: function(data)
+    {
+        cmsModal.show(data, 'Nová stránka', cmsDocument.__submitCreateForm);
+    },
+
+
+    __submitCreateForm: function(e)
+    {
+        e.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('action'),
+            data: $(this).serialize(), // serializes the form's elements.
+            statusCode: {
+                200: function(data) {
+                    // $('#' + data.region).attr('class', data.class);
+                    $('#cms-modal').modal('hide');
+
+                    $(location).attr('href', data.url);
+                    /*
+                    var id = cmsWidget.widgetInEdit.data('widget-id');
+                    // $('.box-' + id).attr('class', 'box container box-' + id + ' ' +  data.class);
+                    // aktualizace tridy widgetu
+                    $('#widget-' + id).attr('class', 'widget widget-' + id + ' ' +  data.class);
+                    // ulozeni obsahu
+                    $('#widget-' + id + ' .widget-content').html(data.html);
+                    // nacteni obsahu widgetu
+                    // $.fancybox.close('all');
+                    $('#cms-modal').modal('hide');
+                    */
+                },
+                400: function(data) {
+                    $('#modal-fom-box').replaceWith(data.responseText);
+                    $('#modal-edit-form').submit(cmsDocument.__submitCreateForm);
+                }
+            }
+        });
+    }
+}
+
+
+
 var cmsWidget = {
 
     widgetInEdit: null,
@@ -154,8 +220,10 @@ var cmsWidget = {
                     $('#cms-modal').modal('hide');
                 },
                 400: function(data) {
+                    cmsModal.tinyDestroy();
                     $('#modal-form-box').replaceWith(data.responseText);
-                    $('#modal-edit-form').submit(cmsWidget.__submitRegionEditForm);
+                    $('#modal-edit-form').submit(cmsWidget.__submitWidgetEditForm);
+                    cmsModal.tinyInit();
                 }
             }
         });
@@ -189,7 +257,7 @@ var cmsWidget = {
                 },
                 400: function(data) {
                     $('#modal-fom-box').replaceWith(data.responseText);
-                    $('#widget-edit-form').submit(cmsWidget.__submitRegionEditForm);
+                    $('#modal-edit-form').submit(cmsWidget.__submitRegionEditForm);
                 }
             }
         });
@@ -208,6 +276,24 @@ var cmsModal = {
         // nastavime nadpis modalu
         $('#cms-modal-label').text(title);
 
+        this.tinyInit();
+
+        $(document).on('focusin', function(e) {
+            if ($(event.target).closest(".mce-window").length) {
+                e.stopImmediatePropagation();
+            }
+        });
+
+        // zobrazeni okna
+        modal.modal();
+        // udalost pri uzavreni okna
+        modal.on('hidden.bs.modal', function () {
+            cmsModal.tinyDestroy();
+        })
+    },
+
+    tinyInit: function()
+    {
         // inicializace tiny
         tinymce.init({
             selector: '#modal-edit-form textarea.tiny',
@@ -220,23 +306,16 @@ var cmsModal = {
             height : "150",
             entity_encoding : "raw"
         });
+    },
 
-        $(document).on('focusin', function(e) {
-            if ($(event.target).closest(".mce-window").length) {
-                e.stopImmediatePropagation();
-            }
-        });
-
-        // zobrazeni okna
-        modal.modal();
-        // udalost pri uzavreni okna
-        modal.on('hidden.bs.modal', function () {
-            if ($("#modal-edit-form textarea.tiny").length/* && tinymce.get('form_html')*/)
-            {
-                tinymce.remove("textarea.tiny");
-            }
-        })
+    tinyDestroy: function()
+    {
+        if ($("#modal-edit-form textarea.tiny").length/* && tinymce.get('form_html')*/)
+        {
+            tinymce.remove("textarea.tiny");
+        }
     }
+
 }
 
 var cms = {
@@ -244,6 +323,9 @@ var cms = {
         cms.__addEvents();
         // cmsBox.addBox('.box');
         cmsWidget.initWidget('.widget');
+
+        cmsDocument.init();
+
         // cmsContextMenu.init();
         tinyMCE.baseURL = '/assets/vendors/tinymce';
     },
