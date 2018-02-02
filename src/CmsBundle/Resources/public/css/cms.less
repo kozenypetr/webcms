@@ -1,21 +1,45 @@
 // TOOLBARS
 .widget-toolbar, .region-toolbar {
   display: none;
-  z-index: 1000;
+  z-index: 100;
   position: absolute;
 
-  background-color: #e3e3e3;
   padding: 3px;
+  background-color: #fff;
+
+  span {
+    display: inline-block;
+    vertical-align: top;
+    background-color: #337ab7;
+    color: #fff;
+    padding: 3px;
+    font-weight: bold;
+    font-size: 13px;
+    border-radius: 3px;
+
+    i {
+      font-size: 15px;
+    }
+  }
 
   i {
-    font-size: 21px;
+    font-size: 23px;
     cursor: pointer;
+  }
+
+  i.fa-remove {
+    color: #fe0006;
   }
 
   a:hover {
     text-decoration: none;
   }
 }
+
+.sortable-helper:extend(.widget-toolbar span) {
+  height: 23px !important;
+}
+
 
 .region-toolbar {
   left: 0;
@@ -37,11 +61,12 @@
 // BOX
 .region {
   position: relative;
+  /*
   &:hover {
     .region-toolbar {
       display: block;
     }
-  }
+  }*/
 }
 
 // WIDGET
@@ -73,11 +98,16 @@
   }
 
   .widget {
-    background-color: #FFFFF0;
     min-height: 25px;
   }
 
-  .widget-toolbar, .region-toolbar {
+  .widget-toolbar {
+    display: block;
+  }
+}
+
+.edit-mode-region {
+  .region-toolbar {
     display: block;
   }
 }
@@ -97,12 +127,19 @@
   right: 0;
   width: 100%;
   height: 70px;
-  z-index: 1000;
+  z-index: 100;
   color: #fff;
   font-weight: bold;
   text-shadow: 0 -1px 1px #000;
   background: #111;
   border: 1px solid #333;
+}
+
+#cms-toolbar img {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  display: none;
 }
 
 body {
@@ -120,10 +157,79 @@ body {
 
 .emptydiv {
   height: 30px;
-  border: dotted #aaa 1px;
-  background: #2b669a;
+  border: dotted #555 2px;
+  background: #eee;
 }
 
+.newbox {
+  background-color: #0be700;
+}
 
+.clearfix {
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+    // Fixes Opera/contenteditable bug:
+    // http://nicolasgallagher.com/micro-clearfix-hack/#comment-36952
+    line-height: 0;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+// SLIDER
+
+.side-panel {
+  background-color: #E6E6E6;
+  padding: 15px;
+  z-index: 200;
+  position: fixed;
+  right: -400px;
+  width: 400px;
+  top: 0px;
+}
+
+#slider .handle {
+  background-color: #2E2E2E;
+  left: -95px;
+  padding: 10px;
+  position: absolute;
+  top: 100px;
+  width: 95px;
+  cursor: pointer;
+  color: #fff;
+  z-index: 200;
+  /* margin-top: 120px; */
+}
+
+.document-sidebar-tree {
+  div {
+    border: dotted #aaa 1px;
+    padding: 2px;
+    margin-bottom: 5px;
+  }
+
+  .level-1 {
+    margin-left: 10px;
+  }
+
+  .level-2 {
+    margin-left: 20px;
+  }
+
+  .level-3 {
+    margin-left: 30px;
+  }
+
+  .level-4 {
+    margin-left: 40px;
+  }
+
+  .level-5 {
+    margin-left: 50px;
+  }
+}
 
 

@@ -28,6 +28,28 @@ class DocumentCategory
      */
     private $name;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tags", type="json_array")
+     */
+    private $tags;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="icon", type="string", length=255)
+     */
+    private $icon;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="widget", type="string", length=255)
+     */
+    private $widget;
+
     /**
      * @var string
      *
@@ -138,5 +160,77 @@ class DocumentCategory
     public function getDocuments()
     {
         return $this->documents;
+    }
+
+    /**
+     * Set tags.
+     *
+     * @param array $tags
+     *
+     * @return DocumentCategory
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Get tags.
+     *
+     * @return array
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Set icon.
+     *
+     * @param string $icon
+     *
+     * @return DocumentCategory
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    /**
+     * Get icon.
+     *
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * Set widget.
+     *
+     * @param string $widget
+     *
+     * @return DocumentCategory
+     */
+    public function setWidget($widget)
+    {
+        $this->widget = $widget;
+
+        return $this;
+    }
+
+    /**
+     * Get widget.
+     *
+     * @return string
+     */
+    public function getWidget()
+    {
+        return $this->widget;
     }
 }

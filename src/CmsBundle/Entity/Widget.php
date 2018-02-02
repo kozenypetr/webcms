@@ -224,7 +224,7 @@ class Widget
         $parameters = $this->getParameters();
         $classes = array();
         $classes[] = 'widget';
-        foreach (array('class_md', 'class_sm', 'class_xs', 'class_lg') as $c)
+        foreach (array('class', 'class_md', 'class_sm', 'class_xs', 'class_lg') as $c)
         {
             if (isset($parameters[$c]) && $parameters[$c])
             {

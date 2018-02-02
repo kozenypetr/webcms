@@ -25,12 +25,29 @@
     <!-- Toolbar -->
     <div id="cms-toolbar">
         <span class="edit-mode-toggle">Editační režim</span>
+        <span class="edit-mode-region-toggle">Regiony</span>
         <span class="box-template draggable drag-drop" data-widget="cms.widget.editor">HTML editor</span>
         <span class="box-template draggable drag-drop" data-widget="cms.widget.news">Novinka</span>
 
         <a href="{{ path('cms_document_add') }}" class="modal-form document-new">Přidat stránku</a>
 
-        {{ render(controller('CmsBundle:Backend/Document:list')) }}
+
+
+        <a href="{{ path('cms_document_edit', {'id': document.id}) }}" class="modal-form document-edit">Upravit stránku</a>
+
+        <img width="60" src="/images/loading.gif" />
+
+    </div>
+
+
+
+    <div id="slider" class="side-panel">
+        <div id="trigger-pages" class="handle">
+            <span class="glyphicon glyphicon-chevron-left"></span> Stránky
+        </div>
+        <div>
+            {{ render(controller('CmsBundle:Backend/Document:list')) }}
+        </div>
     </div>
 
     <script type="text/javascript">

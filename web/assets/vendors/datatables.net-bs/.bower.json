@@ -35,14 +35,14 @@
   ],
   "homepage": "https://datatables.net",
   "license": "MIT",
-  "version": "1.10.15",
-  "_release": "1.10.15",
+  "version": "2.1.1",
+  "_release": "2.1.1",
   "_resolution": {
     "type": "version",
-    "tag": "1.10.15",
-    "commit": "f138ff1a8e0d04113bfbeaeabec2920bf3cb6399"
+    "tag": "2.1.1",
+    "commit": "c9aedb3c531795574d69203688888a6c16e02265"
   },
   "_source": "https://github.com/DataTables/Dist-DataTables-Bootstrap.git",
-  "_target": "^1.10.11",
+  "_target": "^2.1.1",
   "_originalSource": "datatables.net-bs"
 }

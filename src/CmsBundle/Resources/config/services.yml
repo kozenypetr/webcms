@@ -2,9 +2,6 @@ services:
 #    cms.example:
 #        class: CmsBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
-
-
-
      cms.manager.widget:
         class: CmsBundle\Service\WidgetManager
         arguments:    ['@doctrine.orm.entity_manager', '@service_container']
@@ -24,7 +21,7 @@ services:
 
      app.twig.cms:
         class: CmsBundle\Twig\CmsExtension
-        arguments:    ['@doctrine.orm.entity_manager', '@cms.manager.widget']
+        arguments:    ['@doctrine.orm.entity_manager', '@cms.manager.widget', '@request_stack']
         public: false
         tags:
            - { name: twig.extension }

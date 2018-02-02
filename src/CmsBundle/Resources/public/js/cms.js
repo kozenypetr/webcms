@@ -2,10 +2,11 @@ var cmsDocument = {
     init: function()
     {
         $('.document-new').click(this.__loadCreateForm);
+        $('.document-edit').click(this.__loadEditForm);
     },
 
     /**
-     * Nacteni formulare pro editaci widgetu
+     * Nacteni formulare pro pridani stranky
      * @param e
      * @private
      */
@@ -17,6 +18,18 @@ var cmsDocument = {
     },
 
     /**
+     * Nacteni formulare pro editaci stranky
+     * @param e
+     * @private
+     */
+    __loadEditForm: function(e)
+    {
+        e.preventDefault();
+        // nacteme formular pro editaci widgetu
+        cms.ajax($(this).attr('href'), 'GET', cmsDocument.__loadEditFormSuccess);
+    },
+
+    /**
      * Uspesne nacteni formulare pro editaci widgetu = zobrazeni modal okna
      * @param data
      * @private
@@ -24,6 +37,16 @@ var cmsDocument = {
     __loadCreateFormSuccess: function(data)
     {
         cmsModal.show(data, 'Nová stránka', cmsDocument.__submitCreateForm);
+    },
+
+    /**
+     * Uspesne nacteni formulare pro editaci stanky = zobrazeni modal okna
+     * @param data
+     * @private
+     */
+    __loadEditFormSuccess: function(data)
+    {
+        cmsModal.show(data, 'Editace stránky', cmsDocument.__submitEditForm);
     },
 
 
@@ -52,6 +75,30 @@ var cmsDocument = {
                     // $.fancybox.close('all');
                     $('#cms-modal').modal('hide');
                     */
+                },
+                400: function(data) {
+                    $('#modal-fom-box').replaceWith(data.responseText);
+                    $('#modal-edit-form').submit(cmsDocument.__submitCreateForm);
+                }
+            }
+        });
+    },
+
+    __submitEditForm: function(e)
+    {
+        e.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('action'),
+            data: $(this).serialize(), // serializes the form's elements.
+            statusCode: {
+                200: function(data) {
+                    $('#cms-modal').modal('hide');
+                    //if (adminParam['url'] != data.url)
+                    //{
+                        $(location).attr('href', data.url);
+                    //}
                 },
                 400: function(data) {
                     $('#modal-fom-box').replaceWith(data.responseText);
@@ -278,7 +325,7 @@ var cmsModal = {
 
         this.tinyInit();
 
-        $(document).on('focusin', function(e) {
+        $(document).on('focusin', function(event) {
             if ($(event.target).closest(".mce-window").length) {
                 e.stopImmediatePropagation();
             }
@@ -298,13 +345,21 @@ var cmsModal = {
         tinymce.init({
             selector: '#modal-edit-form textarea.tiny',
             themes: "modern",
+            menubar: false,
+            language: 'cs',
+            force_br_newlines : false,
+            force_p_newlines : false,
+            forced_root_block : '',
+            codemirror: { indentOnInit:true, path:'/assets/tinymce/plugins/codemirror/codemirror-4.8'},
             plugins: [
-                "advlist autolink lists link image charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table contextmenu paste",
+                "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+                "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking spellchecker",
+                "table contextmenu directionality emoticons paste textcolor code codemirror codesample table"
             ],
-            height : "150",
-            entity_encoding : "raw"
+            height : "250",
+            entity_encoding : "raw",
+            toolbar1: "undo redo | bold italic underline | forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
+            toolbar2: "styleselect |  image | media | link unlink | table | code codesample"
         });
     },
 
@@ -327,16 +382,22 @@ var cms = {
         cmsDocument.init();
 
         // cmsContextMenu.init();
-        tinyMCE.baseURL = '/assets/vendors/tinymce';
+        tinyMCE.baseURL = '/assets/tinymce';
     },
 
     __addEvents: function () {
         $('.edit-mode-toggle').click(cms.__toggleEditModeEvent);
+        $('.edit-mode-region-toggle').click(cms.__toggleEditModeRegionEvent);
     },
 
     __toggleEditModeEvent: function () {
         $.cookie('cms_editmod', !$('body').hasClass('edit-mode'));
         $('body').toggleClass('edit-mode');
+    },
+
+    __toggleEditModeRegionEvent: function () {
+        $.cookie('cms_editmod_region', !$('body').hasClass('edit-mode-region'));
+        $('body').toggleClass('edit-mode-region');
     },
 
     /**
@@ -386,13 +447,39 @@ $( document ).ready(function() {
 
 $( function() {
 
+    $("#slider").slideReveal({
+        trigger: $(".handle"),
+        push: false,
+        position: "right",
+        width: 400,
+        speed: 700,
+        shown: function(obj){
+            obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-right"></span> Stránky');
+            obj.addClass("left-shadow-overlay");
+        },
+        hidden: function(obj){
+            obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-left"></span> Stránky');
+            obj.removeClass("left-shadow-overlay");
+        }
+    });
+
+
     $( '.region .row' ).sortable({
         connectWith: '.region .row',
         items: ".widget",
         revert: false,
         cursor: "move",
+        cursorAt: {left: 20, top: 10},
         placeholder: 'emptydiv col-md-12',
         handle: ".widget-toolbar .drag",
+        helper: function(event, ui)
+        {
+            var $clone =  ui.find('span.drag').clone();
+            $clone.addClass('sortable-helper');
+            var width = ui.find('span.drag').outerWidth();
+            $clone.width(width);
+            return $clone.get(0);
+        },
         update: function(event, ui) {
             if (!ui.item.hasClass('widget'))
             {
@@ -480,6 +567,16 @@ $( function() {
     },
   });
 
+    $('#tree').jstree();
+
+
+
+
+    $(document).bind("ajaxSend", function(){
+        $("#cms-toolbar img").show();
+    }).bind("ajaxComplete", function(){
+        $("#cms-toolbar img").hide();
+    });
 
 });
 

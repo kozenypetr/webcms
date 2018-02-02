@@ -10,13 +10,18 @@ class DocumentController extends Controller
 {
     /**
      * @Route("/", name="cms_homepage", defaults={"url": ""},)
-     * @Route("/{url}", name="cms_page")
+     * @Route("/{url}", name="cms_page",
+     *     requirements={"url" = ".+"})
      */
     public function showAction($url)
     {
         $document = $this->getDoctrine()
                 ->getRepository('CmsBundle:Document')
                 ->findOneByUrl($url);
+
+        if (!$document) {
+            throw $this->createNotFoundException('Dokument neexistuje');
+        }
 
         return $this->render('CmsBundle:Frontend/Templates:onecolumn.html.twig', array(
             'document' => $document

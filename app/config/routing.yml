@@ -1,8 +1,38 @@
-cms:
-    resource: "@CmsBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 #app:
 #    resource: '@AppBundle/Controller/'
 #    type: annotation
+# ADMIN
+admin:
+    resource: "@AdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
+admin_area:
+    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
+
+
+sonata_user_admin_security:
+    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
+    prefix: /admin
+
+sonata_user_admin_resetting:
+    resource: '@SonataUserBundle/Resources/config/routing/admin_resetting.xml'
+    prefix: /admin/resetting
+
+
+# CMS
+cms:
+    resource: "@CmsBundle/Controller/Backend"
+    type:     annotation
+    prefix:   /
+
+cms_document:
+    resource: "@CmsBundle/Controller/Frontend"
+    type:     annotation
+    prefix:   /

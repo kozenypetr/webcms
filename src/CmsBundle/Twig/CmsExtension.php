@@ -13,16 +13,19 @@ use CmsBundle\Entity\Document;
 use CmsBundle\Entity\Widget;
 use Doctrine\ORM\EntityManager;
 use CmsBundle\Service\WidgetManager;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class CmsExtension extends \Twig_Extension
 {
     private $em;
     private $wm;
 
-    public function __construct(EntityManager $em, WidgetManager $wm)
+    public function __construct(EntityManager $em, WidgetManager $wm, RequestStack $requestStack)
     {
         $this->em = $em;
         $this->wm = $wm;
+        $this->requestStack = $requestStack;
     }
 
     public function getFunctions()
@@ -40,8 +43,36 @@ class CmsExtension extends \Twig_Extension
                 'needs_environment' => true,
                 'is_safe'=> array('html')
             )),
+            new \Twig_SimpleFunction('cms_body_class', array($this, 'cmsBodyClass'), array(
+                'needs_environment' => true,
+                'is_safe'=> array('html')
+            )),
         );
     }
+
+    /**
+     * @param \Twig_Environment $twig
+     * @param Document $document
+     * @param $name
+     * @param string $type
+     * @return string HTMl regionu
+     */
+    public function cmsBodyClass(\Twig_Environment $twig)
+    {
+        $classes = [];
+        if ($this->requestStack->getCurrentRequest()->cookies->get('cms_editmod') == 'true')
+        {
+            $classes[] = 'edit-mode';
+        }
+
+        if ($this->requestStack->getCurrentRequest()->cookies->get('cms_editmod_region') == 'true')
+        {
+            $classes[] = 'edit-mode-region';
+        }
+
+        return join(' ', $classes);
+    }
+
 
     /**
      * @param \Twig_Environment $twig
