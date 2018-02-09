@@ -3,16 +3,27 @@
     {{ form_start(form, {'attr': {'action': path('cms_widget_edit', {'id': widget.id}), 'id': 'modal-edit-form', 'novalidate': 'novalidate' }}) }}
 
     <div class="row">
-        <div class="col-md-4 col-md-push-8">
-            <h4>Responzivní zobrazení</h4>
-            {{ form_row(form.class) }}
-            {{ form_row(form.class_md) }}
-            {{ form_row(form.class_sm) }}
-            {{ form_row(form.class_xs) }}
-            {{ form_row(form.class_lg) }}
-        </div>
-        <div class="col-md-8 col-md-pull-4">
-            {{ form_widget(form) }}
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Základní informace</a></li>
+                <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">Responzivní zobrazení</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Nastavení</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane" id="seo">
+                    {{ form_row(form.class) }}
+                    {{ form_row(form.class_sm) }}
+                    {{ form_row(form.class_xs) }}
+                    {{ form_row(form.class_lg) }}
+                </div>
+                <div role="tabpanel" class="tab-pane" id="messages">
+                    {{ form_row(form.sid) }}
+                </div>
+                <div role="tabpanel" class="tab-pane active" id="basic">
+                    {{ form_widget(form) }}
+                </div>
+            </div>
         </div>
     </div>
 

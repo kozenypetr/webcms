@@ -3,11 +3,18 @@
     {{ form_start(form, {'attr': {'action': action, 'id': 'modal-edit-form', 'novalidate': 'novalidate' }}) }}
 
     <div class="row">
+        {#
         <div class="col-md-4 col-md-push-8">
-            <h4>SEO</h4>
+            <h4>Zobrazení</h4>
+            {{ form_row(form.status) }}
+
+            <h4>Informace o stránce</h4>
+            <p>Vytvořeno: {{ document.created | date('d.m.Y H:i:s') }}</p>
 
         </div>
-        <div class="col-md-8 col-md-pull-4">
+        #}
+        {#<div class="col-md-8 col-md-pull-4">#}
+        <div class="col-md-12">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Základní informace</a></li>
                 <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">SEO</a></li>
@@ -20,16 +27,30 @@
                         {{ form_row(form.name) }}
                     </div>
                     <div class="col-md-6">
+                        {{ form_row(form.category) }}
+                    </div>
+                    <div class="col-md-6">
                         {{ form_row(form.url) }}
                     </div>
                     <div class="col-md-6">
                         {{ form_row(form.parent) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_row(form.category) }}
+                        {{ form_row(form.status) }}
+                    </div>
+
+                </div>
+                <div role="tabpanel" class="tab-pane" id="seo">
+                    <div class="col-md-6">
+                        {{ form_row(form.metatitle) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.metakeywords) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.metadescription) }}
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="seo">...</div>
                 <div role="tabpanel" class="tab-pane" id="messages">...</div>
             </div>
 

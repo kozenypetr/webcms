@@ -1,9 +1,10 @@
+{#
 <div class="document-sidebar-tree">
 {% for document in documents %}
 <div class="level-{{ document.lvl }}"><a href="/{{ document.url }}">{{ document.name }}</a> [/{{ document.url }}]</div>
 {% endfor %}
 </div>
-
+#}
 
 {% macro menu_links(documents) %}
     {% import _self as self %}
@@ -11,7 +12,6 @@
     {% for document in documents %}
         <li>
             <a href="{{ document.url }}" title="{{ document.url }}">{{ document.name }}</a>
-            {% dump(document.__children) %}
             {% if document.__children %}
                     {{ self.menu_links(document.__children) }}
             {% endif %}
@@ -22,13 +22,12 @@
 
 {% import _self as macro %}
 
-{% dump(hierarchy) %}
-
-<div id="tree">
+<div id="page-tree">
     {{ macro.menu_links(hierarchy) }}
 </div>
 
-
+{#
 <div id="tree2">
     {{ htmlTree | raw }}
 </div>
+#}

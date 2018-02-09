@@ -11,6 +11,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bundle\TwigBundle\TwigEngine;
+
+use Doctrine\ORM\EntityManagerInterface;
+
+use Symfony\Component\Form\FormFactoryInterface;
+
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 use CmsBundle\Entity\Widget;
 
@@ -28,12 +35,36 @@ abstract class Base
 
     protected $template;
 
-    public function __construct($em, $formFactory)
+    protected $entity;
+
+    public function __construct(EntityManagerInterface $em, FormFactoryInterface $formFactory, EngineInterface $twig)
     {
         $this->em = $em;
         $this->formFactory = $formFactory;
+        $this->twig = $twig;
     }
 
+    public function setEntity(Widget $widget)
+    {
+        $this->entity = $widget;
+
+        return $this;
+    }
+
+    public function getHtml($plain = false)
+    {
+        $baseWidgetTemplate = 'CmsBundle:Templates/default/Widget:widget.base.' . ($plain?'plain.':'') . 'html.twig';
+
+        $templateDir = 'CmsBundle:Templates/default/Widget:';
+
+        return $this->twig->render($baseWidgetTemplate,
+            array(
+                'widget' => $this->entity,
+                'template' => $templateDir . $this->getTemplate(),
+                'title' => $this->getTitle()
+            )
+        );
+    }
 
     /**
      * Vytvoreni formulare pro editaci widgetu
@@ -54,9 +85,10 @@ abstract class Base
     protected function baseConfigureForm($form)
     {
         return $form
+            ->add('sid', TextType::class, array('label' => 'Strojový název'))
             ->add('class', TextType::class, array('label' => 'Třída'))
             ->add('class_md', ChoiceType::class, array(
-                'label'    => 'Počítač',
+                'label'    => 'Šířka',
                 'required' => true,
                 'choices'  => $this->getBootstrapClasses('col-md-'),
             ))
@@ -83,7 +115,7 @@ abstract class Base
         }
         for ($i = 1; $i <= 12; $i++)
         {
-            $classes[$i . '/12'] = $prefix . $i;
+            $classes[$i] = $prefix . $i;
         }
 
         $classes['Skrytý'] = 'hidden-' . $prefix;

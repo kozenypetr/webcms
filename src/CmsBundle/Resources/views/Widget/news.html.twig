@@ -1,7 +1,0 @@
-{% extends (ajax is defined)?'CmsBundle:Frontend/Document:widget.ajax.html.twig':'CmsBundle:Frontend/Document:widget.html.twig' %}
-
-{% block widget_content %}
-    <h3>{{ widget.parameters.title }}</h3>
-    <p>{{ widget.parameters.annotation }}</p>
-    <p>{{ widget.parameters.text | raw }}</p>
-{% endblock %}

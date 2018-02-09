@@ -1,3 +1,89 @@
+var sliderPage = {
+    init: function()
+    {
+        $("#slider-page").slideReveal({
+            trigger: $("#slider-page .handle"),
+            push: false,
+            position: "right",
+            width: 400,
+            speed: 700,
+            shown: function(obj){
+                obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-right"></span> Stránky');
+                obj.addClass("left-shadow-overlay");
+            },
+            hidden: function(obj){
+                obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-left"></span> Stránky');
+                obj.removeClass("left-shadow-overlay");
+            }
+        });
+    }
+}
+
+
+var sliderFile = {
+    init: function()
+    {
+        $("#slider-file").slideReveal({
+            trigger: $("#slider-file .handle"),
+            push: false,
+            position: "right",
+            width: 400,
+            speed: 700,
+            shown: function(obj){
+                obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-right"></span> Soubory');
+                obj.addClass("left-shadow-overlay");
+            },
+            hidden: function(obj){
+                obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-left"></span> Soubory');
+                obj.removeClass("left-shadow-overlay");
+            }
+        });
+    }
+}
+
+
+var treePage = {
+    init: function()
+    {
+        $('#page-tree')
+            .on('select_node.jstree', this.__selectNode)
+            .jstree();
+
+        $('#page-tree').jstree('open_all');
+    },
+
+    __selectNode: function(e, data)
+    {
+        console.log(e);
+        console.log(data);
+        console.log(data.node.a_attr.href);
+        $(location).attr('href', '/' + data.node.a_attr.href);
+    }
+}
+
+var treeFile = {
+    init: function()
+    {
+        $('#file-tree')
+            .jstree({
+                'core': {
+                    'data': {
+                        'url': Routing.generate('cms_file_node'),
+                        'data': function (node) {
+                            return {'id': node.id};
+                        }
+                    },
+                    'themes' : {
+                        'responsive' : false,
+                        'variant' : 'small',
+                        'stripes' : true
+                    }
+                }
+            });
+    }
+}
+
+
 var cmsDocument = {
     init: function()
     {
@@ -350,6 +436,8 @@ var cmsModal = {
             force_br_newlines : false,
             force_p_newlines : false,
             forced_root_block : '',
+            convert_urls: false,
+            remove_script_host: false,
             codemirror: { indentOnInit:true, path:'/assets/tinymce/plugins/codemirror/codemirror-4.8'},
             plugins: [
                 "advlist autolink link image lists charmap print preview hr anchor pagebreak",
@@ -383,6 +471,16 @@ var cms = {
 
         // cmsContextMenu.init();
         tinyMCE.baseURL = '/assets/tinymce';
+
+        // postranni box se strankami
+        sliderPage.init();
+
+        treePage.init();
+
+        treeFile.init();
+
+        // postranni box se soubory
+        sliderFile.init();
     },
 
     __addEvents: function () {
@@ -433,7 +531,7 @@ var cms = {
     }
 }
 
-$( document ).ready( cms.init );
+
 
 /*
 $( document ).ready(function() {
@@ -445,24 +543,9 @@ $( document ).ready(function() {
 });
 */
 
+$( document ).ready( cms.init );
+
 $( function() {
-
-    $("#slider").slideReveal({
-        trigger: $(".handle"),
-        push: false,
-        position: "right",
-        width: 400,
-        speed: 700,
-        shown: function(obj){
-            obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-right"></span> Stránky');
-            obj.addClass("left-shadow-overlay");
-        },
-        hidden: function(obj){
-            obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-left"></span> Stránky');
-            obj.removeClass("left-shadow-overlay");
-        }
-    });
-
 
     $( '.region .row' ).sortable({
         connectWith: '.region .row',
@@ -480,6 +563,7 @@ $( function() {
             $clone.width(width);
             return $clone.get(0);
         },
+        // presunuti widgetu
         update: function(event, ui) {
             if (!ui.item.hasClass('widget'))
             {
@@ -497,6 +581,7 @@ $( function() {
 
             return cms.ajax(adminUrl['widget_sort'], 'POST', null, { parameters: JSON.stringify(params) });
         },
+        // vlozeni widgetu
         receive: function(event, ui) {
             // zde prijde pridani widgetu - ajax + vlozeni widgetu do DOMu
             // var new_item  = $(this).data().uiSortable.currentItem;
@@ -522,6 +607,12 @@ $( function() {
             // console.log(ui);
             // ui.helper.replaceWith('<div id="widget-1" data-widget-id="1" class="widget col-md-12"><div class="widget-content"><h1>Nadpis stránky sadas</h1></div></div>');
             var $helper = ui.helper;
+
+            if (!$helper.hasClass('draggable-helper'))
+            {
+                return false;
+            }
+
             var $widget  = $helper.data('widget');
             // console.log(ui.helper.parent());
             // console.log(event.target.parentElement.data('region'));
@@ -563,14 +654,9 @@ $( function() {
     cursor: 'move',
     helper: function()
     {
-      return $('<span id="box-drag" data-widget="' + $(this).data('widget')  + '" class="draggable-helper btn btn-danger btn-sm">' + $(this).html() + '</span>');
+      return $('<span id="box-drag" data-widget="' + $(this).data('widget')  + '" class="draggable-helper btn btn-primary btn-xs">' + $(this).html() + '</span>');
     },
   });
-
-    $('#tree').jstree();
-
-
-
 
     $(document).bind("ajaxSend", function(){
         $("#cms-toolbar img").show();
@@ -579,5 +665,7 @@ $( function() {
     });
 
 });
+
+
 
 

@@ -1,8 +1,33 @@
-{% extends "CmsBundle::base.html.twig" %}
+{% extends "CmsBundle::Templates/page.html.twig" %}
 
 {% block title %}{{ document.name }}{% endblock %}
 
+{% block stylesheets %}
+    {% stylesheets
+    'assets/vendors/bootstrap/dist/css/bootstrap.css'
+    'assets/vendors/font-awesome/css/font-awesome.css'
+    'assets/vendors/fancyBox/dist/jquery.fancybox.css'
+    'assets/vendors/bootstrap/dist/css/bootstrap.css'
+    'assets/vendors/bootstrap/dist/css/bootstrap-theme.css'
+    'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.css'
+    'assets/tinymce/skins/lightgray/skin.min.css'
+    'assets/tinymce/skins/lightgray/content.min.css'
+    'assets/jquery-ui/css/jquery-ui.css'
+    'assets/jstree/themes/default/style.css'
+    '@CmsBundle/Resources/public/css/cms.less'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    {{  parent() }}
+{% endblock %}
+
+{% block body %}
+    {% include template with {'document': document } %}
+{% endblock %}
+
+
 {% block cms %}
+    {% if is_granted('ROLE_ADMIN') %}
     <!-- Large modal -->
     <div class="modal fade" id="cms-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog modal-lg" role="document">
@@ -27,11 +52,10 @@
         <span class="edit-mode-toggle">Editační režim</span>
         <span class="edit-mode-region-toggle">Regiony</span>
         <span class="box-template draggable drag-drop" data-widget="cms.widget.editor">HTML editor</span>
+        <span class="box-template draggable drag-drop" data-widget="cms.widget.html_code">HTML kód</span>
         <span class="box-template draggable drag-drop" data-widget="cms.widget.news">Novinka</span>
 
         <a href="{{ path('cms_document_add') }}" class="modal-form document-new">Přidat stránku</a>
-
-
 
         <a href="{{ path('cms_document_edit', {'id': document.id}) }}" class="modal-form document-edit">Upravit stránku</a>
 
@@ -39,27 +63,60 @@
 
     </div>
 
-
-
-    <div id="slider" class="side-panel">
-        <div id="trigger-pages" class="handle">
+    <!-- Sidebar -->
+    <div id="slider-page" class="side-panel-page">
+        <div id="trigger-page" class="handle">
             <span class="glyphicon glyphicon-chevron-left"></span> Stránky
         </div>
-        <div>
-            {{ render(controller('CmsBundle:Backend/Document:list')) }}
+        <div class="slider-content">
+            {{ render(controller('CmsBundle:Editor/Document:list')) }}
         </div>
     </div>
+    <div id="slider-file" class="side-panel-file">
+        <div id="trigger-file" class="handle">
+            <span class="glyphicon glyphicon-chevron-left"></span> Soubory
+        </div>
+        <div class="slider-content">
+            {{ render(controller('CmsBundle:Editor/File:list')) }}
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
+
+
+{% block javascripts %}
+    {% javascripts
+    'assets/vendors/jquery/dist/jquery.js'
+    'assets/vendors/fancyBox/dist/jquery.fancybox.js'
+    'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.js'
+    'assets/vendors/jQuery-contextMenu/dist/jquery.ui.position.js'
+    'assets/vendors/bootstrap/dist/js/bootstrap.js'
+    'assets/vendors/jquery.cookie/jquery.cookie.js'
+    'assets/jquery-ui/js/jquery-ui.js'
+    'assets/jquery-ui/js/jquery-ui.js'
+    'assets/jquery-slidereveal/jquery.slidereveal.min.js'
+    'assets/tinymce/tinymce.min.js'
+    'assets/tinymce/jquery.tinymce.min.js'
+    'assets/tinymce/themes/modern/theme.min.js'
+    'assets/vendors/interactjs/interact.js'
+    'assets/jstree/jstree.min.js'
+    'bundles/fosjsrouting/js/router.js'
+    '@CmsBundle/Resources/public/js/cms.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+    {{ parent() }}
 
     <script type="text/javascript">
-      var adminUrl = Array();
-      adminUrl['widget_add']  = '{{ path('cms_widget_add') }}';
-      adminUrl['widget_sort'] = '{{ path('cms_widget_sort') }}';
+        var adminUrl = Array();
+        adminUrl['widget_add'] = '{{ path('cms_widget_add') }}';
+        adminUrl['widget_sort'] = '{{ path('cms_widget_sort') }}';
+        adminUrl['document_add'] = '{{ path('cms_document_add') }}';
 
-      adminUrl['document_add'] = '{{ path('cms_document_add') }}';
-
-      var adminParam = Array();
-      adminParam['document_id']  = '{{ document.id }}';
-      adminParam['url']          = '{{ document.url }}';
-
+        var adminParam = Array();
+        adminParam['document_id'] = '{{ document.id }}';
+        adminParam['url'] = '{{ document.url }}';
     </script>
 {% endblock %}

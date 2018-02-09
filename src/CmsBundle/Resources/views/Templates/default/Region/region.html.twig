@@ -1,0 +1,11 @@
+<div id="{{ id }}" class="region {{ id }} {{ class }}"{% if is_granted('ROLE_ADMIN') %}data-region="{{ name }}"{% endif %}>
+    <div class="row">
+    {% for widget in widgets %}
+        {{ cms_widget(widget) }}
+    {% endfor %}
+    </div>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        {% include 'CmsBundle:Editor/Toolbar:toolbar.region.html.twig' with {'name' : name, 'documentId' : document.id} %}
+    {% endif %}
+</div>

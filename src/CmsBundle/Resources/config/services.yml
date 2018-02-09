@@ -6,22 +6,39 @@ services:
         class: CmsBundle\Service\WidgetManager
         arguments:    ['@doctrine.orm.entity_manager', '@service_container']
 
+     cms.manager.template:
+             class: CmsBundle\Service\TemplateManager
+             arguments:    ['@doctrine.orm.entity_manager', '@service_container']
 
      cms.widget.editor:
         class:        CmsBundle\Service\Widget\Editor
-        arguments:    ['@doctrine.orm.entity_manager', '@form.factory']
+        autowire: true
         tags:
             -  { name: cms.widget }
 
+     cms.widget.html_code:
+         class:        CmsBundle\Service\Widget\HtmlCode
+         autowire: true
+         tags:
+             -  { name: cms.widget }
+
      cms.widget.news:
-             class:        CmsBundle\Service\Widget\News
-             arguments:    ['@doctrine.orm.entity_manager', '@form.factory']
-             tags:
-                 -  { name: cms.widget }
+         class:        CmsBundle\Service\Widget\News
+         autowire: true
+         tags:
+             -  { name: cms.widget }
 
      app.twig.cms:
         class: CmsBundle\Twig\CmsExtension
-        arguments:    ['@doctrine.orm.entity_manager', '@cms.manager.widget', '@request_stack']
+        arguments:    ['@doctrine.orm.entity_manager', '@cms.manager.widget', '@request_stack', '@security.authorization_checker']
         public: false
         tags:
            - { name: twig.extension }
+
+
+     gedmo.listener.timestampable:
+         class: Gedmo\Timestampable\TimestampableListener
+         tags:
+             - { name: doctrine.event_subscriber, connection: default }
+         calls:
+             - [ setAnnotationReader, [ "@annotation_reader" ] ]

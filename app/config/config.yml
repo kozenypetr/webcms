@@ -5,6 +5,7 @@ imports:
     - { resource: "@CmsBundle/Resources/config/services.yml" }
     - { resource: "@AdminBundle/Resources/config/services.yml" }
 
+
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
@@ -102,10 +103,21 @@ sonata_admin:
     title_logo: images/webcms.png
     security:
         handler: sonata.admin.security.handler.role
-    #dashboard:
-    #    groups:
-    #        CMS:
-    #            icon:            '<i class="fa fa-money"></i>'
+    dashboard:
+        groups:
+            CMS:
+                label:               "Správa obsahu"
+                label_catalogue:      ~
+                icon:            '<i class="fa fa-book"></i>'
+                items:
+                    - admin.cms.document_category
+                    - admin.cms.document
+                    - route:        cms_admin_filemanager
+                      label:        Soubory
+
+            sonata_user:
+                label:           "Uživatelé"
+                icon:            '<i class="fa fa-users"></i>'
 
 sonata_user:
     security_acl:           false

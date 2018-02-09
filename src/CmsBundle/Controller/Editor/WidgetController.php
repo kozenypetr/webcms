@@ -1,6 +1,6 @@
 <?php
 
-namespace CmsBundle\Controller\Backend;
+namespace CmsBundle\Controller\Editor;
 
 
 use CmsBundle\Entity\Document;
@@ -52,10 +52,10 @@ class WidgetController extends Controller
         $service = $this->get($parameters['widget']);
 
         // ziskame HTML widgetu
-        $widgetHtml = $this->get('templating')->render($service->getTemplate(), array('widget' => $widget, 'title' => $service->getTitle()));
+        $html = $service->setEntity($widget)->getHtml();
 
         // vracime JSON - nove ID + HTML
-        return new JsonResponse(array('id' => $widget->getId(), 'widgetHtml' => $widgetHtml));
+        return new JsonResponse(array('id' => $widget->getId(), 'widgetHtml' => $html));
     }
 
 
@@ -109,7 +109,7 @@ class WidgetController extends Controller
         $service = $this->get($widget->getService());
 
         $form = $service->setParameters($widget->getParameters())
-            ->createForm();
+                        ->createForm();
 
         $form->handleRequest($request);
 
@@ -121,7 +121,8 @@ class WidgetController extends Controller
             $em->persist($widget);
             $em->flush();
 
-            $html = $this->get('templating')->render($service->getTemplate(), array('widget' => $widget, 'title' => $service->getTitle(), 'ajax' => true));
+            // $html = $this->get('templating')->render($service->getTemplate(), array('widget' => $widget, 'title' => $service->getTitle(), 'ajax' => true));
+            $html = $service->setEntity($widget)->getHtml(true);
 
             return new JsonResponse(array('html' => $html, 'class' => $widget->getClass()));
         }

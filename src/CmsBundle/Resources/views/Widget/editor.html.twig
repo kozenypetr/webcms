@@ -1,7 +1,0 @@
-{% extends (ajax is defined)?'CmsBundle:Frontend/Document:widget.ajax.html.twig':'CmsBundle:Frontend/Document:widget.html.twig' %}
-
-{% block widget_content %}
-    {% if widget.parameters.html is defined %}
-        {{ widget.parameters.html | raw }}
-    {% endif %}
-{% endblock %}

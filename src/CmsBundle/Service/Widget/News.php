@@ -14,7 +14,7 @@ class News extends Base
 
   protected $title = 'Novinka';
 
-  protected $template = 'CmsBundle:Widget:news.html.twig';
+  protected $template = 'new.html.twig';
 
     protected $default = array(
         'title' => 'Název aktuality',

@@ -7,17 +7,17 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class Editor extends Base
+class HtmlCode extends Base
 {
 
-    protected $type = 'Editor';
+    protected $type = 'HTML';
 
-    protected $title = 'Editor';
+    protected $title = 'HTML';
 
-    protected $template = 'editor.html.twig';
+    protected $template = 'code.html.twig';
 
     protected $default = array(
-        'html' => "<p>Editor</p>",
+        'html' => "",
     );
 
     protected function configureForm($form)
@@ -26,7 +26,6 @@ class Editor extends Base
             ->add('html', TextareaType::class, array(
                 'label'=>'Text',
                 'constraints' => array(new Assert\NotBlank()),
-                'attr' => ['class' => 'tiny'],
             ));
     }
 

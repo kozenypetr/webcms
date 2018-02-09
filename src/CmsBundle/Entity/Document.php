@@ -5,6 +5,8 @@ namespace CmsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+
 
 
 /**
@@ -15,6 +17,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Document
 {
+    use TimestampableEntity;
+
     /**
      * @var int
      *
@@ -34,16 +38,52 @@ class Document
     /**
      * @var string
      *
+     * @ORM\Column(name="template", type="string", length=255, nullable=true)
+     */
+    private $template;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="metatitle", type="string", length=255, nullable=true)
+     */
+    private $metatitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="metakeywords", type="string", length=255, nullable=true)
+     */
+    private $metakeywords;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="metadescription", type="text", nullable=true)
+     */
+    private $metadescription;
+
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="url", type="string", length=255, unique=true)
      */
     private $url;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="DocumentCategory", inversedBy="documents")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     private $category;
-
 
     /**
      * @Gedmo\TreeLeft
@@ -430,5 +470,197 @@ class Document
     public function getTreeName()
     {
         return str_repeat('-', $this->getLvl()) . ' ' .  $this->getName() . '[' . $this->getCategory()->getName() .  ']';
+    }
+
+    /**
+     * Set status.
+     *
+     * @param int $status
+     *
+     * @return Document
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status.
+     *
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set created.
+     *
+     * @param \DateTime $created
+     *
+     * @return Document
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created.
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated.
+     *
+     * @param \DateTime|null $updated
+     *
+     * @return Document
+     */
+    public function setUpdated($updated = null)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated.
+     *
+     * @return \DateTime|null
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set metatitle.
+     *
+     * @param string $metatitle
+     *
+     * @return Document
+     */
+    public function setMetatitle($metatitle)
+    {
+        $this->metatitle = $metatitle;
+
+        return $this;
+    }
+
+    /**
+     * Get metatitle.
+     *
+     * @return string
+     */
+    public function getMetatitle()
+    {
+        return $this->metatitle;
+    }
+
+    /**
+     * Set metakeyword.
+     *
+     * @param string $metakeyword
+     *
+     * @return Document
+     */
+    public function setMetakeyword($metakeyword)
+    {
+        $this->metakeyword = $metakeyword;
+
+        return $this;
+    }
+
+    /**
+     * Get metakeyword.
+     *
+     * @return string
+     */
+    public function getMetakeyword()
+    {
+        return $this->metakeyword;
+    }
+
+    /**
+     * Set metadescription.
+     *
+     * @param string $metadescription
+     *
+     * @return Document
+     */
+    public function setMetadescription($metadescription)
+    {
+        $this->metadescription = $metadescription;
+
+        return $this;
+    }
+
+    /**
+     * Get metadescription.
+     *
+     * @return string
+     */
+    public function getMetadescription()
+    {
+        return $this->metadescription;
+    }
+
+    /**
+     * Set metakeywords.
+     *
+     * @param string $metakeywords
+     *
+     * @return Document
+     */
+    public function setMetakeywords($metakeywords)
+    {
+        $this->metakeywords = $metakeywords;
+
+        return $this;
+    }
+
+    /**
+     * Get metakeywords.
+     *
+     * @return string
+     */
+    public function getMetakeywords()
+    {
+        return $this->metakeywords;
+    }
+
+    /**
+     * Set template.
+     *
+     * @param string|null $template
+     *
+     * @return Document
+     */
+    public function setTemplate($template = null)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * Get template.
+     *
+     * @return string|null
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 }

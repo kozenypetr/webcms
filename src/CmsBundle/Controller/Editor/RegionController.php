@@ -1,6 +1,6 @@
 <?php
 
-namespace CmsBundle\Controller\Backend;
+namespace CmsBundle\Controller\Editor;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

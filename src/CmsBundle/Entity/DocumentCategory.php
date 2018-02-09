@@ -28,6 +28,14 @@ class DocumentCategory
      */
     private $name;
 
+    /**
+     * 
+     * @var boolean
+     *
+     * @ORM\Column(name="is_enable_as_parent", type="boolean")
+     */
+    private $isEnableAsParent;
+
 
     /**
      * @var string
@@ -232,5 +240,29 @@ class DocumentCategory
     public function getWidget()
     {
         return $this->widget;
+    }
+
+    /**
+     * Set isEnableAsParent.
+     *
+     * @param bool $isEnableAsParent
+     *
+     * @return DocumentCategory
+     */
+    public function setIsEnableAsParent($isEnableAsParent)
+    {
+        $this->isEnableAsParent = $isEnableAsParent;
+
+        return $this;
+    }
+
+    /**
+     * Get isEnableAsParent.
+     *
+     * @return bool
+     */
+    public function getIsEnableAsParent()
+    {
+        return $this->isEnableAsParent;
     }
 }

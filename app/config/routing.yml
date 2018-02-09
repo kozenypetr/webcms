@@ -25,10 +25,12 @@ sonata_user_admin_resetting:
     resource: '@SonataUserBundle/Resources/config/routing/admin_resetting.xml'
     prefix: /admin/resetting
 
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
 # CMS
 cms:
-    resource: "@CmsBundle/Controller/Backend"
+    resource: "@CmsBundle/Controller/Editor"
     type:     annotation
     prefix:   /
 

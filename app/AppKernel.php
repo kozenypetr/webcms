@@ -33,7 +33,9 @@ class AppKernel extends Kernel
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
 
             new CmsBundle\CmsBundle(),
-            new AdminBundle\AdminBundle()
+            new AdminBundle\AdminBundle(),
+
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

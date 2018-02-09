@@ -32,6 +32,22 @@ class Region
     /**
      * @var string
      *
+     * @ORM\Column(name="sid", type="string", length=255, nullable=true)
+     */
+    private $sid;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tag", type="string", length=255, options={"default" : "div"})
+     */
+    private $tag;
+
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="class", type="string", length=255, nullable=true)
      */
     private $class;
@@ -167,5 +183,53 @@ class Region
         $class .= ($this->getClass())?' ' . $this->getClass():'';
 
         return $class;
+    }
+
+    /**
+     * Set sid.
+     *
+     * @param string|null $sid
+     *
+     * @return Region
+     */
+    public function setSid($sid = null)
+    {
+        $this->sid = $sid;
+
+        return $this;
+    }
+
+    /**
+     * Get sid.
+     *
+     * @return string|null
+     */
+    public function getSid()
+    {
+        return $this->sid;
+    }
+
+    /**
+     * Set tag.
+     *
+     * @param string $tag
+     *
+     * @return Region
+     */
+    public function setTag($tag)
+    {
+        $this->tag = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Get tag.
+     *
+     * @return string
+     */
+    public function getTag()
+    {
+        return $this->tag;
     }
 }

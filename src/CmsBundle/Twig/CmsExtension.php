@@ -16,15 +16,20 @@ use CmsBundle\Service\WidgetManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+
 class CmsExtension extends \Twig_Extension
 {
     private $em;
     private $wm;
+    private $securityContext;
+    private $requestStack;
 
-    public function __construct(EntityManager $em, WidgetManager $wm, RequestStack $requestStack)
+    public function __construct(EntityManager $em, WidgetManager $wm, RequestStack $requestStack, $securityContext)
     {
         $this->em = $em;
         $this->wm = $wm;
+        $this->securityContext = $securityContext;
         $this->requestStack = $requestStack;
     }
 
@@ -59,6 +64,11 @@ class CmsExtension extends \Twig_Extension
      */
     public function cmsBodyClass(\Twig_Environment $twig)
     {
+        if (!$this->securityContext->isGranted('ROLE_ADMIN'))
+        {
+            return '';
+        }
+
         $classes = [];
         if ($this->requestStack->getCurrentRequest()->cookies->get('cms_editmod') == 'true')
         {
@@ -96,7 +106,7 @@ class CmsExtension extends \Twig_Extension
             $region  = $this->em->getRepository('CmsBundle:Region')->findOneBy(['document' => $document, 'name' => $name]);
         }
 
-        return $twig->render('CmsBundle:Frontend/Document:region.html.twig',
+        return $twig->render('CmsBundle:Templates/default/Region:region.html.twig',
                              array('name' => $name,
                                    'id' => 'region-' . str_replace('.', '-', $name),
                                    'class' => $region?$region->getFullClass():'col-md-12',
@@ -112,7 +122,7 @@ class CmsExtension extends \Twig_Extension
     {
         $service = $this->wm->getWidget($widget->getService());
 
-        return $twig->render($service->getTemplate(), array('widget' => $widget, 'title' => $service->getTitle()));
+        return $service->setEntity($widget)->getHtml();
     }
 
 }

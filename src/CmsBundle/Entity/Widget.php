@@ -21,6 +21,13 @@ class Widget
      */
     private $id;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sid", type="string", length=255, nullable=true)
+     */
+    private $sid;
+
 
     /**
      * @var string
@@ -280,5 +287,29 @@ class Widget
     public function getDocument()
     {
         return $this->document;
+    }
+
+    /**
+     * Set sid.
+     *
+     * @param string|null $sid
+     *
+     * @return Widget
+     */
+    public function setSid($sid = null)
+    {
+        $this->sid = $sid;
+
+        return $this;
+    }
+
+    /**
+     * Get sid.
+     *
+     * @return string|null
+     */
+    public function getSid()
+    {
+        return $this->sid;
     }
 }
