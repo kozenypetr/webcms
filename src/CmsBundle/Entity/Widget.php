@@ -80,6 +80,11 @@ class Widget
     private $parameters;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="WidgetImage", mappedBy="widget", cascade={"remove"})
+     * @ORM\OrderBy({"sort" = "ASC"})
+     */
+    private $images;
 
 
     /*
@@ -311,5 +316,72 @@ class Widget
     public function getSid()
     {
         return $this->sid;
+    }
+
+
+    public function getParameter($name)
+    {
+        return isset($this->parameters[$name])?$this->parameters[$name]:null;
+    }
+
+    public function getSuggestionTemplateFiles($defaultTemplate)
+    {
+        $templates = [];
+
+        $sid = $this->getParameter('sid');
+        if ($sid)
+        {
+            $templates[] = str_replace('.html.twig', "-{$sid}.html.twig", $defaultTemplate);
+        }
+
+        $templates[] = str_replace('.html.twig', "-id-{$this->getId()}.html.twig", $defaultTemplate);
+
+        $templates[] = $defaultTemplate;
+
+        return $templates;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add image.
+     *
+     * @param \CmsBundle\Entity\WidgetImage $image
+     *
+     * @return Widget
+     */
+    public function addImage(\CmsBundle\Entity\WidgetImage $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image.
+     *
+     * @param \CmsBundle\Entity\WidgetImage $image
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeImage(\CmsBundle\Entity\WidgetImage $image)
+    {
+        return $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

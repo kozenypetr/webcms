@@ -58,8 +58,11 @@ class RegionController extends Controller
 
         $form = $this->createFormBuilder($region)
                      ->add('name', HiddenType::class)
-                     ->add('class', TextType::class)
-                     ->add('class_md', TextType::class)
+                     ->add('class_md', TextType::class, array('label' => 'Šířka'))
+                     ->add('htmlId', TextType::class, array('label' => 'ID'))
+                     ->add('class', TextType::class, array('label' => 'CSS třída'))
+                     ->add('tag', TextType::class, array('label' => 'Hlavní tag regionu (div, section, header, footer)'))
+                     ->add('sid', TextType::class, array('label' => 'Šablona'))
                      ->getForm();
 
         $form->handleRequest($request);
@@ -70,7 +73,7 @@ class RegionController extends Controller
             $em->persist($region);
             $em->flush();
 
-            return new JsonResponse(array('region' => $region->getIdentificator(), 'class' => 'region ' . $region->getFullClass()));
+            return new JsonResponse(array('region' => $region->getIdentificator(), 'tag' => $region->getTag(), 'class' => 'region ' . $region->getFullClass()));
         }
 
         $statusCode = 200;
@@ -80,7 +83,7 @@ class RegionController extends Controller
             dump($form->getErrors(true, false));
         }
 
-        return $this->render('CmsBundle:Backend/Document:region.html.twig', array(
+        return $this->render('CmsBundle:Editor/Form:region.html.twig', array(
             'region' => $region,
             'document' => $document,
             'form' => $form->createView()

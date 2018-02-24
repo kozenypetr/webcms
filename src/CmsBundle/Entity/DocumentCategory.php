@@ -54,9 +54,16 @@ class DocumentCategory
     /**
      * @var string
      *
-     * @ORM\Column(name="widget", type="string", length=255)
+     * @ORM\Column(name="widget", type="string", length=255, nullable=true)
      */
     private $widget;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="template", type="string", length=255, nullable=true)
+     */
+    private $template;
 
     /**
      * @var string
@@ -264,5 +271,29 @@ class DocumentCategory
     public function getIsEnableAsParent()
     {
         return $this->isEnableAsParent;
+    }
+
+    /**
+     * Set template.
+     *
+     * @param string|null $template
+     *
+     * @return DocumentCategory
+     */
+    public function setTemplate($template = null)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * Get template.
+     *
+     * @return string|null
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 }

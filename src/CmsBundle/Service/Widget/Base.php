@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bundle\TwigBundle\TwigEngine;
+use CmsBundle\Service\TemplateManager;
 
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -33,15 +34,26 @@ abstract class Base
 
     protected $title = 'Widget';
 
+    protected $tm;
+
     protected $template;
 
     protected $entity;
 
-    public function __construct(EntityManagerInterface $em, FormFactoryInterface $formFactory, EngineInterface $twig)
+    protected $predefinedClasses = [];
+
+    protected $hasItems = false;
+
+    protected $editorTemplate = 'widget.html.twig';
+
+    protected $icon = 'fa-folder-o';
+
+    public function __construct(EntityManagerInterface $em, FormFactoryInterface $formFactory, EngineInterface $twig, TemplateManager $tm)
     {
         $this->em = $em;
         $this->formFactory = $formFactory;
         $this->twig = $twig;
+        $this->tm = $tm;
     }
 
     public function setEntity(Widget $widget)
@@ -53,17 +65,46 @@ abstract class Base
 
     public function getHtml($plain = false)
     {
-        $baseWidgetTemplate = 'CmsBundle:Templates/default/Widget:widget.base.' . ($plain?'plain.':'') . 'html.twig';
+        $baseWidgetTemplate = 'CmsBundle:Templates/base:widget.base.' . ($plain?'plain.':'') . 'html.twig';
 
-        $templateDir = 'CmsBundle:Templates/default/Widget:';
+        $template = $this->tm->getWidgetTemplate($this->getTemplate(), $this->entity);
+
+        $parameters = $this->entity->getParameters();
+
+        foreach ($this->getDefault() as $key => $value)
+        {
+            if (!isset($parameters[$key]))
+            {
+                $parameters[$key] = $value;
+            }
+        }
 
         return $this->twig->render($baseWidgetTemplate,
             array(
                 'widget' => $this->entity,
-                'template' => $templateDir . $this->getTemplate(),
-                'title' => $this->getTitle()
+                'parameters' => $parameters,
+                'template' => $template,
+                'title' => $this->getTitle(),
+                'images' => $this->entity->getImages()
             )
         );
+    }
+
+    public function createItemForm($item, $options)
+    {
+        $form = $this->formFactory->createBuilder(FormType::class, $item, $options);
+
+        $form = $this->baseConfigureItemForm($form);
+
+        $form = $this->configureItemForm($form);
+
+        return $form->getForm();
+    }
+
+    protected function baseConfigureItemForm($form)
+    {
+        return $form
+            ->add('name', TextType::class, array('label' => 'Název'));
     }
 
     /**
@@ -75,9 +116,9 @@ abstract class Base
     {
         $form = $this->formFactory->createBuilder(FormType::class, $this->getParameters(), $options);
 
-        $form = $this->baseConfigureForm($form);
-
         $form = $this->configureForm($form);
+
+        $form = $this->baseConfigureForm($form);
 
         return $form->getForm();
     }
@@ -86,6 +127,12 @@ abstract class Base
     {
         return $form
             ->add('sid', TextType::class, array('label' => 'Strojový název'))
+            ->add('id', TextType::class, array('label' => 'ID'))
+
+            ->add('predefined_class', ChoiceType::class, array(
+                'label' => 'Předdefinovaná třída',
+                'choices'  => array_merge(['Nevybráno' => ''], $this->predefinedClasses),
+            ))
             ->add('class', TextType::class, array('label' => 'Třída'))
             ->add('class_md', ChoiceType::class, array(
                 'label'    => 'Šířka',
@@ -129,8 +176,6 @@ abstract class Base
     }
 
 
-
-
     public function setParameters(array $parameters)
     {
         $this->parameters = $parameters;
@@ -140,11 +185,12 @@ abstract class Base
 
     public function getTemplate()
     {
-        // $class = strtolower(get_class($this));
-
-        // $template = 'CmsBundle:Widget:editor.html.twig';
-
         return $this->template;
+    }
+
+    public function getEditorTemplate()
+    {
+        return $this->editorTemplate;
     }
 
     public function getTitle()
@@ -152,12 +198,19 @@ abstract class Base
         return $this->title;
     }
 
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+
     /**
      * @return array
      */
     public function getDefault()
     {
         return array(
+            'id'       => '',
             'class'    => '',
             'class_md' => 'col-md-12',
             'class_sm' => '',
@@ -172,4 +225,9 @@ abstract class Base
      * @return mixed
      */
     abstract protected function configureForm($form);
+
+    protected function configureItemForm($form)
+    {
+        return $form;
+    }
 }

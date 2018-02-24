@@ -12,12 +12,19 @@ class Editor extends Base
 
     protected $type = 'Editor';
 
-    protected $title = 'Editor';
+    protected $title = 'Text';
 
     protected $template = 'editor.html.twig';
 
+    protected $icon = 'fa-file-text-o';
+
+    protected $predefinedClasses = array(
+        'Bílý box' => 'white-box',
+        'Modrý box' => 'blue-box'
+    );
+
     protected $default = array(
-        'html' => "<p>Editor</p>",
+        'html' => "<p>Zde zadejte text</p>",
     );
 
     protected function configureForm($form)

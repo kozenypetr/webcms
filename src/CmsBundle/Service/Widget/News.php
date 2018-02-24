@@ -16,6 +16,8 @@ class News extends Base
 
   protected $template = 'new.html.twig';
 
+  protected $icon = 'fa-newspaper-o';
+
     protected $default = array(
         'title' => 'Název aktuality',
         'annotation' => 'Krátký popis aktuality',

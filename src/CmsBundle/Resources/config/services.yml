@@ -2,13 +2,18 @@ services:
 #    cms.example:
 #        class: CmsBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+     cms.manager.domain:
+        class: CmsBundle\Service\DomainManager
+        arguments:    ['@doctrine.orm.entity_manager', '@service_container']
+
      cms.manager.widget:
         class: CmsBundle\Service\WidgetManager
         arguments:    ['@doctrine.orm.entity_manager', '@service_container']
 
      cms.manager.template:
-             class: CmsBundle\Service\TemplateManager
-             arguments:    ['@doctrine.orm.entity_manager', '@service_container']
+        class: CmsBundle\Service\TemplateManager
+        arguments:    ['@doctrine.orm.entity_manager', '@service_container']
+
 
      cms.widget.editor:
         class:        CmsBundle\Service\Widget\Editor
@@ -28,9 +33,15 @@ services:
          tags:
              -  { name: cms.widget }
 
+     cms.widget.image:
+              class:        CmsBundle\Service\Widget\Image
+              autowire: true
+              tags:
+                  -  { name: cms.widget }
+
      app.twig.cms:
         class: CmsBundle\Twig\CmsExtension
-        arguments:    ['@doctrine.orm.entity_manager', '@cms.manager.widget', '@request_stack', '@security.authorization_checker']
+        arguments:    ['@doctrine.orm.entity_manager', '@cms.manager.widget', '@cms.manager.template', '@request_stack', '@security.authorization_checker']
         public: false
         tags:
            - { name: twig.extension }

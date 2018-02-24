@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 use CmsBundle\Entity\Document;
 use CmsBundle\Entity\DocumentCategory;
+use CmsBundle\Entity\Widget;
 
 use CmsBundle\Repository\DocumentRepository;
 
@@ -40,6 +41,15 @@ class DocumentController extends Controller
     {
         $document = new Document();
 
+        $parent = null;
+        $parent_id = $request->get('parent_id');
+
+        if ($parent_id) {
+            $parent = $this->getDoctrine()
+                ->getRepository(Document::class)
+                ->find($parent_id);
+        }
+
         $form = $this->createFormBuilder($document)
             ->add('name', TextType::class, array('label' => 'Název'))
             ->add('metatitle', TextType::class, array('label' => 'Metatitle'))
@@ -55,6 +65,13 @@ class DocumentController extends Controller
                     )
                 )
             )
+            ->add('template', ChoiceType::class,
+                array(
+                    'label'   => 'Šablona',
+                    'choices' => $this->get('cms.manager.template')->getDocumentTemplates(),
+                    'data'    => $this->get('cms.manager.template')->getDefaultTemplate()
+                )
+            )
             ->add('parent', EntityType::class, array(
                 'label' => 'Nadřazená stránka',
                 'class' => Document::class,
@@ -64,6 +81,7 @@ class DocumentController extends Controller
                         ->orderBy('d.lft', 'ASC');
                 },
                 'choice_label' => 'treeName',
+                'data' => $parent?$parent:null
             ))
             ->add('category', EntityType::class, array(
                 'label' => 'Kategorie dokumentu',
@@ -75,21 +93,70 @@ class DocumentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
+
             $document = $form->getData();
 
             $em = $this->getDoctrine()->getManager();
+
             $em->persist($document);
+
             $em->flush();
+
+            // pokud ma dokument definovany vychozi widget a widget existuje
+            if ($document->getCategory()->getWidget() && $this->has($document->getCategory()->getWidget()))
+            {
+                $parameters = [
+                    'document_id' => $document->getId(),
+                    'region' => 'page.content',
+                    'widget' => $document->getCategory()->getWidget()
+                ];
+
+                $widget = $this->getDoctrine()
+                    ->getRepository(Widget::class)
+                    ->createWidget($parameters);
+
+                // vychozi nastaveni widgetu
+                $widget->setParameters($this->get($widget->getService())->getDefault());
+
+                // ulozime widget
+                $em->persist($widget);
+                $em->flush();
+            }
 
             return new JsonResponse(array('url' => $document->getUrl()));
         }
 
-        return $this->render('CmsBundle:Backend/Document:document.html.twig', array(
+
+
+
+        return $this->render('CmsBundle:Editor/Form:document.html.twig', array(
             'form' => $form->createView(),
             'action' => $this->generateUrl('cms_document_add')
         ));
+    }
+
+    /**
+     * @Route("/delete/{id}", name="cms_document_delete")
+     * @Method({"DELETE"})
+     * @param Request $request
+     * @param Document $document
+     * @return JsonResponse
+     */
+    public function deleteAction(Request $request, Document $document)
+    {
+        $document_id = $document->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($document);
+
+        /*$this->getDoctrine()
+             ->getRepository(Document::class)
+             ->removeFromTree($document);*/
+
+        $em->flush();
+
+        return new JsonResponse(array('status' => 'SUCCESS', 'document_id' => $document_id));
     }
 
 
@@ -104,7 +171,13 @@ class DocumentController extends Controller
             ->add('name', TextType::class, array('label' => 'Název'))
             ->add('metatitle', TextType::class, array('label' => 'Metatitle'))
             ->add('metakeywords', TextType::class, array('label' => 'Metakeywords'))
-            ->add('metadescription', TextType::class, array('label' => 'Metadescription'));
+            ->add('metadescription', TextType::class, array('label' => 'Metadescription'))
+            ->add('template', ChoiceType::class,
+                array(
+                    'label' => 'Šablona',
+                    'choices' => $this->get('cms.manager.template')->getDocumentTemplates()
+                )
+            );
 
 
         if ($document->getUrl())
@@ -113,8 +186,9 @@ class DocumentController extends Controller
                 ->add('parent', EntityType::class, array(
                     'label' => 'Nadřazená stránka',
                     'class' => Document::class,
-                    'query_builder' => function (DocumentRepository $er) use ($document) {
+                    'query_builder' => function (DocumentRepository $er) {
                         return $er->createQueryBuilder('d')
+                            ->innerJoin('d.category', 'c', 'WITH', 'c.isEnableAsParent = 1')
                             ->orderBy('d.lft', 'ASC');
                     },
                     'choice_label' => 'treeName',
@@ -169,7 +243,7 @@ class DocumentController extends Controller
             return new JsonResponse(array('url' => $document->getUrl()));
         }
 
-        return $this->render('CmsBundle:Backend/Document:document.html.twig', array(
+        return $this->render('CmsBundle:Editor/Form:document.html.twig', array(
             'form' => $form->createView(),
             'document' => $document,
             'action' => $this->generateUrl('cms_document_edit',
@@ -187,36 +261,9 @@ class DocumentController extends Controller
 
         $repo = $em->getRepository('CmsBundle:Document');
 
-        $documents = $repo->children(null, false, 'lft');
-
-            /*$em->getRepository('CmsBundle:Document')->childrenHierarchy(null, false, array(
-            'decorate' => false,
-            'representationField' => 'url',
-            'html' => false
-        ));*/
-        $options = array(
-            'decorate' => true,
-            'rootOpen' => '<ul>',
-            'rootClose' => '</ul>',
-            'childOpen' => '<li>',
-            'childClose' => '</li>',
-            'nodeDecorator' => function($node) {
-                return '<a href="/'.$node['url'].'">' . $node['name'] . '</a>';
-            }
-        );
-
-        $htmlTree = $repo->childrenHierarchy(
-            null, /* starting from root nodes */
-            false, /* false: load all children, true: only direct */
-            $options
-        );
-
-
         $hierarchy = $repo->childrenHierarchy(null, false, array());
 
-        return $this->render('CmsBundle:Backend/Document:list.html.twig', array(
-            'documents' => $documents,
-            'htmlTree' => $htmlTree,
+        return $this->render('CmsBundle:Editor/Sidebar:list.html.twig', array(
             'hierarchy' => $hierarchy
         ));
     }

@@ -11,6 +11,7 @@ namespace CmsBundle\Twig;
 use CmsBundle\Entity\Box;
 use CmsBundle\Entity\Document;
 use CmsBundle\Entity\Widget;
+use CmsBundle\Service\TemplateManager;
 use Doctrine\ORM\EntityManager;
 use CmsBundle\Service\WidgetManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,10 +26,11 @@ class CmsExtension extends \Twig_Extension
     private $securityContext;
     private $requestStack;
 
-    public function __construct(EntityManager $em, WidgetManager $wm, RequestStack $requestStack, $securityContext)
+    public function __construct(EntityManager $em, WidgetManager $wm, TemplateManager $tm, RequestStack $requestStack, $securityContext)
     {
         $this->em = $em;
         $this->wm = $wm;
+        $this->tm = $tm;
         $this->securityContext = $securityContext;
         $this->requestStack = $requestStack;
     }
@@ -106,11 +108,16 @@ class CmsExtension extends \Twig_Extension
             $region  = $this->em->getRepository('CmsBundle:Region')->findOneBy(['document' => $document, 'name' => $name]);
         }
 
-        return $twig->render('CmsBundle:Templates/default/Region:region.html.twig',
+        // najdeme sablony pro region
+        $template = $this->tm->getRegionTemplate($region);
+
+        return $twig->render('CmsBundle::Templates/base/region.base.html.twig',
                              array('name' => $name,
-                                   'id' => 'region-' . str_replace('.', '-', $name),
+                                   'id' => ($region && $region->getHtmlId())?$region->getHtmlId():'region-' . str_replace('.', '-', $name),
                                    'class' => $region?$region->getFullClass():'col-md-12',
+                                   'tag'   => $region?$region->getTag():'div',
                                    'document' => $document,
+                                   'template' => $template,
                                    'region'   => $region,
                                    'widgets'  => $widgets)
         );

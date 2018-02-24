@@ -10,8 +10,8 @@
     {% import _self as self %}
     <ul>
     {% for document in documents %}
-        <li>
-            <a href="{{ document.url }}" title="{{ document.url }}">{{ document.name }}</a>
+        <li data-jstree='{"icon":"fa {{ document.category.icon }}"}' >
+            <a href="{{ document.url }}" title="{{ document.url }}" data-document-id="{{ document.id }}">{{ document.name }}</a>
             {% if document.__children %}
                     {{ self.menu_links(document.__children) }}
             {% endif %}

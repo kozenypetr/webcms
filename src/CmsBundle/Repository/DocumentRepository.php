@@ -13,4 +13,14 @@ use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
  */
 class DocumentRepository extends NestedTreeRepository
 {
+    public function getNodesHierarchyQueryBuilder($node = null, $direct = false, array $options = array(), $includeNode = false)
+    {
+        $qb = parent::getNodesHierarchyQueryBuilder($node, $direct, $options, $includeNode);
+
+        $qb->join('node.category', 'c');
+
+        $qb->addSelect('c');
+
+        return $qb;
+    }
 }

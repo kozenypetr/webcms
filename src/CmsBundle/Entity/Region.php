@@ -36,13 +36,19 @@ class Region
      */
     private $sid;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="html_id", type="string", length=255, nullable=true)
+     */
+    private $htmlId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="tag", type="string", length=255, options={"default" : "div"})
      */
-    private $tag;
+    private $tag = 'div';
 
 
     /**
@@ -231,5 +237,29 @@ class Region
     public function getTag()
     {
         return $this->tag;
+    }
+
+    /**
+     * Set htmlId.
+     *
+     * @param string|null $htmlId
+     *
+     * @return Region
+     */
+    public function setHtmlId($htmlId = null)
+    {
+        $this->htmlId = $htmlId;
+
+        return $this;
+    }
+
+    /**
+     * Get htmlId.
+     *
+     * @return string|null
+     */
+    public function getHtmlId()
+    {
+        return $this->htmlId;
     }
 }

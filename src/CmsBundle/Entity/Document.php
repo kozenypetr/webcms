@@ -14,6 +14,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * @Gedmo\Tree(type="nested")
  * @ORM\Table(name="document")
  * @ORM\Entity(repositoryClass="CmsBundle\Repository\DocumentRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Document
 {
@@ -34,6 +35,21 @@ class Document
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="annotation", type="string", length=255, nullable=true)
+     */
+    private $annotation;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
+
 
     /**
      * @var string
@@ -125,13 +141,13 @@ class Document
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Widget", mappedBy="document")
+     * @ORM\OneToMany(targetEntity="Widget", mappedBy="document", cascade={"remove"})
      * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $widgets;
 
     /**
-     * @ORM\OneToMany(targetEntity="Region", mappedBy="document")
+     * @ORM\OneToMany(targetEntity="Region", mappedBy="document", cascade={"remove"})
      */
     private $regions;
 
@@ -141,9 +157,10 @@ class Document
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->widgets = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->regions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->widgets  = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->regions  = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
 
     /**
      * Get id
@@ -662,5 +679,58 @@ class Document
     public function getTemplate()
     {
         return $this->template;
+    }
+
+    public function getTemplateShortName()
+    {
+        return preg_replace('|^[^\/]+\/|', '', $this->template);
+    }
+
+    /**
+     * Set annotation.
+     *
+     * @param string|null $annotation
+     *
+     * @return Document
+     */
+    public function setAnnotation($annotation = null)
+    {
+        $this->annotation = $annotation;
+
+        return $this;
+    }
+
+    /**
+     * Get annotation.
+     *
+     * @return string|null
+     */
+    public function getAnnotation()
+    {
+        return $this->annotation;
+    }
+
+    /**
+     * Set image.
+     *
+     * @param string|null $image
+     *
+     * @return Document
+     */
+    public function setImage($image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image.
+     *
+     * @return string|null
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

@@ -61,6 +61,7 @@
 // BOX
 .region {
   position: relative;
+  min-height: 30px;
   /*
   &:hover {
     .region-toolbar {
@@ -84,41 +85,18 @@
   }
 }
 
-
-
-// EDIT MODE
-.edit-mode {
-  .region {
-    border: dashed #aaa 1px;
-    margin-bottom: 2px;
-
-    .row {
-      min-height: 40px;
-    }
-  }
-
-  .widget {
-    min-height: 25px;
-  }
-
-  .widget-toolbar {
-    display: block;
-  }
+#box-drag {
+  z-index: 1000;
 }
 
-.edit-mode-region {
-  .region-toolbar {
-    display: block;
-  }
-}
 
 // MODAL
 #modal-form-box .nav-tabs {
   margin-bottom: 15px;
 }
 
-// TOOLBAR
-#cms-toolbar {
+// PANEL
+#cms-panel {
   border-left-width: 0;
   border-right-width: 0;
   position: fixed;
@@ -133,27 +111,117 @@
   text-shadow: 0 -1px 1px #000;
   background: #111;
   border: 1px solid #333;
+
+  .document-info {
+    float: left;
+    height: 100%;
+    width: 450px;
+    padding-left: 15px;
+    padding-top: 5px;
+  }
+
+  .document-links {
+    float: right;
+    height: 100%;
+    width: 300px;
+
+    a {
+      display: block;
+      width: 100px;
+      height: 100%;
+      float: right;
+      color: #fff;
+      text-decoration: none;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    a.document-new {
+      background-color: #0a0;
+    }
+
+    a.document-edit {
+      background-color: #2b669a;
+    }
+
+    a.document-delete {
+      background-color: #e00000;
+    }
+  }
+
+  .show-layout {
+    width: 300px;
+    height: 100%;
+    float: left;
+
+    div {
+      width: 33.333333333%;
+      float: left;
+      height: 100%;
+      text-align: center;
+      padding-top: 6px;
+      background-color: #2b669a;
+      cursor: pointer;
+    }
+  }
+
+  .widgets {
+    width: 185px;
+    height: 100%;
+    float: left;
+
+    div.dropdown-menu {
+      border-radius: 0px;
+      height: 250px;
+      width: 700px;
+      top: -372% !important;
+    }
+
+    .button {
+      font-size: 20px;
+      height: 100%;
+      padding-top: 20px;
+      text-align: center;
+      background-color: #0a0;
+      cursor: pointer;
+    }
+
+    .widget {
+      cursor: move;
+      float: left;
+      width: 70px;
+      height: 50px;
+      background-color: #2b669a;
+      color: #fff;
+      margin: 3px;
+      font-size: 12px;
+      text-align: center;
+      display: table;
+      vertical-align: middle;
+      padding-top: 5px;
+
+      i {
+        font-size: 20px;
+      }
+    }
+  }
+
+  img {
+    position: absolute;
+    right: 10px;
+    top: -65px;
+  }
 }
 
-#cms-toolbar img {
-  position: absolute;
-  right: 10px;
-  top: 5px;
-  display: none;
+#widget-dialog .widget {
+  cursor: move;
 }
+
 
 body {
   margin-bottom: 70px;
 }
 
-.box-template {
-  width: 60px;
-  height: 60px;
-  line-height: 60px;
-  text-align: center;
-  background-color: #aaa;
-  cursor: move;
-}
 
 .emptydiv {
   height: 20px;
@@ -180,10 +248,10 @@ body {
 }
 
 // SLIDER
-.side-panel-page, .side-panel-file {
+#slider-right {
   background-color: #E6E6E6;
   padding: 15px;
-  z-index: 200;
+  z-index: 2000;
   position: fixed;
   right: -400px;
   width: 400px;
@@ -197,22 +265,21 @@ body {
   }
 }
 
-#slider-page .handle, #slider-file .handle {
+#slider-right .handle {
   background-color: #2E2E2E;
-  left: -100px;
+  left: -40px;
   padding: 10px;
   position: absolute;
-  top: 100px;
-  width: 100px;
+  top: 330px;
+  width: 40px;
   cursor: pointer;
   color: #fff;
-  z-index: 200;
-  /* margin-top: 120px; */
+  z-index: 2000;
+  font-size: 20px;
+  height: 100px;
+  padding-top: 38px;
 }
 
-#slider-file .handle {
-  top: 140px;
-}
 
 .document-sidebar-tree {
   div {
@@ -242,33 +309,63 @@ body {
   }
 }
 
-#file-tree .fa {
-  /*color: blue !important;*/
+
+.widget-image-receiver {
+  display: none;
+
+  .landing {
+    width: 200px;
+    padding: 10px;
+    color: #888;
+    border: solid #666 1px;
+
+    &.ui-droppable-hover {
+      background-color: #dde;
+      color: #333;
+    }
+
+    &.ui-droppable-active {
+      border-color: red;
+    }
+  }
 }
 
+// EDIT MODE
+.edit-mode {
+  .region {
+    border: dashed #aaa 1px;
+    margin-bottom: 2px;
 
-#file-tree .folder { background:url('/css/images/file_sprite.png') right bottom no-repeat; }
-#file-tree .file { background:url('/css/images/file_sprite.png') 0 0 no-repeat; }
-#file-tree .file-pdf { background-position: -32px 0 }
-#file-tree .file-as { background-position: -36px 0 }
-#file-tree .file-c { background-position: -72px -0px }
-#file-tree .file-iso { background-position: -108px -0px }
-#file-tree .file-htm, #file-tree .file-html, #file-tree .file-xml, #file-tree .file-xsl { background-position: -126px -0px }
-#file-tree .file-cf { background-position: -162px -0px }
-#file-tree .file-cpp { background-position: -216px -0px }
-#file-tree .file-cs { background-position: -236px -0px }
-#file-tree .file-sql { background-position: -272px -0px }
-#file-tree .file-xls, #file-tree .file-xlsx { background-position: -362px -0px }
-#file-tree .file-h { background-position: -488px -0px }
-#file-tree .file-crt, #file-tree .file-pem, #file-tree .file-cer { background-position: -452px -18px }
-#file-tree .file-php { background-position: -108px -18px }
-#file-tree .file-jpg, #file-tree .file-jpeg, #file-tree .file-png, #file-tree .file-gif, #file-tree .file-bmp { background-position: -126px -18px }
-#file-tree .file-ppt, #file-tree .file-pptx { background-position: -144px -18px }
-#file-tree .file-rb { background-position: -180px -18px }
-#file-tree .file-text, #file-tree .file-txt, #file-tree .file-md, #file-tree .file-log, #file-tree .file-htaccess { background-position: -254px -18px }
-#file-tree .file-doc, #file-tree .file-docx { background-position: -362px -18px }
-#file-tree .file-zip, #file-tree .file-gz, #file-tree .file-tar, #file-tree .file-rar { background-position: -416px -18px }
-#file-tree .file-js { background-position: -434px -18px }
-#file-tree .file-css { background-position: -144px -0px }
-#file-tree .file-fla { background-position: -398px -0px }
+    .row {
+      min-height: 40px;
+    }
+  }
+
+  .widget {
+    min-height: 25px;
+    background-color:#d1f1a9;
+  }
+
+  .widget-toolbar {
+    display: block;
+  }
+
+  div.edit-mode-toggle {
+    background-color: #e00000 !important;
+  }
+
+  .widget-image-receiver {
+    display: block;
+  }
+}
+
+.edit-mode-region {
+  .region-toolbar {
+    display: block;
+  }
+
+  .edit-mode-region-toggle {
+    background-color: #e00000 !important;
+  }
+}
 

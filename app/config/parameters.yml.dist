@@ -20,3 +20,10 @@ parameters:
 
     node: /usr/local/bin/node
     node_paths: /usr/local/lib/node_modules
+
+    domains:
+            localhost:
+                default_template: main.html.twig
+                templates:
+                    main.html.twig: Hlavn?
+                    aktualita.html.twig: Aktualita

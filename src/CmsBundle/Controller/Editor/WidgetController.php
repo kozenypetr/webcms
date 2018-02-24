@@ -13,11 +13,15 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 use CmsBundle\Entity\Widget;
 use CmsBundle\Entity\Box;
+use CmsBundle\Entity\WidgetImage;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 
 /**
@@ -58,6 +62,85 @@ class WidgetController extends Controller
         return new JsonResponse(array('id' => $widget->getId(), 'widgetHtml' => $html));
     }
 
+
+    /**
+     * Pridani obrazku k widgetu
+     * @Route("/addImage/{id}", name="cms_widget_add_image", options={"expose"=true})
+     * @Method({"PUT"})
+     */
+    public function addImageAction(Request $request, Widget $widget)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $file = $request->get('file');
+
+        $file = str_replace('_anchor', '', $file);
+
+        $sourceDir = realpath($this->get('kernel')->getRootDir() . '/../web/data');
+
+        $basedir = realpath($this->get('kernel')->getRootDir() . '/../web/images');
+
+        $destDir = $basedir . DIRECTORY_SEPARATOR . 'widget' . DIRECTORY_SEPARATOR . $widget->getId();
+
+        $fs = new Filesystem();
+
+        if (!is_dir($destDir))
+        {
+            $fs->mkdir($destDir, 0777);
+        }
+
+        $source = $sourceDir .  DIRECTORY_SEPARATOR . $file;
+
+        $q = $em->createQuery('DELETE FROM CmsBundle:WidgetImage im WHERE im.widget = ?1')
+                ->setParameter(1, $widget->getId());
+
+        $q->execute();
+
+        if (is_dir($source))
+        {
+
+        }
+        elseif (file_exists($source))
+        {
+            $destFilename  = pathinfo($file, PATHINFO_BASENAME);
+            $destExtension = pathinfo($file, PATHINFO_EXTENSION);
+
+            try
+            {
+                $fs->copy($source, $destDir . DIRECTORY_SEPARATOR .  $destFilename, true);
+            }
+            catch (\Exception $e)
+            {
+                return new JsonResponse(array('status' => 'ERROR', 'message' => $e->getMessage(), 'id' => $widget->getId(), 'file' => $file));
+            }
+
+            $image = new WidgetImage();
+            $image->setFilename($destFilename);
+            $image->setExtension($destExtension);
+            $image->setWidget($widget);
+            $image->setSort(1);
+
+            $em->persist($image);
+            $em->flush();
+        }
+
+        return new JsonResponse(array('status' => 'SUCCESS', 'id' => $widget->getId(), 'file' => $file));
+    }
+
+
+    /**
+     * Nacteni obsahu widgetu
+     * @Route("/reload/{id}", name="cms_widget_reload", options={"expose"=true})
+     * @Method({"GET"})
+     */
+    public function reloadAction(Request $request, Widget $widget)
+    {
+        $service = $this->get($widget->getService());
+
+        $html = $service->setEntity($widget)->getHtml(true);
+
+        return new JsonResponse(array('id' => $widget->getId(), 'html' => $html, 'class' => $widget->getClass()));
+    }
 
     /**
      * Serazeni widgetu v regionu
@@ -134,8 +217,9 @@ class WidgetController extends Controller
             dump($form->getErrors(true, false));
         }
 
-        return $this->render('CmsBundle:Backend/Document:widget.html.twig', array(
+        return $this->render('CmsBundle:Editor/Form:widget.html.twig', array(
             'widget' => $widget,
+            'defaultTemplate' => $service->getTemplate(),
             'form' => $form->createView()
         ), new Response('', $statusCode));
     }

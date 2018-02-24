@@ -1,0 +1,16 @@
+<div id="" class="widget-{{ widget.id }} {{ widget.class }}"{% if is_granted('ROLE_ADMIN') %} data-widget-id="{{ widget.id }}"{% endif %}>
+    <div class="widget-content">
+        {# vlozeni pouze obsahu widgetu, pokud to neni ajax #}
+        {% include template with {'widget': widget } %}
+    </div>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        {% include 'CmsBundle:Editor/Toolbar:toolbar.widget.html.twig' with {'widget' : widget, 'template': template} %}
+    {% endif %}
+
+    {% if is_granted('ROLE_ADMIN') and widget.service == 'cms.widget.image' %}
+        <div class="widget-image-receiver" align="center">
+            <div class="landing" data-widget-id="{{ widget.id }}">Sem přetáhněte fotku z pravého panelu</div>
+        </div>
+    {% endif %}
+</div>

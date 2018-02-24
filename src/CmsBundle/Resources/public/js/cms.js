@@ -1,23 +1,4 @@
-var sliderPage = {
-    init: function()
-    {
-        $("#slider-page").slideReveal({
-            trigger: $("#slider-page .handle"),
-            push: false,
-            position: "right",
-            width: 400,
-            speed: 700,
-            shown: function(obj){
-                obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-right"></span> Stránky');
-                obj.addClass("left-shadow-overlay");
-            },
-            hidden: function(obj){
-                obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-left"></span> Stránky');
-                obj.removeClass("left-shadow-overlay");
-            }
-        });
-    }
-}
+
 
 
 var sliderFile = {
@@ -30,11 +11,11 @@ var sliderFile = {
             width: 400,
             speed: 700,
             shown: function(obj){
-                obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-right"></span> Soubory');
+                obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-right"></span>');
                 obj.addClass("left-shadow-overlay");
             },
             hidden: function(obj){
-                obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-left"></span> Soubory');
+                obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-left"></span>');
                 obj.removeClass("left-shadow-overlay");
             }
         });
@@ -42,46 +23,9 @@ var sliderFile = {
 }
 
 
-var treePage = {
-    init: function()
-    {
-        $('#page-tree')
-            .on('select_node.jstree', this.__selectNode)
-            .jstree();
 
-        $('#page-tree').jstree('open_all');
-    },
 
-    __selectNode: function(e, data)
-    {
-        console.log(e);
-        console.log(data);
-        console.log(data.node.a_attr.href);
-        $(location).attr('href', '/' + data.node.a_attr.href);
-    }
-}
 
-var treeFile = {
-    init: function()
-    {
-        $('#file-tree')
-            .jstree({
-                'core': {
-                    'data': {
-                        'url': Routing.generate('cms_file_node'),
-                        'data': function (node) {
-                            return {'id': node.id};
-                        }
-                    },
-                    'themes' : {
-                        'responsive' : false,
-                        'variant' : 'small',
-                        'stripes' : true
-                    }
-                }
-            });
-    }
-}
 
 
 var cmsDocument = {
@@ -89,6 +33,23 @@ var cmsDocument = {
     {
         $('.document-new').click(this.__loadCreateForm);
         $('.document-edit').click(this.__loadEditForm);
+        $('.document-delete').click(this.__delete);
+    },
+
+
+    __delete: function(e)
+    {
+        e.preventDefault();
+        if (confirm('Opravdu chcete smazat dokument?'))
+        {
+            cms.ajax($(this).attr('href'), 'DELETE', cmsDocument.__deleteCallback);
+        }
+    },
+
+    __deleteCallback: function(data)
+    {
+        // console.log(data);
+        $(location).attr('href', '/');
     },
 
     /**
@@ -149,7 +110,7 @@ var cmsDocument = {
                     // $('#' + data.region).attr('class', data.class);
                     $('#cms-modal').modal('hide');
 
-                    $(location).attr('href', data.url);
+                    $(location).attr('href', '/' + data.url);
                     /*
                     var id = cmsWidget.widgetInEdit.data('widget-id');
                     // $('.box-' + id).attr('class', 'box container box-' + id + ' ' +  data.class);
@@ -183,7 +144,7 @@ var cmsDocument = {
                     $('#cms-modal').modal('hide');
                     //if (adminParam['url'] != data.url)
                     //{
-                        $(location).attr('href', data.url);
+                        $(location).attr('href', '/' +  data.url);
                     //}
                 },
                 400: function(data) {
@@ -208,11 +169,25 @@ var cmsWidget = {
         // this.__addContextMenu(selector);
 
         $('.region-edit').click(this.__loadRegionEditForm);
+
+        dnd.file();
+    },
+
+    reloadWidget: function(id)
+    {
+        var url = Routing.generate('cms_widget_reload', { 'id': id });
+        cms.ajax(url, 'GET', cmsWidget.__reloadCallback);
+    },
+
+    __reloadCallback: function(data)
+    {
+        var widgetId = data.id;
+        $('.widget-' + widgetId + ' .widget-content').html(data.html);
     },
 
     openEditDialog: function(id)
     {
-        $('#widget-' + id + ' .widget-edit').click();
+        $('.widget-' + id + ' .widget-edit').click();
     },
 
     __addEvents: function(selector)
@@ -232,6 +207,29 @@ var cmsWidget = {
 
     },
 
+
+    __initDropDocument: function()
+    {
+        alert('init');
+        $( ".droplink" ).droppable({
+            accept: ".jstree-anchor",
+            drop: function( event, ui ) {
+                var document = ui.draggable.attr('id');
+                console.log( ui.draggable);
+                console.log(ui);
+                console.log(event);
+                // pridani obrazku k widgetu - posleme ID obrazku
+                // var url = Routing.generate('cms_widget_add_image', { 'id': event.target.dataset.widgetId});
+                // cms.ajax(url, 'PUT', cmsWidget.__addImage, { 'file': file });
+            }
+        });
+    },
+
+    __addImage: function(data)
+    {
+        cmsWidget.reloadWidget(data.id);
+    },
+
     /**
      * Metoda pro smazani widgetu
      * @param e Objekt udalosti
@@ -248,7 +246,7 @@ var cmsWidget = {
         var widgetId = $(this).data('widget-id');
 
         /* odeslani pozadavku na serveru */
-        cms.ajax($(this).attr('href'), 'DELETE', $('#widget-' + widgetId).remove());
+        cms.ajax($(this).attr('href'), 'DELETE', $('.widget-' + widgetId).remove());
     },
 
     /**
@@ -272,7 +270,9 @@ var cmsWidget = {
      */
     __loadEditFormSuccess: function(data)
     {
+
         cmsModal.show(data, 'Editace obsahu', cmsWidget.__submitWidgetEditForm);
+        cmsWidget.__initDropDocument();
     },
 
     /**
@@ -345,9 +345,9 @@ var cmsWidget = {
                     var id = cmsWidget.widgetInEdit.data('widget-id');
                     // $('.box-' + id).attr('class', 'box container box-' + id + ' ' +  data.class);
                     // aktualizace tridy widgetu
-                    $('#widget-' + id).attr('class', 'widget widget-' + id + ' ' +  data.class);
+                    $('.widget-' + id).attr('class', 'widget widget-' + id + ' ' +  data.class);
                     // ulozeni obsahu
-                    $('#widget-' + id + ' .widget-content').html(data.html);
+                    $('.widget-' + id + ' .widget-content').html(data.html);
                     // nacteni obsahu widgetu
                     // $.fancybox.close('all');
                     $('#cms-modal').modal('hide');
@@ -375,7 +375,10 @@ var cmsWidget = {
                 200: function(data) {
                     // alert(data);
                     $('#' + data.region).attr('class', data.class);
+
                     $('#cms-modal').modal('hide');
+
+                    $(location).attr('href', '/' + adminParam['url']);
                     /*
                     var id = cmsWidget.widgetInEdit.data('widget-id');
                     // $('.box-' + id).attr('class', 'box container box-' + id + ' ' +  data.class);
@@ -434,7 +437,7 @@ var cmsModal = {
             menubar: false,
             language: 'cs',
             force_br_newlines : false,
-            force_p_newlines : false,
+            force_p_newlines : true,
             forced_root_block : '',
             convert_urls: false,
             remove_script_host: false,
@@ -472,15 +475,16 @@ var cms = {
         // cmsContextMenu.init();
         tinyMCE.baseURL = '/assets/tinymce';
 
-        // postranni box se strankami
-        sliderPage.init();
-
-        treePage.init();
+        treeDocument.init();
 
         treeFile.init();
 
-        // postranni box se soubory
-        sliderFile.init();
+       // postranni box se soubory
+        slider.init();
+
+        $("#cms-panel img").hide();
+        // $( "#widget-dialog" ).dialog();
+
     },
 
     __addEvents: function () {
@@ -543,7 +547,13 @@ $( document ).ready(function() {
 });
 */
 
+$(window).on("load", function(){
+    $("#cms-panel img").hide();
+})
+
 $( document ).ready( cms.init );
+
+
 
 $( function() {
 
@@ -570,7 +580,7 @@ $( function() {
                 return true;
             }
 
-            var $widget = $('#' + ui.item.attr('id'));
+            var $widget = $('.widget-' + ui.item.data('widget-id'));
 
             var params = {};
             params['document_id'] = adminParam['document_id'];
@@ -640,7 +650,7 @@ $( function() {
                 // new_item.replaceWith(data);
                 // alert(droppable.sortable( "serialize", { key: "sort" } ));
                 $helper.replaceWith(data.widgetHtml);
-                cmsWidget.initWidget('#widget-' + data.id);
+                cmsWidget.initWidget('.widget-' + data.id);
               }
             });
 
@@ -648,20 +658,24 @@ $( function() {
     });
 
 
-  $( ".box-template" ).draggable({
+  $( "#cms-panel .widget" ).draggable({
     connectToSortable: ".region .row",
     revert: "invalid",
     cursor: 'move',
+    appendTo: 'body',
     helper: function()
     {
       return $('<span id="box-drag" data-widget="' + $(this).data('widget')  + '" class="draggable-helper btn btn-primary btn-xs">' + $(this).html() + '</span>');
     },
+    start: function (event, ui) {
+        $('.widgets').removeClass('open ');
+    },
   });
 
     $(document).bind("ajaxSend", function(){
-        $("#cms-toolbar img").show();
+        $("#cms-panel img").show();
     }).bind("ajaxComplete", function(){
-        $("#cms-toolbar img").hide();
+        $("#cms-panel img").hide();
     });
 
 });

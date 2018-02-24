@@ -1,0 +1,6 @@
+{% for key, widget in widgets %}
+<span class="widget" data-widget="{{ key }}">
+    {{ widget.title }}<br />
+    <i class="fa {{ widget.icon }}" aria-hidden="true"></i>
+</span>
+{%  endfor %}

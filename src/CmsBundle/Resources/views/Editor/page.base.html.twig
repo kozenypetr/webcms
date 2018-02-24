@@ -22,64 +22,37 @@
 {% endblock %}
 
 {% block body %}
-    {% include template with {'document': document } %}
+    {% include document.template with {'document': document } %}
 {% endblock %}
 
 
 {% block cms %}
     {% if is_granted('ROLE_ADMIN') %}
-    <!-- Large modal -->
-    <div class="modal fade" id="cms-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="cms-modal-label">New message</h4>
-                </div>
-                <div class="modal-body">
+        <!-- Large modal -->
+        <div class="modal fade" id="cms-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="cms-modal-label">New message</h4>
+                    </div>
+                    <div class="modal-body">
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít </button>
-                    <button id="modal-save-button" type="button" class="btn btn-primary">Uložit</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít </button>
+                        <button id="modal-save-button" type="button" class="btn btn-primary">Uložit</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Toolbar -->
-    <div id="cms-toolbar">
-        <span class="edit-mode-toggle">Editační režim</span>
-        <span class="edit-mode-region-toggle">Regiony</span>
-        <span class="box-template draggable drag-drop" data-widget="cms.widget.editor">HTML editor</span>
-        <span class="box-template draggable drag-drop" data-widget="cms.widget.html_code">HTML kód</span>
-        <span class="box-template draggable drag-drop" data-widget="cms.widget.news">Novinka</span>
+        <!-- Panel -->
+        {% include 'CmsBundle::Editor/Panel/panel.html.twig' %}
 
-        <a href="{{ path('cms_document_add') }}" class="modal-form document-new">Přidat stránku</a>
+        <!-- Sidebar -->
+        {% include 'CmsBundle::Editor/Sidebar/sidebar.html.twig' %}
 
-        <a href="{{ path('cms_document_edit', {'id': document.id}) }}" class="modal-form document-edit">Upravit stránku</a>
-
-        <img width="60" src="/images/loading.gif" />
-
-    </div>
-
-    <!-- Sidebar -->
-    <div id="slider-page" class="side-panel-page">
-        <div id="trigger-page" class="handle">
-            <span class="glyphicon glyphicon-chevron-left"></span> Stránky
-        </div>
-        <div class="slider-content">
-            {{ render(controller('CmsBundle:Editor/Document:list')) }}
-        </div>
-    </div>
-    <div id="slider-file" class="side-panel-file">
-        <div id="trigger-file" class="handle">
-            <span class="glyphicon glyphicon-chevron-left"></span> Soubory
-        </div>
-        <div class="slider-content">
-            {{ render(controller('CmsBundle:Editor/File:list')) }}
-        </div>
-    </div>
     {% endif %}
 {% endblock %}
 
@@ -101,7 +74,8 @@
     'assets/vendors/interactjs/interact.js'
     'assets/jstree/jstree.min.js'
     'bundles/fosjsrouting/js/router.js'
-    '@CmsBundle/Resources/public/js/cms.js'
+
+    '@CmsBundle/Resources/public/js/*'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

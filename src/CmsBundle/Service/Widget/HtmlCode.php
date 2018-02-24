@@ -16,6 +16,8 @@ class HtmlCode extends Base
 
     protected $template = 'code.html.twig';
 
+    protected $icon = 'fa-file-code-o';
+
     protected $default = array(
         'html' => "",
     );

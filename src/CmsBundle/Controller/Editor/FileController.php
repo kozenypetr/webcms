@@ -35,7 +35,6 @@ use Symfony\Component\Finder\Finder;
  */
 class FileController extends Controller
 {
-
     /**
      * Nacitani stromu souboru
      * @Route("/node", name="cms_file_node", options={"expose"=true})
@@ -54,7 +53,7 @@ class FileController extends Controller
 
             $node[0] = ['text' => 'Soubory',
                 'id' => '/',
-                'icon' => 'folder',
+                'icon' => 'fa fa-folder',
                 'state' => ['opened' => true]
             ];
 
@@ -78,7 +77,7 @@ class FileController extends Controller
             $children[$i]['text'] = $item->getFilename();
             $children[$i]['id']   = $relativeDir . '/' . $item->getRelativePathname();
             $children[$i]['children'] = false;
-            $children[$i]['icon'] = ($item->getType() == 'dir')?'folder':$this->__getIconForFile($item->getFilename());
+            $children[$i]['icon'] = ($item->getType() == 'dir')?'fa fa-folder':$this->__getIconForFile($item->getFilename());
             // zjistime, jestli ma slozka nejak dalsi soubory
             if ($item->getType() == 'dir')
             {
@@ -105,25 +104,28 @@ class FileController extends Controller
         return new JsonResponse($node);
     }
 
+    /**
+     * @param $filename
+     *
+     * @return string
+     */
     private function __getIconForFile($filename)
     {
-        $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        return 'file' . (($extension)?" file-{$extension}":"");
+        $files = array();
+        $files['jpg']  = 'fa-file-image-o';
+        $files['jpeg'] = 'fa-file-image-o';
+        $files['png']  = 'fa-file-image-o';
+        $files['gif']  = 'fa-file-image-o';
+        $files['bmp']  = 'fa-file-image-o';
+
+        $files['pdf']   = 'fa-file-pdf-o';
+        $files['xls']   = 'fa-file-excel-o';
+        $files['xlsx']  = 'fa-file-excel-o';
+        $files['doc']   = 'fa-file-word-o';
+        $files['docx']  = 'fa-file-word-o';
+
+        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        return 'fa ' . ((isset($files[$extension]))?$files[$extension]:"fa-file-o");
     }
 
-    /**
-     * Seznam souboru v systemu ve stromu do postranniho panelu
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function listAction()
-    {
-        $dir = realpath($this->get('kernel')->getRootDir() . '/../web/data');
-
-        $finder = new Finder();
-        $finder->directories()->depth('== 0')->notName('#.*thumbs.*#')->in($dir);
-
-        return $this->render('CmsBundle:Backend/File:list.html.twig', array(
-            'files' => $finder
-        ));
-    }
 }

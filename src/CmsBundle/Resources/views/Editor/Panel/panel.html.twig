@@ -1,0 +1,74 @@
+<div id="cms-panel">
+
+    <div class="show-layout">
+        <div class="edit-mode-toggle">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i><br />
+            Editační režim
+        </div>
+        <div class="edit-mode-region-toggle">
+            <i class="fa fa-server" aria-hidden="true"></i><br />
+            Zobrazit regiony
+        </div>
+        <div class="edit-mode">
+            <i class="fa fa-star-half-o" aria-hidden="true"></i><br />
+            Podbarvení obsahu
+        </div>
+    </div>
+
+    <div class="dropdown widgets">
+        <div class="button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i> Přidat obsah
+        </div>
+        <div class="dropdown-menu" aria-labelledby="dLabel">
+            {{ render(controller('CmsBundle:Editor/Editor:widgetList')) }}
+        </div>
+    </div>
+
+    {#
+    <div class="document-info">
+        <table width="100%">
+            <tr>
+                <td width="40%">URL stránky:</td>
+                <td>/{{ document.url }}</td>
+            </tr>
+            <tr>
+                <td width="40%">Šablona stránky:</td>
+                <td>{{ document.getTemplateShortName() }}</td>
+            </tr>
+            <tr>
+                <td width="40%">ID stránky:</td>
+                <td>{{ document.id }}</td>
+            </tr>
+        </table>
+    </div>
+    #}
+
+    {#
+    <div id="widget-dialog" title="Widgety">
+        <span class="widget btn btn-primary btn-xs" data-widget="cms.widget.editor">HTML editor</span>
+        <span class="widget btn btn-primary btn-xs" data-widget="cms.widget.html_code">HTML kód</span>
+        <span class="widget btn btn-primary btn-xs" data-widget="cms.widget.news">Novinka</span>
+    </div>
+    #}
+
+    <div class="document-links">
+        {% if document.lft > 1 %}
+        <a href="{{ path('cms_document_delete', {'id': document.id }) }}" class="modal-form document-delete">
+            <i class="fa fa-times" aria-hidden="true"></i><br />
+            Smazat<br />stránku
+        </a>
+        {% endif %}
+
+        <a href="{{ path('cms_document_add', { 'parent_id': document.id }) }}" class="modal-form document-new">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i><br />
+            Přidat<br />stránku
+        </a>
+
+        <a href="{{ path('cms_document_edit', {'id': document.id }) }}" class="modal-form document-edit">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i><br />
+            Upravit<br />stránku
+        </a>
+    </div>
+
+    <img width="60" src="/images/loading.gif" />
+</div>

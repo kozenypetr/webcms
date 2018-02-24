@@ -23,11 +23,8 @@ class DocumentController extends Controller
             throw $this->createNotFoundException('Dokument neexistuje');
         }
 
-        $template = 'CmsBundle:Templates/default/Document:main.html.twig';
-
-        return $this->render('CmsBundle:Frontend/Document:show.html.twig', array(
+        return $this->render('CmsBundle:Editor:page.base.html.twig', array(
             'document' => $document,
-            'template' => $template
         ));
     }
 }

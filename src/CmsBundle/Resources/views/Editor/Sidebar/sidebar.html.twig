@@ -1,0 +1,39 @@
+<div id="slider-right">
+    <div id="trigger-file" class="handle">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </div>
+    <div class="slider-content">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseDocument" aria-expanded="true" aria-controls="collapseDocument">
+                            Stránky
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseDocument" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        {{ render(controller('CmsBundle:Editor/Document:list')) }}
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFile" aria-expanded="false" aria-controls="collapseFile">
+                            Soubory
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseFile" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        <div id="file-tree">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -17,8 +17,8 @@
         <div class="col-md-12">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Základní informace</a></li>
+                <li role="presentation"><a href="#view" aria-controls="messages" role="tab" data-toggle="tab">Zobrazení</a></li>
                 <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">SEO</a></li>
-                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Rezerva</a></li>
             </ul>
 
             <div class="tab-content">
@@ -27,8 +27,9 @@
                         {{ form_row(form.name) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_row(form.category) }}
+                        {{ form_row(form.status) }}
                     </div>
+
                     <div class="col-md-6">
                         {{ form_row(form.url) }}
                     </div>
@@ -36,9 +37,11 @@
                         {{ form_row(form.parent) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_row(form.status) }}
+                        {{ form_row(form.category) }}
                     </div>
-
+                    <div class="col-md-6">
+                        {{ form_row(form.template) }}
+                    </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="seo">
                     <div class="col-md-6">
@@ -51,7 +54,9 @@
                         {{ form_row(form.metadescription) }}
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="messages">...</div>
+                <div role="tabpanel" class="tab-pane" id="view">
+
+                </div>
             </div>
 
 
