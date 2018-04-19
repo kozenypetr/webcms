@@ -26,6 +26,8 @@
 
     {{ render(controller('CmsBundle:Editor/Editor:widgetList')) }}
 
+    {{ render(controller('CmsBundle:Editor/Editor:pageInfo',{ 'document': document } )) }}
+
     {#
     <div class="document-info">
         <table width="100%">

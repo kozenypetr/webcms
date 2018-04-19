@@ -56,4 +56,12 @@ class EditorController extends Controller
             'widgets' => $this->get('cms.manager.widget')->getWidgets()
         ));
     }
+
+    public function pageInfoAction($document)
+    {
+        return $this->render('CmsBundle:Editor/Panel:pageinfo.html.twig', array(
+            'document' => $document,
+            'host' => $this->get('cms.manager.domain')->getHost()
+        ));
+    }
 }

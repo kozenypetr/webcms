@@ -72,6 +72,7 @@ class Link extends Base
 
             // najdeme dokument
             $document = $this->em->getRepository('CmsBundle:Document')->find($documentId);
+            $parameters['document'] = $document;
 
             $systemWidget = $this->em->getRepository('CmsBundle:Document')->findSystemWidget($document);
 
@@ -99,12 +100,26 @@ class Link extends Base
                 }
             }
 
-            if (!$parameters['date']) $parameters['date'] = $document->getCreated('d. m. Y');
-            if (!$parameters['title']) $parameters['title'] = $document->getName();
-            if (!$parameters['annotation']) $parameters['annotation'] = $document->getAnnotation();
-            if (!$parameters['image']) $parameters['image'] = $document->getImage();
+            $parameters['link'] = '/';
 
-            $parameters['link'] = '/' . $document->getUrl();
+            if ($document) {
+                if (!$parameters['date']) {
+                    $parameters['date'] = $document->getCreated('d. m. Y');
+                }
+                if (!$parameters['title']) {
+                    $parameters['title'] = $document->getName();
+                }
+                if (!$parameters['annotation']) {
+                    $parameters['annotation'] = $document->getAnnotation();
+                }
+                if (!$parameters['image']) {
+                    $parameters['image'] = $document->getImage();
+                }
+
+                $parameters['link'] = '/' . $document->getUrl();
+            }
+
+
         }
 
         return $parameters;

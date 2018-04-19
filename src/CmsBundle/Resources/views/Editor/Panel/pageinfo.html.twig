@@ -1,0 +1,13 @@
+<div class="panel-pageinfo">
+    <table>
+        <tr>
+            <th>URL:</th><td>/{{ document.url }}</td>
+        </tr>
+        <tr>
+            <th>Šablona:</th><td>{{ document.template | replace({'CmsBundle:Templates/': ''}) }}</td>
+        </tr>
+        <tr>
+            <th>Doména:</th><td>{{ host }}</td>
+        </tr>
+    </table>
+</div>
