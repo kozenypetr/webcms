@@ -159,7 +159,15 @@ class DocumentController extends Controller
         }
 
         $copyDocument->setParent($parent);
-        $copyDocument->setUrl($copyDocument->getUrl() . '2');
+
+
+        $suffix = 2;
+        while ($em->getRepository('CmsBundle:Document')->findOneByUrl($copyDocument->getUrl() . $suffix))
+        {
+            $suffix++;
+        }
+
+        $copyDocument->setUrl($copyDocument->getUrl() . $suffix);
 
         $em->persist($copyDocument);
 
