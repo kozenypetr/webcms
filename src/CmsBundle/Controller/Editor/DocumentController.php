@@ -160,7 +160,6 @@ class DocumentController extends Controller
 
         $copyDocument->setParent($parent);
 
-
         $suffix = 2;
         while ($em->getRepository('CmsBundle:Document')->findOneByUrl($copyDocument->getUrl() . $suffix))
         {
@@ -177,6 +176,17 @@ class DocumentController extends Controller
             $copyWidget->setDocument($copyDocument);
 
             $em->persist($copyWidget);
+        }
+
+        // kopie informaci o regionu
+        $regions = $em->getRepository('CmsBundle:Region')->findByDocument($document);
+
+        foreach ($regions as $region)
+        {
+            $copyRegion = clone $region;
+            $copyRegion->setDocument($copyDocument);
+
+            $em->persist($copyRegion);
         }
 
         $em->flush();
