@@ -17,3 +17,5 @@
 /.idea/
 /nbproject/
 /zaloha/
+/web/media/cache/*
+!web/media/cache/.gitkeep

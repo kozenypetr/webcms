@@ -2,6 +2,8 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
+umask(0000);
+
 /** @var \Composer\Autoload\ClassLoader $loader */
 $loader = require __DIR__.'/../vendor/autoload.php';
 if (PHP_VERSION_ID < 70000) {
