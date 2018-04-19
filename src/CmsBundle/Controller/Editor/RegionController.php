@@ -81,7 +81,7 @@ class RegionController extends Controller
 
         if ($form->isSubmitted() && !$form->isValid()){
             $statusCode = 400;
-            dump($form->getErrors(true, false));
+            // dump($form->getErrors(true, false));
         }
 
         return $this->render('CmsBundle:Editor/Form:region.html.twig', array(

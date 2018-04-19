@@ -342,8 +342,6 @@ class DocumentController extends Controller
         switch ($operation)
         {
             case 'moveup':
-                dump($document);
-                dump($parent);
                 $repo->persistAsFirstChildOf($document, $parent);
             break;
             case 'movenext':

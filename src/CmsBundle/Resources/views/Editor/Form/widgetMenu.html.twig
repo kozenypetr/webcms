@@ -1,7 +1,6 @@
 {% macro render_editor_menu(tree) %}
     {% import _self as self %}
     <ul>
-        {% dump(tree) %}
         {% for item in tree %}
             <li cmslink="{{ item.link }}" cmsclass="{{ item.class }}">{{ item.title }}
                 {% if item.children %}
