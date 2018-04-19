@@ -1,0 +1,11 @@
+{#
+  * parameters.title
+  * parameters.annotation
+  * parameters.text | raw
+#}
+
+<div class="reference">
+    <h1>{{ parameters.title }}</h1>
+    <p class="annotation">{{ parameters.annotation }}</p>
+    {{ parameters.text | raw }}
+</div>

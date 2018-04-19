@@ -1,0 +1,29 @@
+{#
+  * parameters.title
+  * parameters.annotation
+  * parameters.text | raw
+#}
+<div class="team-member">
+    <div class="team-thumbnail">
+        {% if parameters.image %}
+        <img class="responsive-image" src="{{ asset(parameters.image) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.name }}" />
+        {% endif %}
+        <div class="overlay">
+            <p class="text">{{ parameters.annotation }}</p>
+            <div class="info name">
+                <h4>{{ parameters.name }}</h4>
+                <p>{{ parameters.jobtitle }}</p>
+            </div>
+            <div class="social-media">
+                <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+                <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="info">
+        <h4>{{ parameters.name }}</h4>
+        <p>{{ parameters.jobtitle }}</p>
+    </div>
+</div>

@@ -432,6 +432,12 @@ class Document
         return $this->widgets;
     }
 
+
+    public function getFirstWidget()
+    {
+        return $this->widgets->first();
+    }
+
     /**
      * Add region
      *
@@ -732,5 +738,25 @@ class Document
     public function getImage()
     {
         return $this->image;
+    }
+
+
+    public function isHomepage()
+    {
+        return empty($this->url);
+    }
+
+    public function getPath()
+    {
+        $path = [$this];
+
+        $parent = $this;
+
+        while (!$parent->isHomepage())
+        {
+            $path[] = $parent = $parent->getParent();
+        }
+
+        return array_reverse($path);
     }
 }

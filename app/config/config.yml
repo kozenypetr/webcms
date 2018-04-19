@@ -42,6 +42,8 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
       - bootstrap_3_layout.html.twig
+    globals:
+        widgets: '@cms.variables.widgets'
 
 # Doctrine Configuration
 doctrine:
@@ -212,8 +214,15 @@ liip_imagine :
             filters :
                 # create a thumbnail: set size to 120x90 and use the "outbound" mode
                 # to crop the image when the size ratio of the input differs
-                thumbnail  : { size : [800, 800], mode : inset }
+                thumbnail  : { size : [500, 500], mode : inset }
 
                 # create a 2px black border: center the thumbnail on a black background
                 # 4px larger to create a 2px border around the final image
                 # background : { size : [124, 94], position : center, color : '#000000' }
+
+        cms_image_large:
+            # adjust the image quality to 75%
+            quality : 85
+            # list of transformations to apply (the "filters")
+            filters :
+                 thumbnail  : { size : [1200, 1200], mode : inset }

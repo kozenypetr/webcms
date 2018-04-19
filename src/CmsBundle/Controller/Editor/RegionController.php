@@ -62,6 +62,7 @@ class RegionController extends Controller
                      ->add('htmlId', TextType::class, array('label' => 'ID'))
                      ->add('class', TextType::class, array('label' => 'CSS třída'))
                      ->add('tag', TextType::class, array('label' => 'Hlavní tag regionu (div, section, header, footer)'))
+                     ->add('attributes', TextType::class, array('label' => 'Atributy'))
                      ->add('sid', TextType::class, array('label' => 'Šablona'))
                      ->getForm();
 

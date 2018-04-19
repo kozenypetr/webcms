@@ -1,7 +1,7 @@
-<{{ tag }} id="{{ id }}" class="region {{ id }} {{ class }}"{% if is_granted('ROLE_ADMIN') %} data-region="{{ name }}"{% endif %}>
+<{{ tag }} id="{{ id }}" class="region {{ id }} {{ class }}" {{ atttributes | raw }} {% if is_granted('ROLE_ADMIN') %} data-region="{{ name }}"{% endif %}>
     {% include template with { 'widegts': widgets } %}
 
     {% if is_granted('ROLE_ADMIN') %}
-        {% include 'CmsBundle:Editor/Toolbar:toolbar.region.html.twig' with {'name' : name, 'documentId' : document.id} %}
+        {% include 'CmsBundle:Editor/Toolbar:toolbar.region.html.twig' with {'name' : name, 'documentId' : document.id, 'regionId': id} %}
     {% endif %}
 </{{ tag }}>

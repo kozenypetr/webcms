@@ -7,6 +7,22 @@
   padding: 3px;
   background-color: #fff;
 
+  .widget-plus {
+    display: inline-block;
+  }
+
+  .widget-edit {
+    display: inline-block;
+  }
+
+  .widget-paste, .widget-paste-region {
+    display: none;
+
+    &.active {
+      display: inline-block;
+    }
+  }
+
   span {
     display: inline-block;
     vertical-align: top;
@@ -17,9 +33,15 @@
     font-size: 13px;
     border-radius: 3px;
 
+
     i {
       font-size: 15px;
     }
+  }
+
+  span.button {
+    width: 20px;
+    text-align: center;
   }
 
   i {
@@ -36,6 +58,25 @@
   }
 }
 
+#widgetlist {
+  display: none;
+}
+
+.widgetlist-add {
+  .widget-new-item {
+    cursor: pointer;
+    float: left;
+    width: 98px;
+    height: 65px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    color: #fff;
+    padding: 5px;
+    background-color: #2b669a;
+    text-align: center;
+  }
+}
+
 .sortable-helper:extend(.widget-toolbar span) {
   height: 23px !important;
 }
@@ -43,11 +84,11 @@
 
 .region-toolbar {
   left: 0;
-  bottom: 0;
+  top: 0;
 }
 
 .widget-toolbar {
-  right: 0;
+  right: 20px;
   top: 0;
 }
 
@@ -123,7 +164,7 @@
   .document-links {
     float: right;
     height: 100%;
-    width: 300px;
+    width: 400px;
 
     a {
       display: block;
@@ -138,6 +179,10 @@
 
     a.document-new {
       background-color: #0a0;
+    }
+
+    a.document-copy {
+      background-color: #e6b900;
     }
 
     a.document-edit {
@@ -224,9 +269,26 @@ body {
 
 
 .emptydiv {
-  height: 20px;
+  height: 30px;
   border: dotted #555 2px;
-  background: #eee;
+  background: #888;
+  display: block;
+
+  &:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    height: 0;
+  }
+
+  &:before {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    height: 0;
+  }
 }
 
 .newbox {
@@ -251,7 +313,7 @@ body {
 #slider-right {
   background-color: #E6E6E6;
   padding: 15px;
-  z-index: 2000;
+  z-index: 1100;
   position: fixed;
   right: -400px;
   width: 400px;
@@ -262,6 +324,16 @@ body {
     height: 100%;
     overflow-y: scroll;
     overflow-x: scroll;
+  }
+
+  #image-preview {
+    display: none;
+    position: absolute;
+    left: -400px;
+    top: 0px;
+    width: 400px;
+    height: auto;
+    z-index: 3000;
   }
 }
 
@@ -274,7 +346,7 @@ body {
   width: 40px;
   cursor: pointer;
   color: #fff;
-  z-index: 2000;
+  z-index: 1100;
   font-size: 20px;
   height: 100px;
   padding-top: 38px;
@@ -330,20 +402,31 @@ body {
   }
 }
 
+.droplink, .dropimage {
+  &.ui-droppable-hover {
+    background-color: #dde !important;
+    color: #333 !important;
+  }
+
+  &.ui-droppable-active {
+    border-color: red !important;
+    background-color: #ffd6a7 !important;
+  }
+}
+
 // EDIT MODE
 .edit-mode {
   .region {
-    border: dashed #aaa 1px;
+    border: dashed #555 2px;
     margin-bottom: 2px;
 
-    .row {
+    .widgetsholder {
       min-height: 40px;
     }
   }
 
-  .widget {
+  .widget, .widget-content {
     min-height: 25px;
-    background-color:#d1f1a9;
   }
 
   .widget-toolbar {
@@ -368,4 +451,13 @@ body {
     background-color: #e00000 !important;
   }
 }
+
+#page-tree
+{
+  z-index: 3000;
+  .fa-link {
+    cursor: move !important;
+  }
+}
+
 

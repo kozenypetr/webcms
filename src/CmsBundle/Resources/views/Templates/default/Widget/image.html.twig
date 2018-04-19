@@ -1,9 +1,18 @@
  {% if  images[0] is defined %}
+
    {% if parameters.link %}
    <a href="{{ parameters.link }}">
    {% endif %}
       <img class="responsive-image{{ (parameters.classImage ? ' ' ~  parameters.classImage ~ ''  : '') | raw  }}" src="{{ asset(images[0].src) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.alt }}" />
    {% if parameters.link %}
+      </a>
+   {% endif %}
+
+   {% if parameters.gallery %}
+      <a class="{{ parameters.gallery }}" href="{{ asset(images[0].src) | imagine_filter('cms_image_large') }}">
+   {% endif %}
+     <img class="responsive-image{{ (parameters.classImage ? ' ' ~  parameters.classImage ~ ''  : '') | raw  }}" src="{{ asset(images[0].src) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.alt }}" />
+   {% if parameters.gallery %}
       </a>
    {% endif %}
 

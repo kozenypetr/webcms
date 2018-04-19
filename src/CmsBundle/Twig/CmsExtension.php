@@ -116,6 +116,7 @@ class CmsExtension extends \Twig_Extension
                                    'id' => ($region && $region->getHtmlId())?$region->getHtmlId():'region-' . str_replace('.', '-', $name),
                                    'class' => $region?$region->getFullClass():'col-md-12',
                                    'tag'   => $region?$region->getTag():'div',
+                                   'atttributes' => $region?$region->getAttributes():'',
                                    'document' => $document,
                                    'template' => $template,
                                    'region'   => $region,

@@ -1,3 +1,17 @@
+.widget.indentation, .widget.cms-widget-image {
+  margin-top: 15px;
+}
+
+.widget.noindentation {
+  margin-top: 0px;
+}
+
+.widget:after {
+  content: "";
+  clear: both;
+}
+
+
 .responsive-image {
   width: 100%;
   height: auto;
@@ -5,4 +19,11 @@
 
 .center {
   text-align: center;
+}
+
+.noimage {
+  height: 200px;
+  line-height: 200px;
+  text-align: center;
+  border: solid red 1px;
 }

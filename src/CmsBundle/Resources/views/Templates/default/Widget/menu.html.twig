@@ -1,0 +1,141 @@
+{% macro menu_links(tree, class) %}
+    {% import _self as self %}
+    <ul{% if (class) %} class="{{ class }}"{% endif %}>
+        {% for item in tree %}
+            <li>
+                {% if (not item.link is null) %}
+                <a href="{{ path('cms_page', { url:  item.link }) }}">
+                {% endif %}
+
+                {{ item.title }}
+
+                {% if (not item.link is null) %}</a>{% endif %}
+
+                {% if item.children %}
+                    {{ self.menu_links(item.children, 'dropdown') }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% import _self as macro %}
+
+<div class="navbar-header"><!-- Stat Toggle Nav Link For Mobiles -->
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <!-- End Toggle Nav Link For Mobiles -->
+    <div class="logo-wrapper"><a class="navbar-brand" href="index.html"> <img src="/assets/img/logo.png" alt="ConBiz" /> </a></div>
+</div>
+<!--  Brand and toggle menu for mobile ends  -->
+<div class="navbar-collapse collapse"><!-- Stat Search --> <!-- Search form ends --> <!-- Start Navigation List -->
+    {{ macro.menu_links(parameters.tree, 'nav navbar-nav navbar-right') }}
+</div>
+
+{{ macro.menu_links(parameters.tree, 'wpb-mobile-menu') }}
+
+
+{#
+<div class="navbar-header"><!-- Stat Toggle Nav Link For Mobiles --> <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <!-- End Toggle Nav Link For Mobiles -->
+	<div class="logo-wrapper"><a class="navbar-brand" href="index.html"> <img src="/assets/img/logo.png" alt="ConBiz" /> </a></div>
+</div>
+<!--  Brand and toggle menu for mobile ends  -->
+<div class="navbar-collapse collapse"><!-- Stat Search --> <!-- Search form ends --> <!-- Start Navigation List -->
+	<ul class="nav navbar-nav navbar-right">
+		<li><a class="active" href="index.html"> Úvod </a>
+			<ul class="dropdown">
+				<li><a href="index-02.html"> Home 2 </a></li>
+				<li><a href="index-03.html"> Home 3 </a></li>
+				<li><a href="index-04.html"> Home 4 </a></li>
+				<li><a href="index-05.html"> Home 5 </a></li>
+			</ul>
+		</li>
+		<li><a href="features.html"> Prodej domů </a></li>
+		<li><a href="#"> Domy na klíč </a>
+			<ul class="dropdown">
+				<li><a href="about.html"> About Us </a></li>
+				<li><a href="certifications.html"> Certifications </a></li>
+				<li><a href="company-history.html"> Company History </a></li>
+				<li><a href="partners.html"> Our Partners </a></li>
+				<li><a href="team.html"> Our Team </a></li>
+				<li><a href="careers.html"> Careers </a></li>
+				<li><a href="Pricing.html"> Pricing </a></li>
+				<li><a href="faq.html"> FAQ </a></li>
+				<li><a href="404.html"> 404 </a></li>
+			</ul>
+		</li>
+		<li><a href="services.html">Stavební činnost</a>
+			<ul class="dropdown">
+				<li><a href="services.html"> All Services </a></li>
+				<li><a href="services1.html"> Services Layout 01 </a></li>
+				<li><a href="services2.html"> Services Layout 02 </a></li>
+			</ul>
+		</li>
+		<li><a href="projects.html"> Reference </a>
+			<ul class="dropdown">
+				<li><a href="projects.html"> Projects layout 1 - Full Width </a></li>
+				<li><a href="projects-2.html"> Projects layout 2 - Boxed 1 </a></li>
+				<li><a href="projects-3.html"> Projects layout 3 - Boxed 3 </a></li>
+				<li><a href="single-project.html"> Single Project </a></li>
+			</ul>
+		</li>
+		<li><a href="blog.html"> Aktuality </a>
+			<ul class="dropdown">
+				<li><a href="blog.html"> Blog - Right sidebar </a></li>
+				<li><a href="blog-left-sidebar.html"> Blog - Left Sidebar </a></li>
+				<li><a href="blog-full-width.html">Blog - Full Width</a></li>
+				<li><a href="single-post.html"> Single Post </a></li>
+			</ul>
+		</li>
+		<li><a href="contact.html"> Kontakt </a></li>
+	</ul>
+	<!-- End Navigation List --></div>
+<!-- Mobile Menu Start -->
+<ul class="wpb-mobile-menu">
+	<li><a class="active" href="index.html"> Úvod </a>
+		<ul class="dropdown">
+			<li><a href="index-02.html"> Home 2 </a></li>
+			<li><a href="index-03.html"> Home 3 </a></li>
+			<li><a href="index-04.html"> Home 4 </a></li>
+			<li><a href="index-05.html"> Home 5 </a></li>
+		</ul>
+	</li>
+	<li><a href="features.html"> Prodej domů </a></li>
+	<li><a href="#"> Domy na klíč </a>
+		<ul class="dropdown">
+			<li><a href="about.html"> About Us </a></li>
+			<li><a href="certifications.html"> Certifications </a></li>
+			<li><a href="company-history.html"> Company History </a></li>
+			<li><a href="partners.html"> Our Partners </a></li>
+			<li><a href="team.html"> Our Team </a></li>
+			<li><a href="careers.html"> Careers </a></li>
+			<li><a href="Pricing.html"> Pricing </a></li>
+			<li><a href="faq.html"> FAQ </a></li>
+			<li><a href="404.html"> 404 </a></li>
+		</ul>
+	</li>
+	<li><a href="services.html">Services</a>
+		<ul class="dropdown">
+			<li><a href="services.html"> All Services </a></li>
+			<li><a href="services1.html"> Services Layout 01 </a></li>
+			<li><a href="services2.html"> Services Layout 02 </a></li>
+		</ul>
+	</li>
+	<li><a href="projects.html"> Reference </a>
+		<ul class="dropdown">
+			<li><a href="projects.html"> Projects layout 1 - Full Width </a></li>
+			<li><a href="projects-2.html"> Projects layout 2 - Boxed 1 </a></li>
+			<li><a href="projects-3.html"> Projects layout 3 - Boxed 3 </a></li>
+			<li><a href="single-project.html"> Single Project </a></li>
+		</ul>
+	</li>
+	<li><a href="blog.html"> Aktuality </a>
+		<ul class="dropdown">
+			<li><a href="blog.html"> Blog - Right sidebar </a></li>
+			<li><a href="blog-left-sidebar.html"> Blog - Left Sidebar </a></li>
+			<li><a href="blog-full-width.html">Blog - Full Width</a></li>
+			<li><a href="single-post.html"> Single Post </a></li>
+		</ul>
+	</li>
+	<li><a href="contact.html"> Kontakt </a></li>
+</ul>
+<!-- Mobile Menu End -->
+#}

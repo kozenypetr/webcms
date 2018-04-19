@@ -50,6 +50,12 @@ class Region
      */
     private $tag = 'div';
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="attributes", type="string", length=255, nullable=true)
+     */
+    private $attributes;
 
     /**
      * @var string
@@ -61,7 +67,7 @@ class Region
     /**
      * @var string
      *
-     * @ORM\Column(name="class_md", type="string", length=255)
+     * @ORM\Column(name="class_md", type="string", length=255, nullable=true)
      */
     private $class_md = 'col-md-12';
 
@@ -261,5 +267,29 @@ class Region
     public function getHtmlId()
     {
         return $this->htmlId;
+    }
+
+    /**
+     * Set attributes.
+     *
+     * @param string|null $attributes
+     *
+     * @return Region
+     */
+    public function setAttributes($attributes = null)
+    {
+        $this->attributes = $attributes;
+
+        return $this;
+    }
+
+    /**
+     * Get attributes.
+     *
+     * @return string|null
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 }

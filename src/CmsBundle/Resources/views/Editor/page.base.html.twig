@@ -3,21 +3,29 @@
 {% block title %}{{ document.name }}{% endblock %}
 
 {% block stylesheets %}
-    {% stylesheets
-    'assets/vendors/bootstrap/dist/css/bootstrap.css'
-    'assets/vendors/font-awesome/css/font-awesome.css'
-    'assets/vendors/fancyBox/dist/jquery.fancybox.css'
-    'assets/vendors/bootstrap/dist/css/bootstrap.css'
-    'assets/vendors/bootstrap/dist/css/bootstrap-theme.css'
-    'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.css'
-    'assets/tinymce/skins/lightgray/skin.min.css'
-    'assets/tinymce/skins/lightgray/content.min.css'
-    'assets/jquery-ui/css/jquery-ui.css'
-    'assets/jstree/themes/default/style.css'
-    '@CmsBundle/Resources/public/css/cms.less'
-    %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
+    {% if is_granted('ROLE_ADMIN') %}
+        {% stylesheets
+        'assets/vendors/bootstrap/dist/css/bootstrap.css'
+        'assets/vendors/font-awesome/css/font-awesome.css'
+        'assets/vendors/bootstrap/dist/css/bootstrap.css'
+        'assets/vendors/bootstrap/dist/css/bootstrap-theme.css'
+        'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.css'
+        'assets/tinymce/skins/lightgray/skin.min.css'
+        'assets/tinymce/skins/lightgray/content.min.css'
+        'assets/jquery-ui/css/jquery-ui.css'
+        'assets/jstree/themes/default/style.css'
+        '@CmsBundle/Resources/public/css/cms.less'
+        %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% else %}
+        {% stylesheets
+        'assets/vendors/bootstrap/dist/css/bootstrap.css'
+        'assets/vendors/font-awesome/css/font-awesome.css'
+        %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endif %}
     {{  parent() }}
 {% endblock %}
 
@@ -29,7 +37,7 @@
 {% block cms %}
     {% if is_granted('ROLE_ADMIN') %}
         <!-- Large modal -->
-        <div class="modal fade" id="cms-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal fade admin-content" id="cms-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -58,31 +66,39 @@
 
 
 {% block javascripts %}
-    {% javascripts
-    'assets/vendors/jquery/dist/jquery.js'
-    'assets/vendors/fancyBox/dist/jquery.fancybox.js'
-    'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.js'
-    'assets/vendors/jQuery-contextMenu/dist/jquery.ui.position.js'
-    'assets/vendors/bootstrap/dist/js/bootstrap.js'
-    'assets/vendors/jquery.cookie/jquery.cookie.js'
-    'assets/jquery-ui/js/jquery-ui.js'
-    'assets/jquery-ui/js/jquery-ui.js'
-    'assets/jquery-slidereveal/jquery.slidereveal.min.js'
-    'assets/tinymce/tinymce.min.js'
-    'assets/tinymce/jquery.tinymce.min.js'
-    'assets/tinymce/themes/modern/theme.min.js'
-    'assets/vendors/interactjs/interact.js'
-    'assets/jstree/jstree.min.js'
-    'bundles/fosjsrouting/js/router.js'
-
-    '@CmsBundle/Resources/public/js/*'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    {% if is_granted('ROLE_ADMIN') %}
+        {% javascripts
+            'assets/vendors/jquery/dist/jquery.js'
+            'assets/vendors/bootstrap/dist/js/bootstrap.js'
+            'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.js'
+            'assets/vendors/jQuery-contextMenu/dist/jquery.ui.position.js'
+            'assets/vendors/jquery.cookie/jquery.cookie.js'
+            'assets/jquery-ui/js/jquery-ui.js'
+            'assets/jquery-ui/js/jquery-ui.js'
+            'assets/jquery-slidereveal/jquery.slidereveal.min.js'
+            'assets/tinymce/tinymce.min.js'
+            'assets/tinymce/jquery.tinymce.min.js'
+            'assets/tinymce/themes/modern/theme.min.js'
+            'assets/vendors/interactjs/interact.js'
+            'assets/jstree/jstree.min.js'
+            'bundles/fosjsrouting/js/router.js'
+            '@CmsBundle/Resources/public/js/*'
+        %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    {% else %}
+        {% javascripts
+            'assets/vendors/jquery/dist/jquery.js'
+            'assets/vendors/bootstrap/dist/js/bootstrap.js'
+        %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endif %}
 
     {{ parent() }}
 
+    {% if is_granted('ROLE_ADMIN') %}
     <script type="text/javascript">
         var adminUrl = Array();
         adminUrl['widget_add'] = '{{ path('cms_widget_add') }}';
@@ -93,4 +109,5 @@
         adminParam['document_id'] = '{{ document.id }}';
         adminParam['url'] = '{{ document.url }}';
     </script>
+    {% endif %}
 {% endblock %}

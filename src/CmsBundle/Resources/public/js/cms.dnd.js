@@ -25,11 +25,37 @@ var dnd = {
                 cms.ajax(url, 'PUT', cmsWidget.__addImage, { 'file': file });
             }
         });
+
+        $( ".dropimage" ).droppable({
+            accept: "#collapseFile .jstree-anchor",
+            drop: function( event, ui ) {
+                var file = ui.draggable.attr('id');
+                file = file.replace("_anchor", "");
+                file = '/data' + file;
+                $(this).val(file);
+            }
+        });
     },
 
     document: function()
     {
+        $( "#page-tree .jstree-anchor .fa-link" ).draggable({
+            helper: 'clone',
+            start: function() {
+                $("#slider-right").slideReveal("hide");
+            }
+        });
 
+        $( ".droplink" ).droppable({
+            accept: "#page-tree .jstree-anchor .fa-link",
+            drop: function( event, ui ) {
+                var document = ui.draggable.attr('id');
+                event.target.value = '[' + ui.draggable.data('document-name') + ':' + ui.draggable.data('document-id') + ']';
+                // pridani obrazku k widgetu - posleme ID obrazku
+                // var url = Routing.generate('cms_widget_add_image', { 'id': event.target.dataset.widgetId});
+                // cms.ajax(url, 'PUT', cmsWidget.__addImage, { 'file': file });
+            }
+        });
     }
 
 }

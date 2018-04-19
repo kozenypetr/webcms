@@ -1,0 +1,18 @@
+<div class="projects-box item">
+  <div class="projects-thumb">
+   <a href="{{ parameters.link }}">
+    <img src="{{ parameters.image }}" alt="{{ parameters.title }}" />
+   </a>
+  </div>
+  <div class="projects-content">
+   <h4><a href="{{ parameters.link }}">{{ parameters.title }}</a></h4>
+   <div class="recent-meta"><span class="date"><i class="fa fa-file-text-o"></i> {{ parameters.date }}</span>
+    <span class="comments"><i class="fa fa-comments-o"></i> {{ parameters.subtitle }}</span></div>
+   {% if parameters.annotation %}
+        <p class="projects-desc">{{ parameters.annotation }}</p>
+   {% else %}
+        <p class="projects-desc">&nbsp;</p>
+   {% endif %}
+   <a href="{{ parameters.link }}" class="btn btn-effect">Více informací <i class="icon-arrow-right"></i></a>
+  </div>
+</div>

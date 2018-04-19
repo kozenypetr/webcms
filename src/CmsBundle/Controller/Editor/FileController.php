@@ -68,7 +68,7 @@ class FileController extends Controller
 
         $finder = new Finder();
         $childrenFinder = new Finder();
-        $finder->depth('== 0')->notName('#.*thumbs.*#')->in($dir);
+        $finder->depth('== 0')->sortByName()->notName('#.*thumbs.*#')->in($dir);
 
         $children  = [];
         $i = 0;
@@ -82,8 +82,8 @@ class FileController extends Controller
             if ($item->getType() == 'dir')
             {
                 $childrenFinder->depth('0')->sortByName()->notName('#.*thumbs.*#')->in($dir . '/' . $item->getFilename());
-                dump($item->getFilename());
-                dump(count($childrenFinder));
+                // dump($item->getFilename());
+                // dump(count($childrenFinder));
                 if (count($childrenFinder) > 0)
                 {
                     $children[$i]['children'] = true;
@@ -103,6 +103,34 @@ class FileController extends Controller
 
         return new JsonResponse($node);
     }
+
+
+    /**
+     * Nacitani stromu souboru
+     * @Route("/image/preview", name="cms_image_preview", options={"expose"=true})
+     * @Method({"GET"})
+     */
+    public function imagePreviewAction(Request $request)
+    {
+        $file = $request->get('file');
+
+        $file = str_replace('_anchor', '', $file);
+
+        $extension = pathinfo($file, PATHINFO_EXTENSION);
+
+        if (!in_array($extension, array('png', 'jpg', 'gif')))
+        {
+            return new JsonResponse(array('status' => 'noimage'));
+        }
+
+        $imagineCacheManager = $this->get('liip_imagine.cache.manager');
+
+        /** @var string */
+        $resolvedPath = $imagineCacheManager->getBrowserPath('/data/' . $file, 'cms_image_thumb');
+
+        return new JsonResponse(['status' => 'image', 'path' => $resolvedPath]);
+    }
+
 
     /**
      * @param $filename

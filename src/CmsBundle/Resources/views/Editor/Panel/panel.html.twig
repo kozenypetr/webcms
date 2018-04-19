@@ -1,4 +1,4 @@
-<div id="cms-panel">
+<div id="cms-panel" class="admin-content">
 
     <div class="show-layout">
         <div class="edit-mode-toggle">
@@ -20,9 +20,11 @@
             <i class="fa fa-plus-circle" aria-hidden="true"></i> Přidat obsah
         </div>
         <div class="dropdown-menu" aria-labelledby="dLabel">
-            {{ render(controller('CmsBundle:Editor/Editor:widgetList')) }}
+            {{ render(controller('CmsBundle:Editor/Editor:widgetPanelList')) }}
         </div>
     </div>
+
+    {{ render(controller('CmsBundle:Editor/Editor:widgetList')) }}
 
     {#
     <div class="document-info">
@@ -62,6 +64,11 @@
         <a href="{{ path('cms_document_add', { 'parent_id': document.id }) }}" class="modal-form document-new">
             <i class="fa fa-plus-circle" aria-hidden="true"></i><br />
             Přidat<br />stránku
+        </a>
+
+        <a href="{{ path('cms_document_copy', { 'id': document.id }) }}" class="modal-form document-copy">
+            <i class="fa fa-copy" aria-hidden="true"></i><br />
+            Kopírovat<br />stránku
         </a>
 
         <a href="{{ path('cms_document_edit', {'id': document.id }) }}" class="modal-form document-edit">

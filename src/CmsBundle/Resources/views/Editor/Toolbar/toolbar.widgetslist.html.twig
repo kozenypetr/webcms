@@ -1,0 +1,9 @@
+<div class="widgetlist-add">
+{% for key, widget in widgets %}
+    <div class="widget-new-item" data-widget="{{ key }}">
+        {{ widget.title }}<br />
+        <i class="fa {{ widget.icon }}" aria-hidden="true"></i>
+    </div>
+{%  endfor %}
+    <div class="clear"></div>
+</div>

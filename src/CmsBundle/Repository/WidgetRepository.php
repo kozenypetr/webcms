@@ -48,7 +48,49 @@ class WidgetRepository extends \Doctrine\ORM\EntityRepository
         if (preg_match('/^page\./', $parameters['region']))
         {
             $widget->setDocument($document);
-            dump($document);
+            // dump($document);
+        }
+
+        return $widget;
+    }
+
+    /**
+     * Vytvori objekt widget na zaklade parametru - region, document_id
+     * prev - ID predchoziho widgetu v regionu
+     * next - ID nasledujiciho widgetu v regionu
+     * @param array() $parameters
+     * @return \CmsBundle\Entity\Widget
+     */
+    public function copyWidget($parameters, $copyWidget)
+    {
+        $em = $this->getEntityManager();
+
+        // nacteni dokumentu
+        $document = $em->getRepository(Document::class)->find((int)$parameters['document_id']);
+
+        // nastavime razeni novemu boxu
+        $sort = $this->sortWidgetsInRegion(
+            $parameters['region'],
+            $parameters['document_id'],
+            isset($parameters['prev'])?$parameters['prev']:null,
+            isset($parameters['next'])?$parameters['next']:null
+        );
+
+        // vytvoreni widgetu
+        $widget = new Widget();
+        $widget->setTag($copyWidget->getTag());
+        $widget->setHtml('');
+        $widget->setSort($sort);
+        $widget->setRegion($parameters['region']);
+        $widget->setService($copyWidget->getService());
+        $widget->setSid($copyWidget->getSid());
+        $widget->setSubclass($copyWidget->getSubclass());
+        $widget->setParameters($copyWidget->getParameters());
+
+        // pokud se jedna o region spojeny se strankou, tak pridame stranku
+        if (preg_match('/^page\./', $parameters['region']))
+        {
+            $widget->setDocument($document);
         }
 
         return $widget;

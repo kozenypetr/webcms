@@ -62,6 +62,39 @@ class WidgetController extends Controller
         return new JsonResponse(array('id' => $widget->getId(), 'widgetHtml' => $html));
     }
 
+    /**
+     * Kopie widgetu
+     * @Route("/copy/{id}", name="cms_widget_copy", options={"expose"=true})
+     * @Method({"POST"})
+     */
+    public function copyAction(Request $request, Widget $copyWidget)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // parametry vlozeni - region, typ region [page/global], dokument, prev, next
+        $parameters = json_decode($request->get('parameters'), true);
+
+        // vytvorime objekt widgetu
+        $widget = $this->getDoctrine()
+            ->getRepository(Widget::class)
+            ->copyWidget($parameters, $copyWidget);
+
+        // vychozi nastaveni widgetu
+        // $widget->setParameters($this->get($widget->getService())->getDefault());
+
+        // ulozime widget
+        $em->persist($widget);
+        $em->flush();
+
+        $service = $this->get($widget->getService());
+
+        // ziskame HTML widgetu
+        $html = $service->setEntity($widget)->getHtml();
+
+        // vracime JSON - nove ID + HTML
+        return new JsonResponse(array('id' => $widget->getId(), 'widgetHtml' => $html));
+    }
+
 
     /**
      * Pridani obrazku k widgetu
@@ -182,6 +215,20 @@ class WidgetController extends Controller
         return new JsonResponse(array('id' => $widget->getId()));
     }
 
+
+    /**
+     * Seznam widgetu k pridani
+     * @Route("/list", name="cms_widget_list")
+     * @Method({"GET"})
+     */
+    public function listAction(Request $request)
+    {
+        return $this->render('CmsBundle:Editor/Toolbar:toolbar.widgetslist.html.twig', array(
+            'widgets' => $this->get('cms.manager.widget')->getWidgets()
+        ));
+    }
+
+
     /**
      * Editace widgetu
      * @Route("/edit/{id}", name="cms_widget_edit")
@@ -191,14 +238,21 @@ class WidgetController extends Controller
     {
         $service = $this->get($widget->getService());
 
-        $form = $service->setParameters($widget->getParameters())
+        $parameters = $widget->getParameters();
+
+        $parameters['is_system'] = $widget->getIsSystem();
+
+        $form = $service->setParameters($parameters)
                         ->createForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $widget->setParameters($form->getData());
+            $data = $form->getData();
+
+            $widget->setIsSystem($data['is_system']);
+            $widget->setParameters($service->processParameters($data));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($widget);
@@ -217,12 +271,16 @@ class WidgetController extends Controller
             dump($form->getErrors(true, false));
         }
 
-        return $this->render('CmsBundle:Editor/Form:widget.html.twig', array(
+        return $this->render('CmsBundle:Editor/Form:' . $service->getEditorTemplate(), array(
             'widget' => $widget,
             'defaultTemplate' => $service->getTemplate(),
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'parameters' => $service->setEntity($widget)->getWidgetParameters(true)
         ), new Response('', $statusCode));
     }
+
+
+
 
 
     /**

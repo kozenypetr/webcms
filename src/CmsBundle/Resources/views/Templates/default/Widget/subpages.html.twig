@@ -1,0 +1,7 @@
+{% if parameters.links is defined %}
+
+    {% for link in parameters.links %}
+        {{ link | raw }}
+    {% endfor %}
+
+{% endif %}

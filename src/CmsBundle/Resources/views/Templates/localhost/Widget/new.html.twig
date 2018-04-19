@@ -1,0 +1,17 @@
+{#
+  * parameters.title
+  * parameters.annotation
+  * parameters.text | raw
+#}
+
+ <div class="projects-box item">
+  <div class="projects-thumb">
+          <img src="{{ parameters.image }}" alt="" />
+  </div>
+  <div class="projects-content">
+    <h4>{{ parameters.title }}</h4>
+    <div class="recent-meta"><span class="date"><i class="fa fa-file-text-o"></i> {{ parameters.date }}</span>
+    <span class="comments"><i class="fa fa-comments-o"></i> O Firmě</span></div>
+    <p class="projects-desc">{{ parameters.annotation }}</p>
+  </div>
+ </div>

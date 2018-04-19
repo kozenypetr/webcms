@@ -32,15 +32,30 @@ class Widget
     /**
      * @var string
      *
-     * @ORM\Column(name="tag", type="string", length=255)
+     * @ORM\Column(name="tag", type="string", length=255, options={"default" : "div"})
      */
-    private $tag;
+    private $tag = 'div';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="subclass", type="string", length=255, nullable=true)
+     */
+    private $subclass;
 
     /**
      * @ORM\ManyToOne(targetEntity="Document", inversedBy="widgets")
      * @ORM\JoinColumn(name="document_id", referencedColumnName="id")
      */
     private $document;
+
+    /**
+     *
+     * @var boolean
+     *
+     * @ORM\Column(name="is_system", type="boolean", options={"default" : false})
+     */
+    private $isSystem = false;
 
     /**
      * @var string
@@ -236,7 +251,7 @@ class Widget
         $parameters = $this->getParameters();
         $classes = array();
         $classes[] = 'widget';
-        foreach (array('class', 'class_md', 'class_sm', 'class_xs', 'class_lg') as $c)
+        foreach (array('class', 'class_md', 'class_sm', 'class_xs', 'class_lg', 'predefined_class') as $c)
         {
             if (isset($parameters[$c]) && $parameters[$c])
             {
@@ -383,5 +398,77 @@ class Widget
     public function getImages()
     {
         return $this->images;
+    }
+
+    /**
+     * Set subelement.
+     *
+     * @param string $subelement
+     *
+     * @return Widget
+     */
+    public function setSubelement($subelement)
+    {
+        $this->subelement = $subelement;
+
+        return $this;
+    }
+
+    /**
+     * Get subelement.
+     *
+     * @return string
+     */
+    public function getSubelement()
+    {
+        return $this->subelement;
+    }
+
+    /**
+     * Set subclass.
+     *
+     * @param string $subclass
+     *
+     * @return Widget
+     */
+    public function setSubclass($subclass)
+    {
+        $this->subclass = $subclass;
+
+        return $this;
+    }
+
+    /**
+     * Get subclass.
+     *
+     * @return string
+     */
+    public function getSubclass()
+    {
+        return $this->subclass;
+    }
+
+    /**
+     * Set isSystem.
+     *
+     * @param bool $isSystem
+     *
+     * @return Widget
+     */
+    public function setIsSystem($isSystem)
+    {
+        $this->isSystem = $isSystem;
+
+        return $this;
+    }
+
+    /**
+     * Get isSystem.
+     *
+     * @return bool
+     */
+    public function getIsSystem()
+    {
+        return $this->isSystem;
     }
 }

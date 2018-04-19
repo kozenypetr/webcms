@@ -3,23 +3,27 @@ services:
 #        class: CmsBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
      cms.manager.domain:
-        class: CmsBundle\Service\DomainManager
-        arguments:    ['@doctrine.orm.entity_manager', '@service_container']
+         class: CmsBundle\Service\DomainManager
+         arguments:    ['@doctrine.orm.entity_manager', '@service_container']
 
      cms.manager.widget:
-        class: CmsBundle\Service\WidgetManager
-        arguments:    ['@doctrine.orm.entity_manager', '@service_container']
+         class: CmsBundle\Service\WidgetManager
+         arguments:    ['@doctrine.orm.entity_manager', '@service_container']
 
      cms.manager.template:
-        class: CmsBundle\Service\TemplateManager
-        arguments:    ['@doctrine.orm.entity_manager', '@service_container']
+         class: CmsBundle\Service\TemplateManager
+         arguments:    ['@doctrine.orm.entity_manager', '@service_container']
+
+     cms.manager.content:
+         class: CmsBundle\Service\ContentManager
+         arguments:    ['@doctrine.orm.entity_manager', '@service_container']
 
 
      cms.widget.editor:
-        class:        CmsBundle\Service\Widget\Editor
-        autowire: true
-        tags:
-            -  { name: cms.widget }
+         class:        CmsBundle\Service\Widget\Editor
+         autowire: true
+         tags:
+             -  { name: cms.widget }
 
      cms.widget.html_code:
          class:        CmsBundle\Service\Widget\HtmlCode
@@ -34,8 +38,69 @@ services:
              -  { name: cms.widget }
 
      cms.widget.image:
-              class:        CmsBundle\Service\Widget\Image
-              autowire: true
+         class:        CmsBundle\Service\Widget\Image
+         autowire: true
+         tags:
+             -  { name: cms.widget }
+
+     cms.widget.contact:
+         class:        CmsBundle\Service\Widget\Contact
+         autowire: true
+         tags:
+             -  { name: cms.widget }
+
+     cms.widget.menu:
+         class:        CmsBundle\Service\Widget\Menu
+         autowire: true
+         tags:
+             -  { name: cms.widget }
+
+
+     cms.widget.subpages:
+         class:        CmsBundle\Service\Widget\Subpages
+         autowire:     true
+         tags:
+             -  { name: cms.widget }
+
+     cms.widget.heading:
+         class:        CmsBundle\Service\Widget\Heading
+         autowire:     true
+         tags:
+             -  { name: cms.widget }
+
+     cms.widget.link:
+         class:        CmsBundle\Service\Widget\Link
+         autowire:     true
+         tags:
+             -  { name: cms.widget }
+
+     cms.widget.reference:
+         class:        CmsBundle\Service\Widget\Reference
+         autowire:     true
+         tags:
+             -  { name: cms.widget }
+
+     cms.widget.person:
+         class:        CmsBundle\Service\Widget\Person
+         autowire:     true
+         tags:
+             -  { name: cms.widget }
+
+     cms.widget.breadcrumb:
+         class:        CmsBundle\Service\Widget\Breadcrumb
+         autowire:     true
+         tags:
+             -  { name: cms.widget }
+
+     cms.widget.contactform:
+              class:        CmsBundle\Service\Widget\ContactForm
+              autowire:     true
+              tags:
+                  -  { name: cms.widget }
+
+     cms.widget.address:
+              class:        CmsBundle\Service\Widget\Address
+              autowire:     true
               tags:
                   -  { name: cms.widget }
 
@@ -45,6 +110,10 @@ services:
         public: false
         tags:
            - { name: twig.extension }
+
+     cms.variables.widgets:
+             class: CmsBundle\Twig\Globals\Widgets
+             arguments: ['@cms.manager.widget']
 
 
      gedmo.listener.timestampable:

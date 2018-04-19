@@ -24,6 +24,8 @@ class TemplateManager {
 
     const TEMPLATE_WIDGET_PATH = 'CmsBundle:Templates/%s/Widget:';
 
+    const TEMPLATE_LINK_PATH = 'CmsBundle:Templates/%s/Link:';
+
     const TEMPLATE_DOCUMENT_PATH = 'CmsBundle:Templates/%s/Document:';
 
     const TEMPLATE_REGION_PATH = 'CmsBundle:Templates/%s/Region:';
@@ -61,6 +63,26 @@ class TemplateManager {
             foreach ([$this->host, self::DEFAULT_TEMPLATE_DIR] as $dir) {
                 if (file_exists($this->templateDir . $dir . '/Widget/' . $file)) {
                     return sprintf(self::TEMPLATE_WIDGET_PATH, $dir) . $file;
+                }
+            }
+        }
+
+        // @TODO: vyjimka, ze neexistuje zadna sablona
+    }
+
+    /**
+     * @param string $defaultTemplate
+     * @param \CmsBundle\Entity\Widget $widget
+     *
+     * @return string
+     */
+    public function getWidgetLinkTemplate(string $defaultTemplate, Widget $widget) {
+        $templates = $widget->getSuggestionTemplateFiles($defaultTemplate);
+
+        foreach ($templates as $key => $file) {
+            foreach ([$this->host, self::DEFAULT_TEMPLATE_DIR] as $dir) {
+                if (file_exists($this->templateDir . $dir . '/Link/' . $file)) {
+                    return sprintf(self::TEMPLATE_LINK_PATH, $dir) . $file;
                 }
             }
         }

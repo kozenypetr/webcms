@@ -1,16 +1,23 @@
-<div id="" class="widget-{{ widget.id }} {{ widget.class }}"{% if is_granted('ROLE_ADMIN') %} data-widget-id="{{ widget.id }}"{% endif %}>
-    <div class="widget-content">
-        {# vlozeni pouze obsahu widgetu, pokud to neni ajax #}
-        {% include template with {'widget': widget } %}
-    </div>
-
-    {% if is_granted('ROLE_ADMIN') %}
-        {% include 'CmsBundle:Editor/Toolbar:toolbar.widget.html.twig' with {'widget' : widget, 'template': template} %}
+<div {{ parameters.id?'id="' ~ parameters.id ~ '"':'' }} class="widget-{{ widget.id }} {{ widget.class }} {{ widget.service | replace({ '.': "-"}) }}"{% if is_granted('ROLE_ADMIN') %} data-widget-id="{{ widget.id }}"{% endif %}>
+    {% if parameters.subclass %}
+    <div class="{{ parameters.subclass }}">
     {% endif %}
 
-    {% if is_granted('ROLE_ADMIN') and widget.service == 'cms.widget.image' %}
-        <div class="widget-image-receiver" align="center">
-            <div class="landing" data-widget-id="{{ widget.id }}">Sem přetáhněte fotku z pravého panelu</div>
+        <div class="widget-content">
+            {# vlozeni pouze obsahu widgetu, pokud to neni ajax #}
+            {% include template with {'widget': widget, 'parameters': parameters } %}
         </div>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            {% include 'CmsBundle:Editor/Toolbar:toolbar.widget.html.twig' with {'widget' : widget, 'template': template} %}
+        {% endif %}
+
+        {% if false and is_granted('ROLE_ADMIN') and widget.service == 'cms.widget.image' %}
+            <div class="widget-image-receiver" align="center">
+                <div class="landing" data-widget-id="{{ widget.id }}">Sem přetáhněte fotku z pravého panelu</div>
+            </div>
+        {% endif %}
+    {% if parameters.subclass %}
+    </div>
     {% endif %}
 </div>

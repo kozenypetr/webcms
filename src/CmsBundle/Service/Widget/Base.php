@@ -9,10 +9,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use CmsBundle\Service\TemplateManager;
+use CmsBundle\Service\WidgetManager;
+use CmsBundle\Service\ContentManager;
+
+
 
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -26,6 +32,12 @@ abstract class Base
 {
     protected $em;
 
+    protected $tm;
+
+    protected $wm;
+
+    protected $cm;
+
     protected $formFactory;
 
     protected $parameters;
@@ -34,11 +46,11 @@ abstract class Base
 
     protected $title = 'Widget';
 
-    protected $tm;
-
     protected $template;
 
     protected $entity;
+
+    protected $basePredefinedClasses = ['Horní odsazení' => 'indentation', 'Bez horního odsazení' => 'noindentation'];
 
     protected $predefinedClasses = [];
 
@@ -48,12 +60,17 @@ abstract class Base
 
     protected $icon = 'fa-folder-o';
 
-    public function __construct(EntityManagerInterface $em, FormFactoryInterface $formFactory, EngineInterface $twig, TemplateManager $tm)
+    protected $group = 'Základní';
+
+    public function __construct(EntityManagerInterface $em, FormFactoryInterface $formFactory, EngineInterface $twig, TemplateManager $tm, WidgetManager $wm, ContentManager $cm)
     {
         $this->em = $em;
+        $this->tm = $tm;
+        $this->wm = $wm;
+        $this->cm = $cm;
+
         $this->formFactory = $formFactory;
         $this->twig = $twig;
-        $this->tm = $tm;
     }
 
     public function setEntity(Widget $widget)
@@ -69,23 +86,26 @@ abstract class Base
 
         $template = $this->tm->getWidgetTemplate($this->getTemplate(), $this->entity);
 
-        $parameters = $this->entity->getParameters();
-
-        foreach ($this->getDefault() as $key => $value)
-        {
-            if (!isset($parameters[$key]))
-            {
-                $parameters[$key] = $value;
-            }
-        }
-
         return $this->twig->render($baseWidgetTemplate,
             array(
                 'widget' => $this->entity,
-                'parameters' => $parameters,
+                'parameters' => $this->getWidgetParameters(),
                 'template' => $template,
                 'title' => $this->getTitle(),
                 'images' => $this->entity->getImages()
+            )
+        );
+    }
+
+    public function getLinkHtml($document)
+    {
+        $template = $this->tm->getWidgetLinkTemplate($this->getTemplate(), $this->entity);
+
+        return $this->twig->render($template,
+            array(
+                'widget' => $this->entity,
+                'document' => $document,
+                'parameters' => $this->getWidgetParameters(),
             )
         );
     }
@@ -129,15 +149,17 @@ abstract class Base
             ->add('sid', TextType::class, array('label' => 'Strojový název'))
             ->add('id', TextType::class, array('label' => 'ID'))
 
+            ->add('is_system', CheckboxType::class, array('label' => 'Systémový'))
+
             ->add('predefined_class', ChoiceType::class, array(
                 'label' => 'Předdefinovaná třída',
-                'choices'  => array_merge(['Nevybráno' => ''], $this->predefinedClasses),
+                'choices'  => $this->getPredefinedClasses(),
             ))
             ->add('class', TextType::class, array('label' => 'Třída'))
             ->add('class_md', ChoiceType::class, array(
                 'label'    => 'Šířka',
                 'required' => true,
-                'choices'  => $this->getBootstrapClasses('col-md-'),
+                'choices'  => $this->getBootstrapClasses('col-md-', true),
             ))
             ->add('class_sm', ChoiceType::class, array(
                  'label' => 'Tablet',
@@ -150,7 +172,18 @@ abstract class Base
             ->add('class_lg', ChoiceType::class, array(
                   'label' => 'Velký displej',
                   'choices'  => $this->getBootstrapClasses('col-lg-', true),
+            ))
+            ->add('tag', TextType::class, array(
+                'label' => 'Tag',
+            ))
+            ->add('subclass', TextType::class, array(
+                'label' => 'Podtřída',
             ));
+    }
+
+    protected function getPredefinedClasses()
+    {
+        return array_merge(['Nevybráno' => ''], $this->basePredefinedClasses, $this->predefinedClasses);
     }
 
     protected function getBootstrapClasses($prefix, $blank = false)
@@ -158,7 +191,7 @@ abstract class Base
         $classes = array();
         if ($blank)
         {
-            $classes['Nevybráno'] = '';
+            $classes['Automaticky'] = '';
         }
         for ($i = 1; $i <= 12; $i++)
         {
@@ -170,17 +203,19 @@ abstract class Base
         return $classes;
     }
 
-    protected function getParameters()
+    public function getWidgetParameters($editor = false)
     {
-        return $this->parameters;
-    }
+        $parameters = $this->entity->getParameters();
 
+        foreach ($this->getDefault() as $key => $value)
+        {
+            if (!isset($parameters[$key]))
+            {
+                $parameters[$key] = $value;
+            }
+        }
 
-    public function setParameters(array $parameters)
-    {
-        $this->parameters = $parameters;
-
-        return $this;
+        return $parameters;
     }
 
     public function getTemplate()
@@ -203,6 +238,17 @@ abstract class Base
         return $this->icon;
     }
 
+    /**
+     * Moznost upravit parametry pro urcity widget
+     *
+     * @param array $parameters
+     *
+     * @return array
+     */
+    public function processParameters($parameters)
+    {
+        return $parameters;
+    }
 
     /**
      * @return array
@@ -215,8 +261,23 @@ abstract class Base
             'class_md' => 'col-md-12',
             'class_sm' => '',
             'class_xs' => '',
-            'class_lg' => ''
+            'class_lg' => '',
+            'tag'      => 'div',
+            'subclass' => ''
         );
+    }
+
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+
+
+    public function setParameters($parameters)
+    {
+        $this->parameters = $parameters;
+
+        return $this;
     }
 
     /**

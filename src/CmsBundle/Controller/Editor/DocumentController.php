@@ -6,7 +6,10 @@ namespace CmsBundle\Controller\Editor;
 
 use CmsBundle\Form\WidgetType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -117,6 +120,7 @@ class DocumentController extends Controller
 
                 // vychozi nastaveni widgetu
                 $widget->setParameters($this->get($widget->getService())->getDefault());
+                $widget->setIsSystem(true);
 
                 // ulozime widget
                 $em->persist($widget);
@@ -133,6 +137,43 @@ class DocumentController extends Controller
             'form' => $form->createView(),
             'action' => $this->generateUrl('cms_document_add')
         ));
+    }
+
+
+    /**
+     * Kopirovani dokumentu
+     * @Route("/copy/{id}", name="cms_document_copy")
+     * @Method({"GET"})
+     */
+    public function copyAction(Request $request, Document $document)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $copyDocument = clone $document;
+
+        $parent = $document->getParent();
+
+        if (!$parent)
+        {
+            $parent = $document;
+        }
+
+        $copyDocument->setParent($parent);
+        $copyDocument->setUrl($copyDocument->getUrl() . '2');
+
+        $em->persist($copyDocument);
+
+        foreach ($document->getWidgets() as $widget)
+        {
+            $copyWidget = clone $widget;
+            $copyWidget->setDocument($copyDocument);
+
+            $em->persist($copyWidget);
+        }
+
+        $em->flush();
+
+        return $this->redirect('/' . $copyDocument->getUrl());
     }
 
     /**
@@ -249,6 +290,70 @@ class DocumentController extends Controller
             'action' => $this->generateUrl('cms_document_edit',
                         array('id' => $document->getId()))
         ));
+    }
+
+    /**
+     * Presunuti dokumentu
+     * @Route("/move/{id}/{parent_id}", name="cms_document_move", options={"expose"=true})\
+     * @ParamConverter("parent", class="CmsBundle:Document", options={
+     *    "repository_method" = "find",
+     *    "mapping": {"parent_id": "id"},
+     *    "map_method_signature" = true
+     * })
+     * @Method({"POST"})
+     */
+    public function moveAction(Request $request, Document $document, Document $parent)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $position = $request->get('position');
+
+        if ($position == 0)
+        {
+            $operation = 'moveup';
+        }
+        else
+        {
+            $children = $parent->getChildren();
+            if (!$children)
+            {
+                $operation = 'moveup';
+            }
+            else
+            {
+                $ids = [];
+                $i = 1;
+                foreach ($children as $item)
+                {
+                    if ($item->getId() == $document->getId())
+                    {
+                        continue;
+                    }
+                    $ids[$i] = $item;
+                    $i++;
+                }
+                $sibling = $ids[$position];
+                $operation = 'movenext';
+            }
+        }
+
+        $repo = $em->getRepository('CmsBundle:Document');
+
+        switch ($operation)
+        {
+            case 'moveup':
+                dump($document);
+                dump($parent);
+                $repo->persistAsFirstChildOf($document, $parent);
+            break;
+            case 'movenext':
+                $repo->persistAsNextSiblingOf($document, $sibling);
+            break;
+        }
+
+        $em->flush();
+
+        return new JsonResponse(array('status' => 'OK', 'position' => $position));
     }
 
     /**

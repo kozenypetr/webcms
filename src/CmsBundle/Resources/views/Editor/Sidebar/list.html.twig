@@ -10,8 +10,12 @@
     {% import _self as self %}
     <ul>
     {% for document in documents %}
-        <li data-jstree='{"icon":"fa {{ document.category.icon }}"}' >
-            <a href="{{ document.url }}" title="{{ document.url }}" data-document-id="{{ document.id }}">{{ document.name }}</a>
+        <li data-jstree='{"icon":"fa {{ document.category.icon }}", "type":"document{{ document.category.isEnableAsParent }}"}' data-document-id="{{ document.id }}" >
+            <a href="{{ document.url }}" title="{{ document.url }}">
+                {{ document.name }}
+                <span class="fa fa-link" data-document-name="{{ document.name }}" data-document-id="{{ document.id }}" aria-hidden="true"></span>
+            </a>
+
             {% if document.__children %}
                     {{ self.menu_links(document.__children) }}
             {% endif %}
@@ -25,6 +29,7 @@
 <div id="page-tree">
     {{ macro.menu_links(hierarchy) }}
 </div>
+
 
 {#
 <div id="tree2">

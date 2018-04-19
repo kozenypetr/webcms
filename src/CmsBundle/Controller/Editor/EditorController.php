@@ -36,6 +36,17 @@ use Symfony\Component\Finder\Finder;
 class EditorController extends Controller
 {
     /**
+     * Seznam widgetu do panelu
+     * @return Response
+     */
+    public function widgetPanelListAction()
+    {
+        return $this->render('CmsBundle:Editor/Panel:widgetsPanel.html.twig', array(
+            'widgets' => $this->get('cms.manager.widget')->getWidgets()
+        ));
+    }
+
+    /**
      * Seznam widgetu
      * @return Response
      */

@@ -1,0 +1,11 @@
+<div class="container">
+    <!-- Some Text -->
+    <div class="row">
+        <!-- Start Recent Projects Carousel -->
+        <div id="news-carousel" class="touch-carousel widgetsholder">
+            {% for widget in widgets %}
+                {{ cms_widget(widget) }}
+            {% endfor %}
+        </div>
+    </div>
+</div>

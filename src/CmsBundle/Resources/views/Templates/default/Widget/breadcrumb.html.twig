@@ -1,0 +1,11 @@
+<h2 class="entry-title">{{ parameters.document.name }}</h2>
+<div class="breadcrumb">
+    {% for item in parameters.path %}
+        {% if (loop.last) %}
+            <span class="current">{{ item.name }}</span>
+        {% else %}
+            <a href="/{{ item.url }}">{{ item.name }}</a>
+            <span class="crumbs-spacer"><i class="fa fa-angle-double-right"></i></span>
+        {% endif %}
+    {% endfor %}
+</div>

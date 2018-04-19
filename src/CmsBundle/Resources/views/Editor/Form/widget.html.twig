@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Základní informace</a></li>
-                <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">Responzivní zobrazení</a></li>
+                <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">Zobrazení</a></li>
                 <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Nastavení</a></li>
             </ul>
 
@@ -16,10 +16,13 @@
                     {{ form_row(form.class_sm) }}
                     {{ form_row(form.class_xs) }}
                     {{ form_row(form.class_lg) }}
+                    {{ form_row(form.tag) }}
+                    {{ form_row(form.subclass) }}
                 </div>
                 <div role="tabpanel" class="tab-pane" id="messages">
                     {{ form_row(form.id) }}
                     {{ form_row(form.sid) }}
+                    {{ form_row(form.is_system) }}
                     <p>pokud zadáte strojový název, bude možné s jeho pomocí vytvořit šablonu přímo pro tento widget</p>
                     <h4>Návrh šablon</h4>
                     {{ widget.suggestionTemplateFiles(defaultTemplate) | join('<br />') | raw }}

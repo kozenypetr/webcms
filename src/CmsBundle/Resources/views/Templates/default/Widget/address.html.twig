@@ -1,0 +1,16 @@
+<h2 class="big-title">{{ parameters.title }}</h2>
+
+<div class="information">
+     <div class="contact-datails">
+          <p><i class="icon-pointer"></i> {{ parameters.address | raw }}</p>
+          {% if parameters.phone %}
+          <p><i class="icon-call-out"></i> {{ parameters.phone }} </p>
+          {% endif %}
+          {% if parameters.email %}
+          <p><i class="icon-envelope"></i> {{ parameters.email }} </p>
+          {% endif %}
+          {% if parameters.opening_hours %}
+          <p><i class="icon-clock"></i> {{ parameters.opening_hours }}</p>
+          {% endif %}
+     </div>
+</div>

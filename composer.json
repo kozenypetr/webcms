@@ -28,6 +28,7 @@
         "friendsofsymfony/user-bundle": "^2.0",
         "gedmo/doctrine-extensions": "^2.4",
         "incenteev/composer-parameter-handler": "^2.0",
+        "intervention/image": "^2.4",
         "knplabs/knp-markdown-bundle": "^1.5",
         "knplabs/knp-menu-bundle": "^2.1",
         "liip/imagine-bundle": "^1.9",

@@ -23,4 +23,40 @@ class DocumentRepository extends NestedTreeRepository
 
         return $qb;
     }
+
+    public function getChildrenWithSystemWidget($node, $limit)
+    {
+        $qb = parent::childrenQueryBuilder($node);
+
+        $qb->join('node.widgets', 'w');
+
+        $qb->orderBy('node.lft');
+
+        $qb->setMaxResults($limit);
+        // $qb->andWhere('node.categoryId = ' . $category);
+
+        $qb->andWhere('w.isSystem = 1');
+
+        $qb->addSelect('w');
+
+        return $qb->getQuery()->execute();
+    }
+
+
+    public function findSystemWidget($document)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT w FROM CmsBundle:Widget w
+                     WHERE w.document = :document AND w.isSystem = 1'
+            )->setParameter('document', $document);
+
+
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
 }
