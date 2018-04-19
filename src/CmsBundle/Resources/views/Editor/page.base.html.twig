@@ -2,7 +2,7 @@
 
 {% block title %}{{ document.name }}{% endblock %}
 
-{% block stylesheets %}
+{#% block stylesheets %}
     {% if is_granted('ROLE_ADMIN') %}
         {% stylesheets
         'assets/vendors/bootstrap/dist/css/bootstrap.css'
@@ -27,7 +27,7 @@
         {% endstylesheets %}
     {% endif %}
     {{  parent() }}
-{% endblock %}
+{% endblock %#}
 
 {% block body %}
     {% include document.template with {'document': document } %}
@@ -66,7 +66,8 @@
 
 
 {% block javascripts %}
-    {% if is_granted('ROLE_ADMIN') %}
+    {#% if is_granted('ROLE_ADMIN') %}
+
         {% javascripts
             'assets/vendors/jquery/dist/jquery.js'
             'assets/vendors/bootstrap/dist/js/bootstrap.js'
@@ -95,7 +96,7 @@
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% endif %}
-
+    #}
     {{ parent() }}
 
     {% if is_granted('ROLE_ADMIN') %}
