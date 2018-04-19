@@ -1,0 +1,27 @@
+services:
+#    admin.example:
+#        class: AdminBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    admin.cms.document_category:
+        class: AdminBundle\Admin\DocumentCategoryAdmin
+        arguments: [~, CmsBundle\Entity\DocumentCategory, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Kategorie dokumentu", group: "CMS", show_in_dashboard: "true" }
+        public: true
+
+    admin.cms.document:
+        class: AdminBundle\Admin\DocumentAdmin
+        arguments: [~, CmsBundle\Entity\Document, AdminBundle:DocumentAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "CMS", label: Document }
+        public: true
+
+#    admin.cms.product:
+#        class: AppBundle\Admin\ProductAdmin
+#        arguments: [~, AppBundle\Entity\Product, ~]
+#        tags:
+#          - { name: sonata.admin, manager_type: orm, label: Produkty, group: "Eshop", show_in_dashboard: "true" }
+#        public: true
+
+
