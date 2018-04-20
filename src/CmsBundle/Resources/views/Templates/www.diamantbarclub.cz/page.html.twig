@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>{% block title %}{% endblock %} | Diamant Club Bar</title>
+        {% block stylesheets %}
+            <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+            <link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC:400,700,900&amp;subset=latin-ext" rel="stylesheet">
+
+            {% stylesheets
+                'bootstrap/css/bootstrap.min.css'
+                'assets/vendors/font-awesome/css/font-awesome.css'
+                'assets/vendors/bootstrap/dist/css/bootstrap-theme.css'
+                'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.css'
+                'assets/tinymce/skins/lightgray/skin.min.css'
+                'assets/tinymce/skins/lightgray/content.min.css'
+                'assets/jquery-ui/css/jquery-ui.css'
+                'assets/jstree/themes/default/style.css'
+
+
+                'assets/diamantbarclub/css/animate.css'
+                'assets/diamantbarclub/css/swiper.min.css'
+                'assets/diamantbarclub/css/style.css'
+
+
+                'assets/vendors/fancyBox/dist/jquery.fancybox.css'
+                '@CmsBundle/Resources/public/css/main.less'
+
+                '@CmsBundle/Resources/public/css/cms.less'
+                '@CmsBundle/Resources/public/css/bootstrap/bootstrap.less'
+            %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+
+    <body class="document{{ document.id }}{{ document.class?' ' ~ document.class ~ '':''  }}{{ cms_body_class() }}">
+        <div id="preloader">
+            <div id="preloader-inner"></div>
+        </div>
+
+        {% block body %}
+        {% endblock body %}
+
+        {# NEMAZAT- DULEZITE PRO EDITACI STRANKY #}
+        {% block cms %}
+        {% endblock cms %}
+
+        {% block javascripts %}
+            {% javascripts
+            'assets/vendors/jquery/dist/jquery.js'
+            'assets/vendors/bootstrap/dist/js/bootstrap.js'
+            'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.js'
+            'assets/vendors/jQuery-contextMenu/dist/jquery.ui.position.js'
+            'assets/vendors/jquery.cookie/jquery.cookie.js'
+            'assets/jquery-ui/js/jquery-ui.js'
+            'assets/jquery-ui/js/jquery-ui.js'
+            'assets/jquery-slidereveal/jquery.slidereveal.min.js'
+            'assets/tinymce/tinymce.min.js'
+            'assets/tinymce/jquery.tinymce.min.js'
+            'assets/tinymce/themes/modern/theme.min.js'
+            'assets/vendors/interactjs/interact.js'
+            'assets/jstree/jstree.min.js'
+            'assets/vendors/fancyBox/dist/jquery.fancybox.js'
+            'bundles/fosjsrouting/js/router.js'
+            '@CmsBundle/Resources/public/js/*'
+
+
+            'assets/diamantbarclub/javascript/acos.jquery.js'
+            'assets/diamantbarclub/javascript/script.js'
+
+
+            '@CmsBundle/Resources/public/js/main.js'
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+            <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+            <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+        {% endblock %}
+
+    </body>
+</html>

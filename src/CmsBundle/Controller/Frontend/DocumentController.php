@@ -27,6 +27,7 @@ class DocumentController extends Controller
 
         return $this->render('CmsBundle:Editor:page.base.html.twig', array(
             'document' => $document,
+            'host'     => $this->get('cms.manager.domain')->getHost()
         ));
     }
 }

@@ -68,6 +68,7 @@ class DocumentController extends Controller
                     )
                 )
             )
+            ->add('class', TextType::class, array('label' => 'Třída'))
             ->add('template', ChoiceType::class,
                 array(
                     'label'   => 'Šablona',
@@ -231,6 +232,7 @@ class DocumentController extends Controller
             ->add('metatitle', TextType::class, array('label' => 'Metatitle'))
             ->add('metakeywords', TextType::class, array('label' => 'Metakeywords'))
             ->add('metadescription', TextType::class, array('label' => 'Metadescription'))
+            ->add('class', TextType::class, array('label' => 'Třída'))
             ->add('template', ChoiceType::class,
                 array(
                     'label' => 'Šablona',

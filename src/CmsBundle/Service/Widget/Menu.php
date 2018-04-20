@@ -25,7 +25,7 @@ class Menu extends Base
 
     protected $default = array(
         'title' => '',
-        'tree' => ''
+        'tree' => array()
     );
 
     protected function configureForm($form)
@@ -49,7 +49,8 @@ class Menu extends Base
 
         $parameters['tree'] = json_decode($parameters['tree'], true);
 
-        if (!$editor)
+
+        if (!$editor && $parameters['tree'])
         {
             $parameters['tree'] = $this->prepareTree($parameters['tree']);
         }

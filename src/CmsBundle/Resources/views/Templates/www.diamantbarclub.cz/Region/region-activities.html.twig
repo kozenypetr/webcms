@@ -1,0 +1,9 @@
+<div class="row">
+    <div class="col-12">
+        <div class="portfolio grid-4 widgetsholder">
+            {% for widget in widgets %}
+            {{ cms_widget(widget) }}
+            {% endfor %}
+        </div>
+    </div>
+</div>

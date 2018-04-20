@@ -1,4 +1,4 @@
-{% extends "CmsBundle::Templates/page.html.twig" %}
+{% extends "CmsBundle::Templates/" ~ host ~ "/page.html.twig" %}
 
 {% block title %}{{ document.name }}{% endblock %}
 
@@ -37,7 +37,8 @@
 {% block cms %}
     {% if is_granted('ROLE_ADMIN') %}
         <!-- Large modal -->
-        <div class="modal fade admin-content" id="cms-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+     <div class="admin-content">
+        <div class="modal fade" id="cms-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -54,12 +55,13 @@
                 </div>
             </div>
         </div>
+     </div>
 
-        <!-- Panel -->
-        {% include 'CmsBundle::Editor/Panel/panel.html.twig' %}
+     <!-- Panel -->
+     {% include 'CmsBundle::Editor/Panel/panel.html.twig' %}
 
-        <!-- Sidebar -->
-        {% include 'CmsBundle::Editor/Sidebar/sidebar.html.twig' %}
+     <!-- Sidebar -->
+     {% include 'CmsBundle::Editor/Sidebar/sidebar.html.twig' %}
 
     {% endif %}
 {% endblock %}

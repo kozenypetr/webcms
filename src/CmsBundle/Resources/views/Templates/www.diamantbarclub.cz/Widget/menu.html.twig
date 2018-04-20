@@ -1,0 +1,30 @@
+{% macro menu_links(tree, class) %}
+    {% import _self as self %}
+    <ul{% if (class) %} class="{{ class }}"{% endif %}>
+        {% for item in tree %}
+            <li class="nav-item{% if item.children %}dropdown{% endif %}">
+                <a class="nav-link" href="{{ path('cms_page', { url:  item.link }) }}" {% if item.children %}data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{% endif %}>
+                    {{ item.title }}
+                    {% if item.children %}
+                    <span class="dropdown-toggle"></span>
+                    {% endif %}
+                </a>
+
+                {% if item.children %}
+                    {{ self.menu_links(item.children, 'dropdown') }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% import _self as macro %}
+
+<nav class="navbar navbar-expand-sm navbar-light">
+    <a class="navbar-brand d-sm-none" href="/"><img class="img-fluid" src="/data/logo-small.png" alt=""></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+    <div class="collapse navbar-collapse justify-content-sm-center" id="main-navbar">
+    {{ macro.menu_links(parameters.tree, 'navbar-nav') }}
+    </div>
+</nav>

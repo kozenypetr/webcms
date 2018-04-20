@@ -82,7 +82,15 @@ class CmsExtension extends \Twig_Extension
             $classes[] = 'edit-mode-region';
         }
 
-        return join(' ', $classes);
+        if ($classes)
+        {
+            return ' ' . join(' ', $classes);
+        }
+        else
+        {
+            return '';
+        }
+
     }
 
 

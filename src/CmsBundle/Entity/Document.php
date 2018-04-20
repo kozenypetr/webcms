@@ -61,6 +61,13 @@ class Document
     /**
      * @var string
      *
+     * @ORM\Column(name="class", type="string", length=255, nullable=true)
+     */
+    private $class;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="metatitle", type="string", length=255, nullable=true)
      */
     private $metatitle;
@@ -758,5 +765,29 @@ class Document
         }
 
         return array_reverse($path);
+    }
+
+    /**
+     * Set class.
+     *
+     * @param string|null $class
+     *
+     * @return Document
+     */
+    public function setClass($class = null)
+    {
+        $this->class = $class;
+
+        return $this;
+    }
+
+    /**
+     * Get class.
+     *
+     * @return string|null
+     */
+    public function getClass()
+    {
+        return $this->class;
     }
 }

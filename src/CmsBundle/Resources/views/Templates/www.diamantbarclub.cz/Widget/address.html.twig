@@ -1,0 +1,18 @@
+<h2 class="big-title">{{ parameters.title }}</h2>
+
+<div class="information">
+     <div class="contact-datails">
+          <p><i class="fa fa-diamond" aria-hidden="true"></i>
+              {{ parameters.address | raw }}</p>
+          {% if parameters.phone %}
+          <p><i class="fa fa-phone" aria-hidden="true"></i>
+               </i> {{ parameters.phone }} </p>
+          {% endif %}
+          {% if parameters.email %}
+          <p><i class="icon-envelope"></i> {{ parameters.email }} </p>
+          {% endif %}
+          {% if parameters.opening_hours %}
+          <p><i class="fa fa-glass" aria-hidden="true"></i> {{ parameters.opening_hours }}</p>
+          {% endif %}
+     </div>
+</div>

@@ -1,0 +1,7 @@
+<h2 class="big-title" style="text-align: left;">{{ parameters.title }}</h2>
+
+{{form_start(parameters.form, {'attr': {'action': path('cms_contactform_send'), 'id': 'contact-form', 'novalidate': 'novalidate' }})}}
+
+     {{form_widget(parameters.form)}}
+
+{{form_end(parameters.form)}}

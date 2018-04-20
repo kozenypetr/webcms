@@ -1,0 +1,14 @@
+<header id="header-wrap" class="site-header clearfix">
+    {{ cms_region(document, 'global.head') }}
+    {{ cms_region(document, 'global.menu') }}
+    <!-- End Header Logo & Navigation -->
+    <div class="clearfix"></div>
+</header>
+
+    {#{ cms_region(document, 'global.breadcrumb') }#}
+
+    {{ cms_region(document, 'page.content') }}
+
+    {{ cms_region(document, 'global.map') }}
+
+    {{ cms_region(document, 'global.foot') }}

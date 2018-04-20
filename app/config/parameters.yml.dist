@@ -21,6 +21,7 @@ parameters:
     node: /usr/local/bin/node
     node_paths: /usr/local/lib/node_modules
 
+    rewriteHost: null
     domains:
             localhost:
                 default_template: main.html.twig
