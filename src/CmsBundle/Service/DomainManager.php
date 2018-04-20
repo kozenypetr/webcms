@@ -17,7 +17,12 @@ class DomainManager
         $this->em = $em;
         $this->container = $container;
 
-        if ($this->container->get('request_stack')->getCurrentRequest())
+
+        if ($this->container->getParameter('rewriteHost'))
+        {
+            $this->host = $this->container->getParameter('rewriteHost');
+        }
+        elseif ($this->container->get('request_stack')->getCurrentRequest())
         {
             $this->host = $this->container->get('request_stack')
                 ->getCurrentRequest()
