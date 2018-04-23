@@ -25,9 +25,19 @@ class DocumentController extends Controller
 
         $this->get('cms.manager.content')->setDocument($document);
 
+        if  ($this->getUser() && $this->getUser()->hasRole('ROLE_ADMIN'))
+        {
+            $pageTemplate = 'page.admin.html.twig';
+        }
+        else
+        {
+            $pageTemplate = 'page.html.twig';
+        }
+
         return $this->render('CmsBundle:Editor:page.base.html.twig', array(
             'document' => $document,
-            'host'     => $this->get('cms.manager.domain')->getHost()
+            'host'     => $this->get('cms.manager.domain')->getHost(),
+            'pageTemplate' => $pageTemplate
         ));
     }
 }
