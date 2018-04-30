@@ -52,6 +52,7 @@
         {% endblock cms %}
 
         {% block javascripts %}
+
             {% javascripts
             'assets/vendors/jquery/dist/jquery.js'
             'assets/vendors/bootstrap/dist/js/bootstrap.js'
@@ -64,23 +65,23 @@
             'assets/jquery-ui/js/jquery-ui.js'
 
             'assets/jquery-slidereveal/jquery.slidereveal.min.js'
-            'assets/tinymce/themes/modern/theme.min.js'
+
             'assets/vendors/interactjs/interact.js'
             'assets/jstree/jstree.min.js'
             'assets/vendors/fancyBox/dist/jquery.fancybox.js'
             'bundles/fosjsrouting/js/router.js'
             '@CmsBundle/Resources/public/js/*'
 
-
             'assets/diamantbarclub/javascript/acos.jquery.js'
             'assets/diamantbarclub/javascript/script.js'
-
 
             '@CmsBundle/Resources/public/js/main.js'
             %}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
+
             <script src="/assets/tinymce/tinymce.min.js"></script>
+            <script src="/assets/tinymce/themes/modern/theme.min.js"></script>
 
             <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
             <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
