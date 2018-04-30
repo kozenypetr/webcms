@@ -8,11 +8,11 @@ var slider = {
             width: 400,
             speed: 700,
             shown: function(obj){
-                obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-right"></span>');
+                obj.find(".handle").html('<i class="fa fa-chevron-right" aria-hidden="true"></i>');
                 obj.addClass("left-shadow-overlay");
             },
             hidden: function(obj){
-                obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-left"></span>');
+                obj.find(".handle").html('<i class="fa fa-chevron-left" aria-hidden="true"></i>');
                 obj.removeClass("left-shadow-overlay");
             }
         });

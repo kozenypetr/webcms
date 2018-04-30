@@ -22236,6 +22236,10 @@ body {
 }
 #accordion * {
   text-align: left;
+  font-size: 14px !important;
+}
+#accordion .jstree-icon.fa {
+  width: 15px;
 }
 #accordion h3 {
   font-weight: bold;

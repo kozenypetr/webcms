@@ -827,32 +827,6 @@ String.prototype.latinise = function(){return this.replace(/[^A-Za-z0-9\[\] ]/g,
 
 var urlify = function(a){return a.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "-").replace(/^-+|-+$/g, '')};
 
-var sliderFile = {
-    init: function()
-    {
-        $("#slider-file").slideReveal({
-            trigger: $("#slider-file .handle"),
-            push: false,
-            position: "right",
-            width: 400,
-            speed: 700,
-            shown: function(obj){
-                obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-right"></span>');
-                obj.addClass("left-shadow-overlay");
-            },
-            hidden: function(obj){
-                obj.find(".handle").html('<span class="glyphicon glyphicon-chevron-left"></span>');
-                obj.removeClass("left-shadow-overlay");
-            }
-        });
-    }
-}
-
-
-
-
-
-
 
 var cmsDocument = {
     init: function()

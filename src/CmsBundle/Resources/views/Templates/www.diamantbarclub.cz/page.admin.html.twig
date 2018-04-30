@@ -9,7 +9,11 @@
             <link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC:400,700,900&amp;subset=latin-ext" rel="stylesheet">
 
             {% stylesheets
+                'assets/pure/grids-min.css'
+                'assets/pure/forms-min.css'
+
                 'bootstrap/css/bootstrap.min.css'
+
                 'assets/vendors/font-awesome/css/font-awesome.css'
                 'assets/vendors/bootstrap/dist/css/bootstrap-theme.css'
                 'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.css'
@@ -34,7 +38,7 @@
             <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-            <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">
+
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
