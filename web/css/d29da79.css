@@ -21846,6 +21846,12 @@ li.fancybox-thumbs-loading {
 .region-toolbar .widget-paste-region.active {
   display: inline-block;
 }
+.widget-toolbar a.edit,
+.region-toolbar a.edit {
+  background-color: #fff;
+  color: #337ab7;
+  width: 22px;
+}
 .widget-toolbar span,
 .region-toolbar span,
 .sortable-helper {
@@ -21864,7 +21870,7 @@ li.fancybox-thumbs-loading {
 }
 .widget-toolbar span.button,
 .region-toolbar span.button {
-  width: 20px;
+  width: 22px;
   text-align: center;
 }
 .widget-toolbar i,
@@ -21887,13 +21893,14 @@ li.fancybox-thumbs-loading {
   cursor: pointer;
   float: left;
   width: 98px;
-  height: 65px;
+  height: 70px;
   margin-right: 10px;
   margin-bottom: 10px;
   color: #fff;
   padding: 5px;
   background-color: #2b669a;
   text-align: center;
+  font-size: 15px;
 }
 .sortable-helper {
   height: 23px !important;
@@ -21968,6 +21975,7 @@ li.fancybox-thumbs-loading {
   text-decoration: none;
   text-align: center;
   font-size: 16px;
+  padding-top: 3px;
 }
 #cms-panel .document-links a.document-new {
   background-color: #0a0;
@@ -21982,18 +21990,19 @@ li.fancybox-thumbs-loading {
   background-color: #e00000;
 }
 #cms-panel .show-layout {
-  width: 300px;
+  width: 260px;
   height: 100%;
   float: left;
 }
 #cms-panel .show-layout div {
-  width: 33.333333333%;
+  width: 50%;
   float: left;
   height: 100%;
   text-align: center;
   padding-top: 6px;
   background-color: #2b669a;
   cursor: pointer;
+  font-size: 15px;
 }
 #cms-panel .widgets {
   width: 185px;
@@ -22200,6 +22209,40 @@ body {
 .panel-pageinfo table th {
   font-size: 10px;
   padding: 2px;
+}
+#remodal .tab {
+  min-height: 500px;
+  text-align: left;
+  font-size: 15px;
+}
+#remodal .tab input[type=text],
+#remodal .tab select,
+#remodal .tab textarea {
+  width: 95%;
+}
+#remodal .tab label {
+  margin-top: 15px !important;
+}
+#remodal .tab .ui-tabs-anchor {
+  font-size: 16px !important;
+}
+#remodal .region-form {
+  font-family: Verdana, sans-serif !important;
+}
+#remodal h1.modal-title {
+  font-size: 20px;
+  text-align: center;
+  font-family: Verdana, sans-serif !important;
+}
+#accordion * {
+  text-align: left;
+}
+#accordion h3 {
+  font-weight: bold;
+  font-family: Verdana, sans-serif !important;
+}
+#accordion h3.ui-state-active {
+  color: #fff !important;
 }
 
 /*!
