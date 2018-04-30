@@ -1,6 +1,6 @@
 <div class="region-toolbar admin-content">
-    <span>region ({{ name }})</span>
-    <a href="{{  path('cms_region_edit', {'id': documentId, 'name': name }) }}" class="region-edit" data-region-name="{{ name }}">
+    <span title="{{ template |replace({'CmsBundle:Templates/': ''}) }}">region ({{ name }})</span>
+    <a href="{{  path('cms_region_edit', {'id': documentId, 'name': name }) }}" class="region-edit edit" data-region-name="{{ name }}">
         <i class="fa fa-pencil-square" aria-hidden="true"></i>
     </a>
     <span class="widget-plus-region  button" data-region-id="{{ id }}">

@@ -1,4 +1,4 @@
-<div id="cms-panel" class="admin-content">
+<div id="cms-panel">
 
     <div class="show-layout">
         <div class="edit-mode-toggle">
@@ -9,12 +9,15 @@
             <i class="fa fa-server" aria-hidden="true"></i><br />
             Zobrazit regiony
         </div>
+        {#
         <div class="edit-mode">
             <i class="fa fa-star-half-o" aria-hidden="true"></i><br />
             Podbarvení obsahu
         </div>
+        #}
     </div>
 
+    {#
     <div class="dropdown widgets">
         <div class="button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-plus-circle" aria-hidden="true"></i> Přidat obsah
@@ -23,6 +26,7 @@
             {{ render(controller('CmsBundle:Editor/Editor:widgetPanelList')) }}
         </div>
     </div>
+    #}
 
     {{ render(controller('CmsBundle:Editor/Editor:widgetList')) }}
 

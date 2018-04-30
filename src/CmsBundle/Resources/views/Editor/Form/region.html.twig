@@ -1,13 +1,14 @@
 
-<div id="widget-fom-box" class="admin-content">
+<div id="widget-fom-box" class="region-form pure-form pure-form-stacked">
     {{ form_start(form, {'attr': {'action': path('cms_region_edit', {'id': document.id, 'name': region.name }), 'id': 'modal-edit-form', 'novalidate': 'novalidate' }}) }}
 
-    <div class="row">
-        <div class="col-md-3 col-md-push-9">
-            <h5>{{ region.name }}</h5>
-        </div>
-        <div class="col-md-9 col-md-pull-3">
+    <div class="tab pure-g">
+        <div class="pure-u-4-5">
             {{ form_widget(form) }}
+            <p>šablona je "footer", soubor pak má název "DOMENA/Region/region-footer.html.twig"</p>
+        </div>
+        <div class="pure-u-1-5">
+            <p>Region: <strong>{{ region.name }}</strong></p>
         </div>
     </div>
 

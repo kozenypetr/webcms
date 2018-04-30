@@ -1,25 +1,32 @@
-<div id="modal-form-box">
+<div id="modal-form-box" class="pure-form pure-form-stacked">
     {{ form_start(form, {'attr': {'action': path('cms_widget_edit', {'id': widget.id}), 'id': 'modal-edit-form', 'novalidate': 'novalidate' }}) }}
 
-    <div class="row">
-        <div class="col-md-12">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Základní informace</a></li>
-                <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">Zobrazení</a></li>
-                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Nastavení</a></li>
-            </ul>
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">Základní informace</a></li>
+            <li><a href="#tabs-2">Zobrazení</a></li>
+            <li><a href="#tabs-3">Nastavení</a></li>
+        </ul>
 
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane" id="seo">
+
+        <div id="tabs-2" class="tab">
+            <div class="pure-g">
+                <div class="pure-u-1-2">
                     {{ form_row(form.predefined_class) }}
                     {{ form_row(form.class) }}
                     {{ form_row(form.class_sm) }}
                     {{ form_row(form.class_xs) }}
                     {{ form_row(form.class_lg) }}
+                </div>
+                <div class="pure-u-1-2">
                     {{ form_row(form.tag) }}
                     {{ form_row(form.subclass) }}
                 </div>
-                <div role="tabpanel" class="tab-pane" id="messages">
+            </div>
+        </div>
+        <div id="tabs-3" class="tab">
+            <div class="pure-g">
+                <div class="pure-u-1">
                     {{ form_row(form.id) }}
                     {{ form_row(form.sid) }}
                     {{ form_row(form.is_system) }}
@@ -27,7 +34,12 @@
                     <h4>Návrh šablon</h4>
                     {{ widget.suggestionTemplateFiles(defaultTemplate) | join('<br />') | raw }}
                 </div>
-                <div role="tabpanel" class="tab-pane active" id="basic">
+            </div>
+        </div>
+
+        <div id="tabs-1" class="tab">
+            <div class="pure-g">
+                <div class="pure-u-1">
                     {{ form_widget(form) }}
                 </div>
             </div>
@@ -38,3 +50,9 @@
 
     {{ form_end(form) }}
 </div>
+
+<script>
+    $( function() {
+        $( "#tabs" ).tabs();
+    } );
+</script>

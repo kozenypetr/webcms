@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -18,6 +18,8 @@
                 'assets/jquery-ui/css/jquery-ui.css'
                 'assets/jstree/themes/default/style.css'
 
+                'assets/remodal/remodal.css'
+                'assets/remodal/remodal-default-theme.css'
 
                 'assets/diamantbarclub/css/animate.css'
                 'assets/diamantbarclub/css/swiper.min.css'
@@ -28,11 +30,11 @@
                 '@CmsBundle/Resources/public/css/main.less'
 
                 '@CmsBundle/Resources/public/css/cms.less'
-                '@CmsBundle/Resources/public/css/bootstrap/bootstrap.less'
             %}
             <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+            <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -53,14 +55,15 @@
             {% javascripts
             'assets/vendors/jquery/dist/jquery.js'
             'assets/vendors/bootstrap/dist/js/bootstrap.js'
+
+            'assets/remodal/remodal.min.js'
+
             'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.js'
             'assets/vendors/jQuery-contextMenu/dist/jquery.ui.position.js'
             'assets/vendors/jquery.cookie/jquery.cookie.js'
             'assets/jquery-ui/js/jquery-ui.js'
-            'assets/jquery-ui/js/jquery-ui.js'
+
             'assets/jquery-slidereveal/jquery.slidereveal.min.js'
-            'assets/tinymce/tinymce.min.js'
-            'assets/tinymce/jquery.tinymce.min.js'
             'assets/tinymce/themes/modern/theme.min.js'
             'assets/vendors/interactjs/interact.js'
             'assets/jstree/jstree.min.js'
@@ -77,6 +80,8 @@
             %}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
+            <script src="/assets/tinymce/tinymce.min.js"></script>
+
             <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
             <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
         {% endblock %}

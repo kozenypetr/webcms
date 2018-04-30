@@ -8,7 +8,7 @@ var dnd = {
 
     file: function()
     {
-        $( "#collapseFile .jstree-anchor" ).draggable({
+        $( "#file-tree .jstree-anchor" ).draggable({
             helper: 'clone',
             start: function() {
                 $("#slider-right").slideReveal("hide");
@@ -16,7 +16,7 @@ var dnd = {
         });
 
         $( ".widget-image-receiver .landing" ).droppable({
-            accept: "#collapseFile .jstree-anchor",
+            accept: "#file-tree .jstree-anchor",
             drop: function( event, ui ) {
                 var file = ui.draggable.attr('id');
                 // pridani obrazku k widgetu - posleme ID obrazku
@@ -27,7 +27,7 @@ var dnd = {
         });
 
         $( ".dropimage" ).droppable({
-            accept: "#collapseFile .jstree-anchor",
+            accept: "#file-tree .jstree-anchor",
             drop: function( event, ui ) {
                 var file = ui.draggable.attr('id');
                 file = file.replace("_anchor", "");
@@ -54,6 +54,8 @@ var dnd = {
                 // pridani obrazku k widgetu - posleme ID obrazku
                 // var url = Routing.generate('cms_widget_add_image', { 'id': event.target.dataset.widgetId});
                 // cms.ajax(url, 'PUT', cmsWidget.__addImage, { 'file': file });
+                console.log(event);
+                console.log(ui);
             }
         });
     }

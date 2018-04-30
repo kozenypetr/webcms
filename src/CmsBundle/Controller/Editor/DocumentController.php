@@ -58,7 +58,7 @@ class DocumentController extends Controller
             ->add('metatitle', TextType::class, array('label' => 'Metatitle'))
             ->add('metakeywords', TextType::class, array('label' => 'Metakeywords'))
             ->add('metadescription', TextType::class, array('label' => 'Metadescription'))
-            ->add('url', TextType::class, array('label' => 'URL'))
+            ->add('url', TextType::class, array('label' => 'URL', 'data' => $parent?$parent->getUrl() . '/':null))
             ->add('status', ChoiceType::class,
                 array(
                     'label' => 'Stav',
@@ -136,6 +136,7 @@ class DocumentController extends Controller
 
         return $this->render('CmsBundle:Editor/Form:document.html.twig', array(
             'form' => $form->createView(),
+            'new'  => 1,
             'action' => $this->generateUrl('cms_document_add')
         ));
     }
@@ -233,6 +234,7 @@ class DocumentController extends Controller
             ->add('metakeywords', TextType::class, array('label' => 'Metakeywords'))
             ->add('metadescription', TextType::class, array('label' => 'Metadescription'))
             ->add('class', TextType::class, array('label' => 'Třída'))
+            ->add('class', TextType::class, array('label' => 'Třída'))
             ->add('template', ChoiceType::class,
                 array(
                     'label' => 'Šablona',
@@ -307,6 +309,7 @@ class DocumentController extends Controller
         return $this->render('CmsBundle:Editor/Form:document.html.twig', array(
             'form' => $form->createView(),
             'document' => $document,
+            'new'  => 0,
             'action' => $this->generateUrl('cms_document_edit',
                         array('id' => $document->getId()))
         ));

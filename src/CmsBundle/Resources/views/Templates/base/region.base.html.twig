@@ -2,6 +2,6 @@
     {% include template with { 'widegts': widgets } %}
 
     {% if is_granted('ROLE_ADMIN') %}
-        {% include 'CmsBundle:Editor/Toolbar:toolbar.region.html.twig' with {'name' : name, 'documentId' : document.id, 'regionId': id} %}
+        {% include 'CmsBundle:Editor/Toolbar:toolbar.region.html.twig' with {'name' : name, 'documentId' : document.id, 'regionId': id, 'template': template} %}
     {% endif %}
 </{{ tag }}>
