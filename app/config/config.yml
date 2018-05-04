@@ -104,6 +104,10 @@ sonata_block:
 sonata_admin:
     title:      WEBCMS
     title_logo: images/webcms.png
+    templates:
+        layout:      'AdminBundle::standard_layout.html.twig'
+        dashboard:   'AdminBundle::Core/dashboard.html.twig'
+        user_block:  'AdminBundle::Core/user_block.html.twig'
     security:
         handler: sonata.admin.security.handler.role
     dashboard:
@@ -114,7 +118,7 @@ sonata_admin:
                 icon:            '<i class="fa fa-book"></i>'
                 items:
                     - admin.cms.document_category
-                    - admin.cms.document
+#                    - admin.cms.document
                     - route:        cms_admin_filemanager
                       label:        Soubory
 
