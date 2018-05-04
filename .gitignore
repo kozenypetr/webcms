@@ -19,3 +19,5 @@
 /zaloha/
 /web/media/cache/*
 !web/media/cache/.gitkeep
+/web/media/data/*
+!web/media/data/.gitkeep
