@@ -102,6 +102,11 @@ class DocumentController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
+            // zkontrolujeme url, odstranime znaky a jestli uz neexistuje
+            $url = $em->getRepository('CmsBundle:Document')->checkUrl($document->getUrl());
+
+            $document->setUrl($url);
+
             $em->persist($document);
 
             $em->flush();
@@ -162,13 +167,7 @@ class DocumentController extends Controller
 
         $copyDocument->setParent($parent);
 
-        $suffix = 2;
-        while ($em->getRepository('CmsBundle:Document')->findOneByUrl($copyDocument->getUrl() . $suffix))
-        {
-            $suffix++;
-        }
-
-        $copyDocument->setUrl($copyDocument->getUrl() . $suffix);
+        $copyDocument->setUrl($em->getRepository('CmsBundle:Document')->checkUrl($copyDocument->getUrl()));
 
         $em->persist($copyDocument);
 
@@ -300,6 +299,10 @@ class DocumentController extends Controller
             $document = $form->getData();
 
             $em = $this->getDoctrine()->getManager();
+
+            $url = $em->getRepository('CmsBundle:Document')->checkUrl($document->getUrl(), $document->getId());
+            $document->setUrl($url);
+
             $em->persist($document);
             $em->flush();
 

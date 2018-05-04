@@ -59,4 +59,32 @@ class DocumentRepository extends NestedTreeRepository
         }
     }
 
+    public function checkUrl($baseUrl, $documentId = null)
+    {
+        // orezeme kraje url
+        $url = trim($baseUrl, ' /-');
+
+        if (empty($url))
+        {
+            $url = 'uvod';
+        }
+
+        // zjistime, jestli uz URL neexistuje
+        $document = $this->findOneByUrl($url);
+
+        // pokud existuje, tak pridame suffix
+        if ($document && (is_null($documentId) || $document->getId() != $documentId))
+        {
+            $suffix = 2;
+            while ($this->findOneByUrl($url . $suffix))
+            {
+                $suffix++;
+            }
+
+            $url = $url . $suffix;
+        }
+
+        return $url;
+    }
+
 }

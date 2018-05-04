@@ -1,0 +1,20 @@
+{#
+  * parameters.title
+  * parameters.annotation
+  * parameters.text | raw
+  * parameters.image
+#}
+<div class="row news-detail">
+    <div class="col-md-12">
+        <h2>{{ parameters.title }}</h2>
+        <p class="annotation">{{ parameters.annotation }}</p>
+    </div>
+    <div class="col-md-6 offset-md-3">
+        <img src="{{ asset(parameters.image) | imagine_filter('cms_image_thumb') }}" alt="">
+    </div>
+    <div class="col-md-12">
+        <p class="text">
+            {{ parameters.text | raw }}
+        </p>
+    </div>
+</div>

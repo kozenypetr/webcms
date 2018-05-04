@@ -23,6 +23,10 @@
     }
   }
 
+  a {
+    display: inline !important;
+  }
+
   a.edit {
     background-color: #fff;
     color: #337ab7;
@@ -203,12 +207,13 @@
   }
 
   .show-layout {
-    width: 260px;
+    width: 300px;
     height: 100%;
     float: left;
 
-    div {
-      width: 50%;
+    div, a {
+      display: block;
+      width: 33%;
       float: left;
       height: 100%;
       text-align: center;
@@ -216,6 +221,7 @@
       background-color: #2b669a;
       cursor: pointer;
       font-size: 15px;
+      color: #fff;
     }
   }
 

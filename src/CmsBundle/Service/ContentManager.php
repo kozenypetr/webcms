@@ -58,6 +58,8 @@ class ContentManager
             ->getCurrentRequest()
             ->get('url');
 
+        dump($this->url);
+
         if ($this->url)
         {
             $this->document = $this->em
@@ -73,6 +75,9 @@ class ContentManager
         $this->documentId = $this->container->get('request_stack')
             ->getCurrentRequest()
             ->get('document_id');
+
+        dump($this->container->get('request_stack')
+            ->getCurrentRequest()->get('document_id'));
 
         if ($this->documentId)
         {

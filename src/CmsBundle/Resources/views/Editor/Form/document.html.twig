@@ -24,12 +24,14 @@
                 <div class="pure-g">
                     <div class="pure-u-1-2">
                         {{ form_row(form.name) }}
+                        <a href="#" class="create-url-button">Generovat URL</a>
                     </div>
                     <div class="pure-u-1-2">
                         {{ form_row(form.status) }}
                     </div>
                     <div class="pure-u-1-2">
                         {{ form_row(form.url) }}
+
                     </div>
                     <div class="pure-u-1-2">
                         {{ form_row(form.parent) }}
@@ -75,5 +77,12 @@
 <script>
     $( function() {
         $( "#tabs" ).tabs();
+
+
+
+        $('.create-url-button').click(function(e){
+            e.preventDefault();
+        });
+
     } );
 </script>

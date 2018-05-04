@@ -1,0 +1,37 @@
+{% macro menu_links(documents) %}
+    {% import _self as self %}
+    <ul>
+        {% for document in documents %}
+            <li data-jstree='{"icon":"fa {{ document.category.icon }}", "type":"document{{ document.category.isEnableAsParent }}"}' data-document-id="{{ document.id }}" >
+                <a href="/{{ document.url }}" title="{{ document.url }}">
+                    {{ document.name }}
+                </a>
+
+                {% if document.__children %}
+                    {{ self.menu_links(document.__children) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% import _self as macro %}
+
+
+{% block sonata_admin_content %}
+    <div class="cms-dashboard row">
+        <div class="col-xs-8 col-md-8">
+            <div class="box box-primary">
+                <strong>PRO EDITACI WEBU KLIKNĚTE <a href="{{ app.request.getSchemeAndHttpHost() }}">ZDE</a></strong>
+            </div>
+        </div>
+        <div class="col-xs-4 col-md-4">
+            <div class="box box-primary">
+                <h3>Seznam stránek</h3>
+                <div class="tree">
+                    {{ macro.menu_links(hierarchy) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -3,18 +3,18 @@
     <div class="show-layout">
         <div class="edit-mode-toggle">
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i><br />
-            Editační režim
+            Editační<br />režim
         </div>
         <div class="edit-mode-region-toggle">
             <i class="fa fa-server" aria-hidden="true"></i><br />
             Zobrazit regiony
         </div>
-        {#
-        <div class="edit-mode">
+
+        <a href="{{ app.request.getSchemeAndHttpHost() }}/admin" class="edit-mode">
             <i class="fa fa-star-half-o" aria-hidden="true"></i><br />
-            Podbarvení obsahu
-        </div>
-        #}
+            Administrace
+        </a>
+
     </div>
 
     {#

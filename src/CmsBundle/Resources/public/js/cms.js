@@ -885,7 +885,6 @@ var cmsDocument = {
     {
         cmsModal.show(data, 'Nová stránka', cmsDocument.__submitCreateForm);
 
-        //
         cmsDocument.__checkUrl();
     },
 
@@ -893,21 +892,41 @@ var cmsDocument = {
     {
         $('.modal-document-add #form_name').keyup(function(){
             // pokud nedoslo k uprave URL
-            var name = $('.modal-document-add #form_name').val();
-
             if ($('#cms_update_url').val() == 1)
             {
-                var url = $('.modal-document-add #form_url').val();
-
-                url = url.replace(/\/[^\/]+$/, "/");
-
-                $('.modal-document-add #form_url').val(url + urlify(name.latinise()));
+                cmsDocument.__generateUrlFromName();
             }
         });
 
-        $('.modal-document-add #form_url').keyup(function(){
+
+        $('.modal-document-add #form_url').keypress(function(e) {
+            var re = /[A-Za-z0-9-_\.\/]/g;
+
+            if (!re.test(e.key))
+            {
+                e.preventDefault();
+            }
+
             $('#cms_update_url').val(0);
         });
+
+        $('.modal-document-add .create-url-button').click(function(e){
+            e.preventDefault();
+
+            cmsDocument.__generateUrlFromName();
+        });
+
+    },
+
+    __generateUrlFromName: function()
+    {
+        var name = $('.modal-document-add #form_name').val();
+
+        var url = $('.modal-document-add #form_url').val();
+
+        url = url.replace(/\/[^\/]+$/, "/");
+
+        $('.modal-document-add #form_url').val(url + urlify(name.latinise()));
     },
 
     /**
@@ -918,6 +937,8 @@ var cmsDocument = {
     __loadEditFormSuccess: function(data)
     {
         cmsModal.show(data, 'Editace stránky', cmsDocument.__submitEditForm);
+
+        cmsDocument.__checkUrl();
     },
 
 
@@ -1023,7 +1044,8 @@ var cmsRegion = {
         $.ajax({
             type: 'PUT',
             data: {
-                parameters: JSON.stringify(params)
+                parameters: JSON.stringify(params),
+                document_id: adminParam['document_id']
             },
             // url: admin_urls['col_new'] + '?area_id=' + area_id + '&layout_id=' + layout_id + '&page_id=' + page_id + '&location=' + location + '&ph=' + ph,
             // url: $(ui.item).attr('href') + '?col_id=' + col_id + '&prev_col=' + new_item.prev().attr('col-id') + '&' + droppable.sortable( "serialize" ),
@@ -1136,7 +1158,7 @@ var cmsWidget = {
         // ulozime widget, ktery se edituje
         cmsWidget.widgetInEdit = $(this);
         // nacteme formular pro editaci widgetu
-        cms.ajax($(this).attr('href'), 'GET', cmsWidget.__loadEditFormSuccess);
+        cms.ajax($(this).attr('href') + '?document_id=' + adminParam['document_id'], 'GET', cmsWidget.__loadEditFormSuccess);
     },
 
     /**
@@ -1209,12 +1231,13 @@ var cmsWidget = {
         params['next']        = $('.widget-' + insertWidgetId).next().data('widget-id');
 
         // $.cookie('cms_copy_widget_id', null);
-        $.removeCookie('cms_copy_widget_id');
+
 
         $.ajax({
             type: 'POST',
             data: {
-                parameters: JSON.stringify(params)
+                parameters: JSON.stringify(params),
+                document_id: adminParam['document_id']
             },
             // url: admin_urls['col_new'] + '?area_id=' + area_id + '&layout_id=' + layout_id + '&page_id=' + page_id + '&location=' + location + '&ph=' + ph,
             // url: $(ui.item).attr('href') + '?col_id=' + col_id + '&prev_col=' + new_item.prev().attr('col-id') + '&' + droppable.sortable( "serialize" ),
@@ -1224,11 +1247,15 @@ var cmsWidget = {
             success: function(data) {
                 $('.widget-' + insertWidgetId).after(data.widgetHtml);
                 cmsWidget.initWidget('.widget-' + data.id);
+
+                $('.widget-paste').removeClass('active');
+                $('.widget-paste-region').removeClass('active');
+
+                $.removeCookie('cms_copy_widget_id');
             }
         });
 
-        $('.widget-paste').removeClass('active');
-        $('.widget-paste-region').removeClass('active');
+
 
     },
 
@@ -1266,7 +1293,8 @@ var cmsWidget = {
         $.ajax({
             type: 'PUT',
             data: {
-                parameters: JSON.stringify(params)
+                parameters: JSON.stringify(params),
+                document_id: adminParam['document_id']
             },
             // url: admin_urls['col_new'] + '?area_id=' + area_id + '&layout_id=' + layout_id + '&page_id=' + page_id + '&location=' + location + '&ph=' + ph,
             // url: $(ui.item).attr('href') + '?col_id=' + col_id + '&prev_col=' + new_item.prev().attr('col-id') + '&' + droppable.sortable( "serialize" ),

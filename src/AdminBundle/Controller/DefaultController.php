@@ -15,4 +15,20 @@ class DefaultController extends Controller
     {
         return $this->render('AdminBundle:Default:filemanager.html.twig');
     }
+
+
+    public function dashboardAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $repo = $em->getRepository('CmsBundle:Document');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $repo = $em->getRepository('CmsBundle:Document');
+
+        $hierarchy = $repo->childrenHierarchy(null, false, array());
+
+        return $this->render('AdminBundle:Default:dashboard.html.twig', array('hierarchy' => $hierarchy));
+    }
 }
