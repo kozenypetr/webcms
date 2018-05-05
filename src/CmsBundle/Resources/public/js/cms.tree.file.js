@@ -1,3 +1,5 @@
+var xhr = null;
+
 var treeFile = {
     init: function()
     {
@@ -24,6 +26,11 @@ var treeFile = {
 
         $("#file-tree .jstree-anchor").on("mouseenter", function(event) {
             event.stopImmediatePropagation();
+
+            if( xhr != null ) {
+                xhr.abort();
+                xhr = null;
+            }
 
             $('#image-preview').html('<img src="/images/loading.gif" width="80" />');
             $('#image-preview').show();

@@ -15,73 +15,87 @@
 
 
 
-<div id="modal-form-box">
+<div id="modal-form-box" class="pure-form pure-form-stacked">
     {{ form_start(form, {'attr': {'action': path('cms_widget_edit', {'id': widget.id}), 'id': 'modal-edit-form', 'novalidate': 'novalidate' }}) }}
 
-    <div class="row">
-        <div class="col-md-12">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Základní informace</a></li>
-                <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">Zobrazení</a></li>
-                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Nastavení</a></li>
+    <div id="tabs">
+            <ul>
+                <li><a href="#tabs-1">Základní informace</a></li>
+                <li><a href="#tabs-2">Zobrazení</a></li>
+                <li><a href="#tabs-3">Nastavení</a></li>
             </ul>
 
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane" id="seo">
+
+        <div id="tabs-2" class="tab">
+            <div class="pure-g">
+                <div class="pure-u-1-2">
                     {{ form_row(form.predefined_class) }}
                     {{ form_row(form.class) }}
                     {{ form_row(form.class_sm) }}
                     {{ form_row(form.class_xs) }}
                     {{ form_row(form.class_lg) }}
+                </div>
+                <div class="pure-u-1-2">
                     {{ form_row(form.tag) }}
                     {{ form_row(form.subclass) }}
                 </div>
-                <div role="tabpanel" class="tab-pane" id="messages">
+            </div>
+        </div>
+        <div id="tabs-3" class="tab">
+            <div class="pure-g">
+                <div class="pure-u-1">
                     {{ form_row(form.id) }}
                     {{ form_row(form.sid) }}
+                    {{ form_row(form.is_system) }}
                     <p>pokud zadáte strojový název, bude možné s jeho pomocí vytvořit šablonu přímo pro tento widget</p>
                     <h4>Návrh šablon</h4>
                     {{ widget.suggestionTemplateFiles(defaultTemplate) | join('<br />') | raw }}
                 </div>
-                <div role="tabpanel" class="tab-pane active" id="basic">
+            </div>
+        </div>
+
+
+        <div id="tabs-1" class="tab">
+            <div class="pure-g">
+
+                <div class="pure-u-1">
                     {{ form_widget(form) }}
+                </div>
 
+                <div id="menu" class="pure-u-1-2">
+                    <ul>
+                        <li data-jstree='{ "icon" : "//jstree.com/tree-icon.png" }'>
+                            MENU
+                            {{ macro.render_editor_menu(parameters.tree) }}
+                        </li>
+                    </ul>
+                </div>
 
-                    <div class="row">
-                    <div id="menu" class="col-md-6">
-                        <ul>
-                            <li data-jstree='{ "icon" : "//jstree.com/tree-icon.png" }'>
-                                MENU
-                                {{ macro.render_editor_menu(parameters.tree) }}
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="menuitem" class="col-md-6">
-                        <div id="menuitem-form" style="display: none;">
-                            <div class="form-group">
-                                <label class="control-label required" for="form_menuitem_title">Název</label>
-                                <input id="form_menuitem_title"  required="required" class="form-control" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label required" for="form_menuitem_link">Odkaz</label>
-                                <input id="form_menuitem_link"  required="required" class="form-control droplink" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label required" for="form_menuitem_class">Třída</label>
-                                <input id="form_menuitem_class"  required="required" class="form-control" type="text">
-                            </div>
-                            <div>
+                <div id="menuitem" class="pure-u-1-2">
+                    <div id="menuitem-form" style="display: none;">
+                        <div class="form-group">
+                            <label class="control-label required" for="form_menuitem_title">Název</label>
+                            <input id="form_menuitem_title"  required="required" class="form-control" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label required" for="form_menuitem_link">Odkaz</label>
+                            <input id="form_menuitem_link"  required="required" class="form-control droplink" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label required" for="form_menuitem_class">Třída</label>
+                            <input id="form_menuitem_class"  required="required" class="form-control" type="text">
+                        </div>
+                        <div>
 
-                                <button id="menuitem-save-button" type="button" class="btn btn-primary">Aktualizovat</button>
-                                <button id="menuitem-storno-button" type="button" class="btn btn-default">Storno </button>
-                            </div>
+                            <button id="menuitem-save-button" type="button" class="btn btn-primary">Aktualizovat</button>
+                            <button id="menuitem-storno-button" type="button" class="btn btn-default">Storno </button>
                         </div>
                     </div>
-                    </div>
-
-                    <div class="clear"></div>
                 </div>
+
+                <div class="clear"></div>
             </div>
+
         </div>
     </div>
 
@@ -91,5 +105,12 @@
 </div>
 
 <script>
-    cmsMenu.init();
+
+    $( function() {
+        $( "#tabs" ).tabs();
+
+        cmsMenu.init();
+    });
+
+
 </script>

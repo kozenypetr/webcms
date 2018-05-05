@@ -51,6 +51,16 @@
         {% block cms %}
         {% endblock cms %}
 
+        <a href="#" class="back-to-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+
+        <div id="loader">
+            <div class="square-spin">
+                <div></div>
+            </div>
+        </div>
+
         {% block javascripts %}
             {% javascripts
                 'assets/vendors/jquery/dist/jquery.js'
@@ -70,6 +80,12 @@
                 'assets/js/jquery.themepunch.tools.min.js'
 
 
+
+
+                'assets/js/main.js'
+
+                '@CmsBundle/Resources/public/js/main.js'
+
                 'assets/remodal/remodal.min.js'
                 'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.js'
                 'assets/vendors/jQuery-contextMenu/dist/jquery.ui.position.js'
@@ -80,8 +96,6 @@
                 'assets/vendors/fancyBox/dist/jquery.fancybox.js'
                 'bundles/fosjsrouting/js/router.js'
                 '@CmsBundle/Resources/public/js/*'
-
-                '@CmsBundle/Resources/public/js/main.js'
             %}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
