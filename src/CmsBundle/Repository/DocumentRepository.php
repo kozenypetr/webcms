@@ -64,7 +64,7 @@ class DocumentRepository extends NestedTreeRepository
         // orezeme kraje url
         $url = trim($baseUrl, ' /-');
 
-        if (empty($url))
+        if (is_null($documentId) && empty($url))
         {
             $url = 'uvod';
         }

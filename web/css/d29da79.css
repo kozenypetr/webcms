@@ -21817,6 +21817,15 @@ li.fancybox-thumbs-loading {
   text-align: center;
   border: solid red 1px;
 }
+.news-detail {
+  text-align: center;
+}
+.news-link .news-link-image img {
+  width: 100%;
+}
+.team.region {
+  margin-bottom: 20px;
+}
 
 .widget-toolbar,
 .region-toolbar {
@@ -21845,6 +21854,10 @@ li.fancybox-thumbs-loading {
 .widget-toolbar .widget-paste-region.active,
 .region-toolbar .widget-paste-region.active {
   display: inline-block;
+}
+.widget-toolbar a,
+.region-toolbar a {
+  display: inline !important;
 }
 .widget-toolbar a.edit,
 .region-toolbar a.edit {
@@ -21990,12 +22003,14 @@ li.fancybox-thumbs-loading {
   background-color: #e00000;
 }
 #cms-panel .show-layout {
-  width: 260px;
+  width: 300px;
   height: 100%;
   float: left;
 }
-#cms-panel .show-layout div {
-  width: 50%;
+#cms-panel .show-layout div,
+#cms-panel .show-layout a {
+  display: block;
+  width: 33%;
   float: left;
   height: 100%;
   text-align: center;
@@ -22003,6 +22018,7 @@ li.fancybox-thumbs-loading {
   background-color: #2b669a;
   cursor: pointer;
   font-size: 15px;
+  color: #fff;
 }
 #cms-panel .widgets {
   width: 185px;
@@ -22169,7 +22185,6 @@ body {
 }
 .edit-mode .region {
   border: dashed #555 2px;
-  margin-bottom: 2px;
 }
 .edit-mode .region .widgetsholder {
   min-height: 40px;
@@ -22202,12 +22217,13 @@ body {
 .panel-pageinfo {
   float: left;
   height: 100%;
-  width: 380px;
+  width: 450px;
   margin: 5px;
 }
 .panel-pageinfo table td,
 .panel-pageinfo table th {
-  font-size: 10px;
+  font-size: 13px;
+  line-height: 16px;
   padding: 2px;
 }
 #remodal .tab {

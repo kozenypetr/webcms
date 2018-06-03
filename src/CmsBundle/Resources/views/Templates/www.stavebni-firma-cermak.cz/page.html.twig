@@ -1,23 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>{% block title %}{% endblock %} | Stavební firma Čermák</title>
         {% block stylesheets %}
             {% stylesheets
-                'assets/vendors/bootstrap/dist/css/bootstrap.css'
-                'assets/vendors/font-awesome/css/font-awesome.css'
-                'assets/vendors/bootstrap/dist/css/bootstrap-theme.css'
-                'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.css'
-                'assets/tinymce/skins/lightgray/skin.min.css'
-                'assets/tinymce/skins/lightgray/content.min.css'
-                'assets/jquery-ui/css/jquery-ui.css'
-                'assets/jstree/themes/default/style.css'
-
+                'assets/css/bootstrap.min.css'
+                'assets/fonts/font-awesome.min.css'
 
                 'assets/fonts/simple-line-icons.css'
                 'assets/fonts/flaticon.css'
+
+                'assets/css/settings.css'
 
                 'assets/css/main.css'
                 'assets/css/responsive.css'
@@ -27,9 +22,6 @@
                 'assets/slick/slick-theme.css'
                 'assets/vendors/fancyBox/dist/jquery.fancybox.css'
                 '@CmsBundle/Resources/public/css/main.less'
-
-                '@CmsBundle/Resources/public/css/cms.less'
-                '@CmsBundle/Resources/public/css/bootstrap/bootstrap.less'
             %}
             <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
@@ -45,6 +37,16 @@
         {% endblock body %}
         </div>
 
+        <a href="#" class="back-to-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+
+        <div id="loader">
+            <div class="square-spin">
+                <div></div>
+            </div>
+        </div>
+
         {# NEMAZAT- DULEZITE PRO EDITACI STRANKY #}
         {% block cms %}
         {% endblock cms %}
@@ -53,20 +55,7 @@
             {% javascripts
             'assets/vendors/jquery/dist/jquery.js'
             'assets/vendors/bootstrap/dist/js/bootstrap.js'
-            'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.js'
-            'assets/vendors/jQuery-contextMenu/dist/jquery.ui.position.js'
-            'assets/vendors/jquery.cookie/jquery.cookie.js'
-            'assets/jquery-ui/js/jquery-ui.js'
-            'assets/jquery-ui/js/jquery-ui.js'
-            'assets/jquery-slidereveal/jquery.slidereveal.min.js'
-            'assets/tinymce/tinymce.min.js'
-            'assets/tinymce/jquery.tinymce.min.js'
-            'assets/tinymce/themes/modern/theme.min.js'
-            'assets/vendors/interactjs/interact.js'
-            'assets/jstree/jstree.min.js'
             'assets/vendors/fancyBox/dist/jquery.fancybox.js'
-            'bundles/fosjsrouting/js/router.js'
-            '@CmsBundle/Resources/public/js/*'
 
             'assets/js/owl.carousel.min.js'
             'assets/js/modernizrr.js'
@@ -77,17 +66,17 @@
             'assets/js/jquery.parallax.js'
             'assets/js/smooth-scroll.js'
             'assets/js/jquery.slicknav.js'
-            'assets/js/template.js'
-            'assets/js/jquery.themepunch.revolution.min.js'
+
             'assets/js/jquery.themepunch.tools.min.js'
-            'assets/slick/slick.min.js'
+
+            'assets/js/main.js'
 
             '@CmsBundle/Resources/public/js/main.js'
             %}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
+            <script src="assets/js/jquery.themepunch.revolution.min.js"></script>
             <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-            <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
         {% endblock %}
 
     </body>

@@ -1620,7 +1620,7 @@ var cms = {
         }
 
         // odeslani pozadavku metodou AJAX
-        $.ajax(settings);
+        xhr = $.ajax(settings);
 
         return $result;
     }

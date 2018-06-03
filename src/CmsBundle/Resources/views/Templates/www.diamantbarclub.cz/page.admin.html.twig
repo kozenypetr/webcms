@@ -51,6 +51,16 @@
         {% block body %}
         {% endblock body %}
 
+        <a href="#" class="back-to-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+
+        <div id="loader" style="display: none;">
+            <div class="square-spin">
+                <div></div>
+            </div>
+        </div>
+
         {# NEMAZAT- DULEZITE PRO EDITACI STRANKY #}
         {% block cms %}
         {% endblock cms %}
