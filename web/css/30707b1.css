@@ -11895,6 +11895,9 @@ li.fancybox-thumbs-loading {
 .team.region {
   margin-bottom: 20px;
 }
+h1 {
+  border-bottom: solid 1px #ccc;
+}
 
 /*!
 Pure v1.0.0
