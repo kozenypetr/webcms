@@ -1,6 +1,6 @@
 {% form_theme parameters.form 'bootstrap_3_layout.html.twig' %}
 
-<h2 class="big-title" style="text-align: left;">{{ parameters.title }}</h2>
+<h2 class="big-title" style="text-align: center; margin-top: 20px;">{{ parameters.title }}</h2>
 
 {{form_start(parameters.form, {'attr': {'action': path('cms_contactform_send'), 'id': 'contact-form', 'novalidate': 'novalidate' }})}}
 
