@@ -3,7 +3,7 @@
     <ul{% if (class) %} class="{{ class }}"{% endif %}>
         {% for item in tree %}
             <li class="nav-item{% if item.children %}dropdown{% endif %}">
-                <a class="nav-link" href="{{ path('cms_page', { url:  item.link }) }}" {% if item.children %}data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{% endif %}>
+                <a class="nav-link" href="{{ (item.link == 'path')?path('cms_page', { url:  item.link }):(item.link | raw) }}" {% if item.children %}data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{% endif %}>
                     {{ item.title }}
                     {% if item.children %}
                     <span class="dropdown-toggle"></span>
