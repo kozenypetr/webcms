@@ -27,7 +27,9 @@ class News extends Base
         'annotation' => 'Krátký popis aktuality',
         'text' => '<p>Text aktuality</p>',
         'image' => '',
-        'date'  => ''
+        'date'  => '',
+        'subtitle' => '',
+        'document' => ''
     );
 
     protected function configureForm($form)
@@ -36,6 +38,7 @@ class News extends Base
             ->add('title', TextType::class, array(
                 'label'=>'Nadpis'
             ))
+            ->add('subtitle', TextType::class, ['label' => 'Podnadpis'])
             ->add('annotation', TextareaType::class, array(
                 'label'=>'Krátký popis',
                 'constraints' => array(new Assert\NotBlank()),
@@ -51,7 +54,30 @@ class News extends Base
             ->add('image', TextType::class, array(
                 'label'=>'Obrázek',
                 'attr' => ['class' => 'dropimage'],
-            ));
+            ))
+            ->add('document', TextType::class, ['label' => 'Stránka', 'attr' => ['class' => 'droplink']]);
+    }
+
+    public function getWidgetParameters($editor = false)
+    {
+        $parameters = parent::getWidgetParameters();
+
+        $parameters['link'] = '';
+        if (preg_match('/\[(.+):([0-9]+)\]/', $parameters['document'], $matches))
+        {
+            $documentId = $matches[2];
+
+            // najdeme dokument
+            $document = $this->em->getRepository('CmsBundle:Document')->find($documentId);
+            $parameters['document'] = $document;
+
+            if ($document)
+            {
+                $parameters['link'] = '/' . $document->getUrl();
+            }
+        }
+
+        return $parameters;
     }
 
 

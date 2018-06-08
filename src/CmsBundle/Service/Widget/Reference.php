@@ -24,7 +24,7 @@ class Reference extends Base
 
     protected $default = array(
         'title' => 'Název reference',
-        'annotation' => 'Krátký popis reference',
+        'annotation' => '',
         'text' => '<p>Popis reference</p>',
         'image' => '',
         'date'  => ''
@@ -38,7 +38,6 @@ class Reference extends Base
             ))
             ->add('annotation', TextareaType::class, array(
                 'label'=>'Krátký popis',
-                'constraints' => array(new Assert\NotBlank()),
             ))
             ->add('text', TextareaType::class, array(
               'label'=>'Krátký popis',

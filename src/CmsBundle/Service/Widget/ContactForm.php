@@ -6,6 +6,7 @@ use CmsBundle\Service\Widget\Base;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use CmsBundle\Entity\Contact;
@@ -69,10 +70,10 @@ class ContactForm extends Base
         # Add form fields
         $form = $this->formFactory->createBuilder()
             ->add('name', TextType::class, array('label'=> 'Jméno a příjmení'))
-            ->add('email', TextType::class, array('label'=> 'Email'))
-            ->add('phone', TextType::class, array('label'=> 'Telefon'))
+            ->add('email', EmailType::class, array('label'=> 'Email'))
+            ->add('phone', TextType::class, array('label'=> 'Telefon', 'required' => false))
             ->add('subject', TextType::class, array('label'=> 'Předmět'))
-            ->add('message', TextareaType::class, array('label'=> 'Zpráva'))
+            ->add('message', TextareaType::class, array('label'=> 'Zpráva', 'required' => false))
             ->add('widget_id', HiddenType::class)
             ->add('Save', SubmitType::class, array('label'=> 'Odeslat dotaz', 'attr' => ['class' => 'btn btn-effect', 'id' => 'submit']))
             ->getForm();

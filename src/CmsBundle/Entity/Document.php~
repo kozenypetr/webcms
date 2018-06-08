@@ -4,14 +4,22 @@ namespace CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+
+
+
 /**
  * Page
- *
+ * @Gedmo\Tree(type="nested")
  * @ORM\Table(name="document")
  * @ORM\Entity(repositoryClass="CmsBundle\Repository\DocumentRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Document
 {
+    use TimestampableEntity;
+
     /**
      * @var int
      *
@@ -31,16 +39,134 @@ class Document
     /**
      * @var string
      *
+     * @ORM\Column(name="annotation", type="string", length=255, nullable=true)
+     */
+    private $annotation;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="template", type="string", length=255, nullable=true)
+     */
+    private $template;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="class", type="string", length=255, nullable=true)
+     */
+    private $class;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="metatitle", type="string", length=255, nullable=true)
+     */
+    private $metatitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="metakeywords", type="string", length=255, nullable=true)
+     */
+    private $metakeywords;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="metadescription", type="text", nullable=true)
+     */
+    private $metadescription;
+
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="url", type="string", length=255, unique=true)
      */
     private $url;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Widget", mappedBy="document")
+     * @ORM\ManyToOne(targetEntity="DocumentCategory", inversedBy="documents")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category;
+
+    /**
+     * @Gedmo\TreeLeft
+     * @ORM\Column(name="lft", type="integer")
+     */
+    private $lft;
+
+    /**
+     * @Gedmo\TreeLevel
+     * @ORM\Column(name="lvl", type="integer")
+     */
+    private $lvl;
+
+    /**
+     * @Gedmo\TreeRight
+     * @ORM\Column(name="rgt", type="integer")
+     */
+    private $rgt;
+
+    /**
+     * @Gedmo\TreeRoot
+     * @ORM\ManyToOne(targetEntity="Document")
+     * @ORM\JoinColumn(name="tree_root", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $root;
+
+    /**
+     * @Gedmo\TreeParent
+     * @ORM\ManyToOne(targetEntity="Document", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Document", mappedBy="parent")
+     * @ORM\OrderBy({"lft" = "ASC"})
+     */
+    private $children;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Widget", mappedBy="document", cascade={"remove"})
+     * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $widgets;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Region", mappedBy="document", cascade={"remove"})
+     */
+    private $regions;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->widgets  = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->regions  = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 
     /**
@@ -101,17 +227,182 @@ class Document
         return $this->url;
     }
 
-
-    public function __toString()
-    {
-        return $this->getName();
-    }
     /**
-     * Constructor
+     * Set lft
+     *
+     * @param integer $lft
+     *
+     * @return Document
      */
-    public function __construct()
+    public function setLft($lft)
     {
-        $this->widgets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->lft = $lft;
+
+        return $this;
+    }
+
+    /**
+     * Get lft
+     *
+     * @return integer
+     */
+    public function getLft()
+    {
+        return $this->lft;
+    }
+
+    /**
+     * Set lvl
+     *
+     * @param integer $lvl
+     *
+     * @return Document
+     */
+    public function setLvl($lvl)
+    {
+        $this->lvl = $lvl;
+
+        return $this;
+    }
+
+    /**
+     * Get lvl
+     *
+     * @return integer
+     */
+    public function getLvl()
+    {
+        return $this->lvl;
+    }
+
+    /**
+     * Set rgt
+     *
+     * @param integer $rgt
+     *
+     * @return Document
+     */
+    public function setRgt($rgt)
+    {
+        $this->rgt = $rgt;
+
+        return $this;
+    }
+
+    /**
+     * Get rgt
+     *
+     * @return integer
+     */
+    public function getRgt()
+    {
+        return $this->rgt;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \CmsBundle\Entity\DocumentCategory $category
+     *
+     * @return Document
+     */
+    public function setCategory(\CmsBundle\Entity\DocumentCategory $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \CmsBundle\Entity\DocumentCategory
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set root
+     *
+     * @param \CmsBundle\Entity\Document $root
+     *
+     * @return Document
+     */
+    public function setRoot(\CmsBundle\Entity\Document $root = null)
+    {
+        $this->root = $root;
+
+        return $this;
+    }
+
+    /**
+     * Get root
+     *
+     * @return \CmsBundle\Entity\Document
+     */
+    public function getRoot()
+    {
+        return $this->root;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \CmsBundle\Entity\Document $parent
+     *
+     * @return Document
+     */
+    public function setParent(\CmsBundle\Entity\Document $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \CmsBundle\Entity\Document
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Add child
+     *
+     * @param \CmsBundle\Entity\Document $child
+     *
+     * @return Document
+     */
+    public function addChild(\CmsBundle\Entity\Document $child)
+    {
+        $this->children[] = $child;
+
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \CmsBundle\Entity\Document $child
+     */
+    public function removeChild(\CmsBundle\Entity\Document $child)
+    {
+        $this->children->removeElement($child);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 
     /**
@@ -148,11 +439,50 @@ class Document
         return $this->widgets;
     }
 
-  /**
-   * @param $region
-   *
-   * @return array
-   */
+
+    public function getFirstWidget()
+    {
+        return $this->widgets->first();
+    }
+
+    /**
+     * Add region
+     *
+     * @param \CmsBundle\Entity\Region $region
+     *
+     * @return Document
+     */
+    public function addRegion(\CmsBundle\Entity\Region $region)
+    {
+        $this->regions[] = $region;
+
+        return $this;
+    }
+
+    /**
+     * Remove region
+     *
+     * @param \CmsBundle\Entity\Region $region
+     */
+    public function removeRegion(\CmsBundle\Entity\Region $region)
+    {
+        $this->regions->removeElement($region);
+    }
+
+    /**
+     * Get regions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRegions()
+    {
+        return $this->regions;
+    }
+
+    /**
+     * @param $region
+     * @return array
+     */
     public function getRegionWidgets($region)
     {
         $widgets = [];
@@ -166,4 +496,274 @@ class Document
         return $widgets;
     }
 
+
+    public function getTreeName()
+    {
+        return str_repeat('-', $this->getLvl()) . ' ' .  $this->getName() . '[' . $this->getCategory()->getName() .  ']';
+    }
+
+    /**
+     * Set status.
+     *
+     * @param int $status
+     *
+     * @return Document
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status.
+     *
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set created.
+     *
+     * @param \DateTime $created
+     *
+     * @return Document
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created.
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated.
+     *
+     * @param \DateTime|null $updated
+     *
+     * @return Document
+     */
+    public function setUpdated($updated = null)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated.
+     *
+     * @return \DateTime|null
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set metatitle.
+     *
+     * @param string $metatitle
+     *
+     * @return Document
+     */
+    public function setMetatitle($metatitle)
+    {
+        $this->metatitle = $metatitle;
+
+        return $this;
+    }
+
+    /**
+     * Get metatitle.
+     *
+     * @return string
+     */
+    public function getMetatitle()
+    {
+        return $this->metatitle;
+    }
+
+    /**
+     * Set metakeyword.
+     *
+     * @param string $metakeyword
+     *
+     * @return Document
+     */
+    public function setMetakeyword($metakeyword)
+    {
+        $this->metakeyword = $metakeyword;
+
+        return $this;
+    }
+
+    /**
+     * Get metakeyword.
+     *
+     * @return string
+     */
+    public function getMetakeyword()
+    {
+        return $this->metakeyword;
+    }
+
+    /**
+     * Set metadescription.
+     *
+     * @param string $metadescription
+     *
+     * @return Document
+     */
+    public function setMetadescription($metadescription)
+    {
+        $this->metadescription = $metadescription;
+
+        return $this;
+    }
+
+    /**
+     * Get metadescription.
+     *
+     * @return string
+     */
+    public function getMetadescription()
+    {
+        return $this->metadescription;
+    }
+
+    /**
+     * Set metakeywords.
+     *
+     * @param string $metakeywords
+     *
+     * @return Document
+     */
+    public function setMetakeywords($metakeywords)
+    {
+        $this->metakeywords = $metakeywords;
+
+        return $this;
+    }
+
+    /**
+     * Get metakeywords.
+     *
+     * @return string
+     */
+    public function getMetakeywords()
+    {
+        return $this->metakeywords;
+    }
+
+    /**
+     * Set template.
+     *
+     * @param string|null $template
+     *
+     * @return Document
+     */
+    public function setTemplate($template = null)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * Get template.
+     *
+     * @return string|null
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    public function getTemplateShortName()
+    {
+        return preg_replace('|^[^\/]+\/|', '', $this->template);
+    }
+
+    /**
+     * Set annotation.
+     *
+     * @param string|null $annotation
+     *
+     * @return Document
+     */
+    public function setAnnotation($annotation = null)
+    {
+        $this->annotation = $annotation;
+
+        return $this;
+    }
+
+    /**
+     * Get annotation.
+     *
+     * @return string|null
+     */
+    public function getAnnotation()
+    {
+        return $this->annotation;
+    }
+
+    /**
+     * Set image.
+     *
+     * @param string|null $image
+     *
+     * @return Document
+     */
+    public function setImage($image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image.
+     *
+     * @return string|null
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+
+    public function isHomepage()
+    {
+        return empty($this->url);
+    }
+
+    public function getPath()
+    {
+        $path = [$this];
+
+        $parent = $this;
+
+        while (!$parent->isHomepage())
+        {
+            $path[] = $parent = $parent->getParent();
+        }
+
+        return array_reverse($path);
+    }
 }
