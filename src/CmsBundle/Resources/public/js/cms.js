@@ -1480,6 +1480,7 @@ var cmsModal = {
         }
 
         // udalost tlacitka pro ulozeni, ktere neni soucasti formulare
+        modal.find('#modal-save-button').unbind();
         modal.find('#modal-save-button').click(function(){
             $('#remodal form').submit();
         });

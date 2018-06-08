@@ -100,6 +100,9 @@ class Menu extends Base
 
         $tree = json_decode($parameters['tree'], true);
 
+        dump($parameters['tree']);
+        dump($tree);
+
         $parameters['tree'] = json_encode($this->readMenu($tree[0]['children']));
 
         return $parameters;
@@ -117,7 +120,7 @@ class Menu extends Base
         foreach ($children as $child)
         {
             $menu[] = array(
-                'title' => $child['text'],
+                'title' => trim($child['text']),
                 'link'  => (isset($child['li_attr']['cmslink']))?$child['li_attr']['cmslink']:null,
                 'class' => (isset($child['li_attr']['cmsclass']))?$child['li_attr']['cmsclass']:null,
                 'children' => $this->readMenu($child['children'])

@@ -41015,6 +41015,7 @@ var cmsModal = {
         }
 
         // udalost tlacitka pro ulozeni, ktere neni soucasti formulare
+        modal.find('#modal-save-button').unbind();
         modal.find('#modal-save-button').click(function(){
             $('#remodal form').submit();
         });
@@ -41335,8 +41336,10 @@ var cmsMenu = {
 
         $('#json').click(function(){
             // alert($("#menu").jstree(true).get_json('#', { 'flat': true }));
-            console.log($("#menu").jstree(true).get_json('#'));
+            // console.log($("#menu").jstree(true).get_json('#'));
         });
+
+
 
         $('#modal-edit-form').submit(function(){
             $('#form_tree').val(JSON.stringify($("#menu").jstree(true).get_json('#')));
@@ -41346,8 +41349,8 @@ var cmsMenu = {
 
     __selectNode: function (e, data)
     {
-        console.log(e);
-        console.log(data);
+        // console.log(e);
+        // console.log(data);
         // alert(data.node.id);
 
         var nodeId = data.node.id;
