@@ -24,8 +24,8 @@ class News extends Base
 
     protected $default = array(
         'title' => 'Název aktuality',
-        'annotation' => 'Krátký popis aktuality',
-        'text' => '<p>Text aktuality</p>',
+        'annotation' => '',
+        'text' => '',
         'image' => '',
         'date'  => '',
         'subtitle' => '',
