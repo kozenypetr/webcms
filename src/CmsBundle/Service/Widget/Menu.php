@@ -100,9 +100,6 @@ class Menu extends Base
 
         $tree = json_decode($parameters['tree'], true);
 
-        dump($parameters['tree']);
-        dump($tree);
-
         $parameters['tree'] = json_encode($this->readMenu($tree[0]['children']));
 
         return $parameters;
