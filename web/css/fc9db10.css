@@ -5233,3 +5233,12 @@ option {
 .team.region {
   margin-bottom: 20px;
 }
+form.contact-form label.required:after {
+  content: " *";
+}
+form.contact-form label.error {
+  color: red;
+}
+form.contact-form .form-control {
+  margin-bottom: 10px;
+}
