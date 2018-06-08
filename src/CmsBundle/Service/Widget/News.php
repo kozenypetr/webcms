@@ -41,10 +41,9 @@ class News extends Base
             ->add('subtitle', TextType::class, ['label' => 'Podnadpis'])
             ->add('annotation', TextareaType::class, array(
                 'label'=>'Krátký popis',
-                'constraints' => array(new Assert\NotBlank()),
             ))
             ->add('text', TextareaType::class, array(
-              'label'=>'Krátký popis',
+              'label'=>'Text aktuality',
               'constraints' => array(new Assert\NotBlank()),
               'attr' => ['class' => 'tiny'],
             ))
