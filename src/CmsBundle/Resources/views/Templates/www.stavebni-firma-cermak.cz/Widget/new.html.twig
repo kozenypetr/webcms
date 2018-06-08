@@ -18,8 +18,14 @@
     </h4>
     <div class="recent-meta"><span class="date"><i class="fa fa-file-text-o"></i> {{ parameters.date }}</span>
     <span class="comments"><i class="fa fa-comments-o"></i> {{ parameters.subtitle }}</span></div>
-    <p class="projects-desc">{{ parameters.annotation | raw}}</p>
-    <p class="projects-desc">{{ parameters.text | raw }}</p>
+
+    {% if parameters.annotation %}
+      <p class="projects-desc">{{ parameters.annotation | raw}}</p>
+    {% endif %}
+
+    {% if parameters.text %}
+      <p class="projects-desc">{{ parameters.text | raw }}</p>
+    {% endif %}
 
     {% if parameters.link %}
     <a href="{{ parameters.link }}" class="btn btn-effect">Více informací <i class="icon-arrow-right"></i></a>
