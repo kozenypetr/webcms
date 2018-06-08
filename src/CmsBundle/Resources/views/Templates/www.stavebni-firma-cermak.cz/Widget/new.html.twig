@@ -7,7 +7,7 @@
  <div class="projects-box item">
   <div class="projects-thumb">
       {% if parameters.link %}<a href="{{ parameters.link }}">{% endif %}
-          <img src="{{ parameters.image }}" alt="{{ parameters.title }}" />
+          <img src="{{ asset(parameters.image) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.title }}" />
       {% if parameters.link %}</a>{% endif %}
   </div>
   <div class="projects-content">

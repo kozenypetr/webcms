@@ -1,7 +1,7 @@
 <div class="projects-box item">
   <div class="projects-thumb">
    <a href="{{ parameters.link }}">
-    <img src="{{ parameters.image }}" alt="{{ parameters.title }}" />
+    <img src="{{ asset(parameters.image) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.title }}" />
    </a>
   </div>
   <div class="projects-content">
