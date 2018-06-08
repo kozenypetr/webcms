@@ -1,19 +1,3 @@
-function detectmob() {
-    if( navigator.userAgent.match(/Android/i)
-        || navigator.userAgent.match(/webOS/i)
-        || navigator.userAgent.match(/iPhone/i)
-        || navigator.userAgent.match(/iPad/i)
-        || navigator.userAgent.match(/iPod/i)
-        || navigator.userAgent.match(/BlackBerry/i)
-        || navigator.userAgent.match(/Windows Phone/i)
-    ){
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
 $( function() {
 
 /*
@@ -28,38 +12,28 @@ $( function() {
         // alert('click');
     });
 
+    var slides = 4;
 
-    if (detectmob())
+    if ($(window).width() < 700)
     {
-        $('.bxslider').bxSlider({
-            auto: true,
-            slideWidth: 5000,
-            responsive: true,
-            minSlides: 1,
-            maxSlides: 1,
-            slideMargin: 0,
-            pager: false,
-            moveSlides: 1,
-            autoHover: true,
-            pause: 4000,
-            captions: true
-        });
+        slides = 1;
     }
-    else {
-        $('.bxslider').bxSlider({
-            auto: true,
-            slideWidth: 5000,
-            responsive: true,
-            minSlides: 4,
-            maxSlides: 4,
-            slideMargin: 5,
-            pager: false,
-            moveSlides: 1,
-            autoHover: true,
-            pause: 4000,
-            captions: true
-        });
-    }
+
+
+    $('.bxslider').bxSlider({
+        auto: true,
+        slideWidth: 5000,
+        responsive: true,
+        minSlides: slides,
+        maxSlides: slides,
+        slideMargin: 5,
+        pager: false,
+        moveSlides: 1,
+        autoHover: true,
+        pause: 4000,
+        captions: true
+    });
+
 
 
     if ($('.photogallery1').length)
@@ -78,5 +52,11 @@ $( function() {
     }
 
     // https://owlcarousel2.github.io/OwlCarousel2/docs/api-options.html
+
+
+
+    $( ".contact-form" ).each(function() {
+        $( this ).validate({ onfocusout: function(element) { $(element).valid(); } });
+    });
 
 });

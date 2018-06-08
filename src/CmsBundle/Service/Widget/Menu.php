@@ -67,12 +67,14 @@ class Menu extends Base
     {
         foreach ($tree as $key => $item)
         {
+            $tree[$key]['type'] = 'output';
             if (preg_match('/\[(.+):([0-9]+)\]/', $item['link'], $matches))
             {
                 $documentId = $matches[2];
                 // najdeme dokument
                 $document = $this->em->getRepository('CmsBundle:Document')->find($documentId);
                 $tree[$key]['link'] = $document->getUrl();
+                $tree[$key]['type'] = 'path';
             }
             elseif (empty($tree[$key]['link']))
             {

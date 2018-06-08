@@ -1,4 +1,4 @@
-<div {{ parameters.id?'id="' ~ parameters.id ~ '"':'' }} class="widget-{{ widget.id }} {{ widget.class }} {{ widget.service | replace({ '.': "-"}) }}"{% if is_granted('ROLE_ADMIN') %} data-widget-id="{{ widget.id }}"{% endif %}>
+<div {{ (parameters.id?'id="' ~ parameters.id ~ '"':'') | raw  }} class="widget-{{ widget.id }} {{ widget.class }} {{ widget.service | replace({ '.': "-"}) }}"{% if is_granted('ROLE_ADMIN') %} data-widget-id="{{ widget.id }}"{% endif %}>
     {% if parameters.subclass %}
     <div class="{{ parameters.subclass }}">
     {% endif %}

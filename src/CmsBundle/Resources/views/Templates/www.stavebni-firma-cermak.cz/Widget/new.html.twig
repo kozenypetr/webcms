@@ -6,12 +6,22 @@
 
  <div class="projects-box item">
   <div class="projects-thumb">
-          <img src="{{ parameters.image }}" alt="" />
+      {% if parameters.link %}<a href="{{ parameters.link }}">{% endif %}
+          <img src="{{ parameters.image }}" alt="{{ parameters.title }}" />
+      {% if parameters.link %}</a>{% endif %}
   </div>
   <div class="projects-content">
-    <h4>{{ parameters.title }}</h4>
+    <h4>
+        {% if parameters.link %}<a href="{{ parameters.link }}">{% endif %}
+            {{ parameters.title }}
+        {% if parameters.link %}</a>{% endif %}
+    </h4>
     <div class="recent-meta"><span class="date"><i class="fa fa-file-text-o"></i> {{ parameters.date }}</span>
     <span class="comments"><i class="fa fa-comments-o"></i> O Firmě</span></div>
     <p class="projects-desc">{{ parameters.annotation }}</p>
+
+    {% if parameters.link %}
+    <a href="{{ parameters.link }}" class="btn btn-effect">Více informací <i class="icon-arrow-right"></i></a>
+    {% endif %}
   </div>
  </div>

@@ -4,7 +4,7 @@
         {% for item in tree %}
             <li>
                 {% if (not item.link is null) %}
-                <a href="{{ path('cms_page', { url:  item.link }) }}">
+                <a href="{{ (item.link == 'path')?path('cms_page', { url:  item.link }):(item.link | raw) }}">
                 {% endif %}
 
                 {{ item.title }}
@@ -23,7 +23,7 @@
 
 <div class="navbar-header"><!-- Stat Toggle Nav Link For Mobiles -->
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <!-- End Toggle Nav Link For Mobiles -->
-    <div class="logo-wrapper"><a class="navbar-brand" href="index.html"> <img src="/assets/img/logo.png" alt="ConBiz" /> </a></div>
+    <div class="logo-wrapper"><a class="navbar-brand" href="/"> <img src="/assets/img/logo.png" alt="ConBiz" /> </a></div>
 </div>
 <!--  Brand and toggle menu for mobile ends  -->
 <div class="navbar-collapse collapse"><!-- Stat Search --> <!-- Search form ends --> <!-- Start Navigation List -->
