@@ -11898,3 +11898,12 @@ li.fancybox-thumbs-loading {
 h1 {
   border-bottom: solid 1px #ccc;
 }
+form.contact-form label.required:after {
+  content: " *";
+}
+form.contact-form label.error {
+  color: red;
+}
+form.contact-form .form-control {
+  margin-bottom: 10px;
+}
