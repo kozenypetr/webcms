@@ -22,11 +22,14 @@ Options +FollowSymlinks
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    RewriteCond %{HTTP_HOST} ^www\.choltice-rodinne-domy\.cz [NC]
+    RewriteCond %{HTTP_HOST} ^choltice-rodinne-domy\.cz [NC]
     RewriteRule (.*) https://www.stavebni-firma-cermak.cz [R=301,L]
 
     RewriteCond %{HTTP_HOST} zaklady-stavba\.cz [NC]
     RewriteRule (.*) https://www.stavebni-firma-cermak.cz [L,R=301]
+
+    RewriteCond %{SERVER_PORT} ^80$
+    RewriteRule ^(.*)$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
 
     # Determine the RewriteBase automatically and set it as environment variable.
     # If you are using Apache aliases to do mass virtual hosting or installed the
