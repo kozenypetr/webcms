@@ -22,8 +22,8 @@ Options +FollowSymlinks
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    RewriteCond %{HTTP_HOST} choltice-rodinne-domy\.cz [NC]
-    RewriteRule (.*) https://www.stavebni-firma-cermak.cz [L,R=301]
+    RewriteCond %{HTTP_HOST} ^www\.choltice-rodinne-domy\.cz [NC]
+    RewriteRule (.*) https://www.stavebni-firma-cermak.cz [R=301,L]
 
     RewriteCond %{HTTP_HOST} zaklady-stavba\.cz [NC]
     RewriteRule (.*) https://www.stavebni-firma-cermak.cz [L,R=301]
