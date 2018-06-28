@@ -1,0 +1,46 @@
+{#
+  * parameters.title
+  * parameters.annotation
+  * parameters.text | raw
+#}
+
+<div class="bytove-studio-item">
+    <h2>{{ parameters.title }}</h2>
+    {% if parameters.text %}
+        <div class="bs-desc">{{ parameters.text | raw }}</div>
+    {% endif %}
+
+    {% if parameters.image %}
+    <a class="news-gallery-image" data-fancybox="gallery-{{ widget.id }}" title="{{ parameters.title }}" href="{{ asset(parameters.image) | imagine_filter('cms_image_large') }}">
+        <img src="{{ asset(parameters.image) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.title }}" />
+    </a>
+    {% endif %}
+
+    {% if parameters.image2 or parameters.image3 or parameters.image4 or parameters.image5 %}
+        <div class="bs-other-images">
+            <div class="row">
+                {% if parameters.image2 %}
+                    <div class="col-md-4 col-xs-4">
+                        <a class="news-gallery-image" data-fancybox="gallery-{{ widget.id }}" title="{{ parameters.title }}" href="{{ asset(parameters.image2) | imagine_filter('cms_image_large') }}">
+                            <img src="{{ asset(parameters.image2) | imagine_filter('cms_image_thumb_small') }}" alt="{{ parameters.title }}" />
+                        </a>
+                    </div>
+                {% endif %}
+                {% if parameters.image3 %}
+                    <div class="col-md-4 col-xs-4">
+                        <a class="news-gallery-image" data-fancybox="gallery-{{ widget.id }}" title="{{ parameters.title }}" href="{{ asset(parameters.image3) | imagine_filter('cms_image_large') }}">
+                            <img src="{{ asset(parameters.image3) | imagine_filter('cms_image_thumb_small') }}" alt="{{ parameters.title }}" />
+                        </a>
+                    </div>
+                {% endif %}
+                {% if parameters.image4 %}
+                    <div class="col-md-4 col-xs-4">
+                        <a class="news-gallery-image" data-fancybox="gallery-{{ widget.id }}" title="{{ parameters.title }}" href="{{ asset(parameters.image4) | imagine_filter('cms_image_large') }}">
+                            <img src="{{ asset(parameters.image4) | imagine_filter('cms_image_thumb_small') }}" alt="{{ parameters.title }}" />
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>

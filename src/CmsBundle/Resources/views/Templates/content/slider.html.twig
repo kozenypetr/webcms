@@ -2,11 +2,12 @@
 <div class="bxslider" style="width: 100%;">
     <div class="slide">
         {#<a href="/akutality/nova-aktualita"><img title="Choltice" src="{{ asset('data/hlavicka/dum2.jpg') }}" /></a>#}
-        <img title="Staročernsko" src="{{ asset('data/hlavicka/dum2.jpg') }}" />
+        <img title="Staročernsko" src="{{ asset('data/hlavicka/dum2.jpg') | imagine_filter('cms_image_thumb') }}" />
     </div>
-    <div><img title="Čeperka" src="{{ asset('data/hlavicka/dum3.jpg') }}" /></div>
-    <div><img title="Choltice" src="{{ asset('data/hlavicka/dum4.jpg') }}" /></div>
-    <div><img title="Barchov" src="{{ asset('data/hlavicka/dum5.jpg') }}" /></div>
-    <div><img title="Choltice" src="{{ asset('data/hlavicka/dum6.jpg') }}" /></div>
-    <div><img title="Zdechovice" src="{{ asset('data/hlavicka/dum7.jpg') }}" /></div>
+    <div><img title="Čeperka" src="{{ asset('data/hlavicka/dum3.jpg') | imagine_filter('cms_image_thumb') }}" /></div>
+    <div><img title="Choltice" src="{{ asset('data/hlavicka/dum4.jpg') | imagine_filter('cms_image_thumb') }}" /></div>
+    <div><img title="Barchov" src="{{ asset('data/hlavicka/dum5.jpg') | imagine_filter('cms_image_thumb') }}" /></div>
+    <div><img title="Choltice" src="{{ asset('data/hlavicka/dum6.jpg') | imagine_filter('cms_image_thumb') }}" /></div>
+    <div><img title="Zdechovice" src="{{ asset('data/hlavicka/dum7.jpg') | imagine_filter('cms_image_thumb') }}" /></div>
+    <div><img title="Stavební firma Čermák" src="{{ asset('data/vlk/logo_3.jpg') | imagine_filter('cms_image_thumb') }}" /></div>
 </div>

@@ -1,6 +1,12 @@
 {% extends "CmsBundle::Templates/" ~ host ~ "/" ~ pageTemplate %}
 
-{% block title %}{{ document.name }}{% endblock %}
+{% block title %}{{ document.metatitle?document.metatitle:document.name }}{% endblock %}
+{% block ogtitle %}{{ document.metatitle?document.metatitle:document.name }}{% endblock %}
+{% block metadescription %}{{ document.metadescription }}{% endblock %}
+{% block ogmetadescription %}{{ document.metadescription }}{% endblock %}
+{% block metakeywords %}{{ document.metakeywords }}{% endblock %}
+
+
 
 {#% block stylesheets %}
     {% if is_granted('ROLE_ADMIN') %}

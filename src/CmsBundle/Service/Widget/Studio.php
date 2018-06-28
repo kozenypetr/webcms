@@ -9,22 +9,21 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class News extends Base
+class Studio extends Base
 {
 
-  protected $type = 'Novinka';
+  protected $type = 'Bytové studio';
 
-  protected $title = 'Novinka';
+  protected $title = 'Bytové studio';
 
-  protected $template = 'new.html.twig';
+  protected $template = 'studio.html.twig';
 
-  protected $icon = 'fa-newspaper-o';
+  protected $icon = 'fa-eye';
 
   protected $group = 'Obsah';
 
     protected $default = array(
-        'title' => 'Název aktuality',
-        'annotation' => '',
+        'title' => 'Položka bytového studia',
         'text' => '',
         'image' => '',
         'image2' => '',
@@ -42,17 +41,10 @@ class News extends Base
             ->add('title', TextType::class, array(
                 'label'=>'Nadpis'
             ))
-            ->add('subtitle', TextType::class, ['label' => 'Podnadpis'])
-            ->add('annotation', TextareaType::class, array(
-                'label'=>'Krátký popis',
-            ))
             ->add('text', TextareaType::class, array(
-              'label'=>'Text aktuality',
+              'label'=>'Popis',
               'constraints' => array(new Assert\NotBlank()),
               'attr' => ['class' => 'tiny'],
-            ))
-            ->add('date', TextType::class, array(
-                'label'=>'Datum'
             ))
             ->add('image', TextType::class, array(
                 'label'=>'Obrázek',
@@ -68,10 +60,6 @@ class News extends Base
             ))
             ->add('image4', TextType::class, array(
                 'label'=>'Obrázek 4',
-                'attr' => ['class' => 'dropimage'],
-            ))
-            ->add('image5', TextType::class, array(
-                'label'=>'Obrázek 5',
                 'attr' => ['class' => 'dropimage'],
             ))
             ->add('document', TextType::class, ['label' => 'Stránka', 'attr' => ['class' => 'droplink']]);

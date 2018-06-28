@@ -73,6 +73,13 @@ class Menu extends Base
                 $documentId = $matches[2];
                 // najdeme dokument
                 $document = $this->em->getRepository('CmsBundle:Document')->find($documentId);
+
+                if ($document->getStatus() == 0)
+                {
+                    unset($tree[$key]);
+                    continue;
+                }
+
                 $tree[$key]['link'] = $document->getUrl()?'/'.$document->getUrl():'/';
                 $tree[$key]['type'] = 'path';
             }

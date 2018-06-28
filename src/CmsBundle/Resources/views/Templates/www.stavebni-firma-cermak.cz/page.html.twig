@@ -4,6 +4,25 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>{% block title %}{% endblock %} | Stavební firma Čermák</title>
+
+        <meta name="keywords" content="{% block metakeywords %}{% endblock %}">
+        <meta name="description" content="{% block metadescription %}{% endblock %}">
+        <meta name="robots" content="index,follow">
+
+        <!-- Canonical URLs -->
+        <link rel="canonical" href="https://www.stavebni-firma-cermak.cz/{{ document.url }}">
+
+        <!-- Open Graph -->
+        <meta property="og:site_name" content="Stavební firma Čermák">
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="cs_CZ">
+
+        <meta property="og:title" content="{% block ogtitle %}{% endblock %}">
+        <meta property="og:image" content="https://www.staveni-firma-cermak.cz/data/vlk/logo_3.png">
+        <meta property="og:description" content="{% block ogmetadescription %}{% endblock %}">
+
+
+
         {% block stylesheets %}
             {% stylesheets
                 'assets/css/bootstrap.min.css'

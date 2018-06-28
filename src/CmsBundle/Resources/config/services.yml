@@ -99,10 +99,16 @@ services:
                   -  { name: cms.widget }
 
      cms.widget.address:
-              class:        CmsBundle\Service\Widget\Address
-              autowire:     true
-              tags:
-                  -  { name: cms.widget }
+         class:        CmsBundle\Service\Widget\Address
+         autowire:     true
+         tags:
+              -  { name: cms.widget }
+
+     cms.widget.studio:
+         class:        CmsBundle\Service\Widget\Studio
+         autowire:     true
+         tags:
+             -  { name: cms.widget }
 
      app.twig.cms:
         class: CmsBundle\Twig\CmsExtension

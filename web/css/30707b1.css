@@ -3074,7 +3074,7 @@ zoom: 1;
 
 body {
   font-family: 'Lato', sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 21px;
   font-weight: 400;
   color: #666;
@@ -3150,7 +3150,7 @@ h6 {
 }
 p {
   color: #666;
-  font-size: 14px;
+  font-size: 15px;
   font-family: 'Lato', sans-serif;
   font-weight: 400;
   line-height: 22px;
@@ -3613,7 +3613,7 @@ input[type="submit"] {
 .navbar-top.affix {
   width: 100%;
   top: 0;
-  z-index: 9999999;
+  z-index: 999;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-fill-mode: both;
@@ -11903,6 +11903,62 @@ form.contact-form label.error {
 }
 form.contact-form .form-control {
   margin-bottom: 10px;
+}
+.project-other-images div {
+  margin-bottom: 10px;
+}
+.bytove-studio-item {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 15px 15px;
+  background-color: #fafafa;
+}
+.bytove-studio-item h2 {
+  margin-top: 10px;
+  text-align: center;
+  color: #2b669a;
+  font-weight: bold;
+  text-decoration: underline;
+}
+.bytove-studio-item .bs-desc {
+  margin-top: 20px;
+  text-align: center;
+  min-height: 260px;
+}
+.bytove-studio-item .bs-desc p {
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+  line-height: 20px;
+  font-size: 15px;
+}
+.bytove-studio-item .bs-desc p:after {
+  content: '*';
+  line-height: 13px;
+  display: block;
+  padding-top: 7px;
+  font-weight: bold;
+  font-size: 18px;
+}
+.bytove-studio-item .bs-desc p:last-child:after {
+  content: "";
+}
+.bytove-studio-item .bs-other-images {
+  margin-top: 15px;
+}
+.address table {
+  border: 0;
+}
+.address table tr:nth-child(odd) {
+  background-color: #fafafa;
+}
+.address table td:last-child {
+  text-align: right;
+}
+.address table td,
+.address table tr {
+  border: 0;
+  padding: 5px 10px;
 }
 
 /*!

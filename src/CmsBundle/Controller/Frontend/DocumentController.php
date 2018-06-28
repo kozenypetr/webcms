@@ -15,9 +15,16 @@ class DocumentController extends Controller
      */
     public function showAction($url)
     {
+        $criteria = array('url' => $url);
+
+        if (is_null($this->getUser()) ||  !$this->getUser()->hasRole('ROLE_ADMIN'))
+        {
+            $criteria['status'] = 1;
+        }
+
         $document = $this->getDoctrine()
                 ->getRepository('CmsBundle:Document')
-                ->findOneByUrl($url);
+                ->findOneBy($criteria);
 
         if (!$document) {
             throw $this->createNotFoundException('Dokument neexistuje');

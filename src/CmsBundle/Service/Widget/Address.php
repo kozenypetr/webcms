@@ -24,6 +24,7 @@ class Address extends Base
       'email'         => '',
       'phone'         => '',
       'opening_hours' => '',
+      'text' => '',
   );
 
   protected function configureForm($form)
@@ -43,6 +44,10 @@ class Address extends Base
           ))
           ->add('opening_hours', TextType::class, array(
               'label' => 'Otevírací doba'
+          ))
+          ->add('text', TextareaType::class, array(
+              'label'=>'Další text',
+              'attr' => ['class' => 'tiny'],
           ))
           ;
   }

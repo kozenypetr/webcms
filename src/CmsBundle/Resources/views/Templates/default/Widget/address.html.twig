@@ -12,5 +12,8 @@
           {% if parameters.opening_hours %}
           <p><i class="icon-clock"></i> {{ parameters.opening_hours }}</p>
           {% endif %}
+          {% if parameters.text %}
+          {{ parameters.text | raw }}
+          {% endif %}
      </div>
 </div>

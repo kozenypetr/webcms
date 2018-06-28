@@ -46602,6 +46602,11 @@ $( function() {
         $(".photogallery3").fancybox();
     }
 
+    if ($('.news-gallery-image').length)
+    {
+        $(".news-gallery-image").fancybox();
+    }
+
     // https://owlcarousel2.github.io/OwlCarousel2/docs/api-options.html
 
 
@@ -47660,6 +47665,11 @@ $( function() {
     if ($('.photogallery3').length)
     {
         $(".photogallery3").fancybox();
+    }
+
+    if ($('.news-gallery-image').length)
+    {
+        $(".news-gallery-image").fancybox();
     }
 
     // https://owlcarousel2.github.io/OwlCarousel2/docs/api-options.html

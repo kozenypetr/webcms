@@ -28,6 +28,8 @@ class DocumentRepository extends NestedTreeRepository
     {
         $qb = parent::childrenQueryBuilder($node);
 
+        $qb->andWhere('node.status = 1');
+
         $qb->join('node.widgets', 'w');
 
         $qb->orderBy('node.lft');
