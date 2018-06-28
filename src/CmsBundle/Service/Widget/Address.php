@@ -20,7 +20,7 @@ class Address extends Base
 
   protected $default = array(
       'title'         => 'Nadpis',
-      'address'       => 'Adresa',
+      'address'       => '',
       'email'         => '',
       'phone'         => '',
       'opening_hours' => '',
