@@ -2,7 +2,9 @@
 
 <div class="information">
      <div class="contact-datails">
+          {% if parameters.address %}
           <p><i class="icon-pointer"></i> {{ parameters.address | raw }}</p>
+          {% endif %}
           {% if parameters.phone %}
           <p><i class="icon-call-out"></i> {{ parameters.phone }} </p>
           {% endif %}
