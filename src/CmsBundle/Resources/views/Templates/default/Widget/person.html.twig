@@ -6,7 +6,7 @@
 <div class="team-member">
     <div class="team-thumbnail">
         {% if parameters.image %}
-        <img class="responsive-image" src="{{ asset(parameters.image) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.name }}" />
+        <img class="responsive-image" src="{{ asset(parameters.image) | imagine_filter('cms_image_thumb_inset') }}" alt="{{ parameters.name }}" />
         {% endif %}
         <div class="overlay">
             <p class="text">{{ parameters.annotation }}</p>
