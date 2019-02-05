@@ -1,0 +1,21 @@
+<div id="product-images" data-path-sort="{{ path('gallery_admin_sort_image') }}">
+{% for image in gallery.images %}
+    <div id="image-{{ image.id }}" data-id="{{ image.id }}" class="item">
+        <div class="loader"><span>Nahrávám ...</span></div>
+
+        <img src="{{ asset(image.path) | imagine_filter('cms_image_thumb') }}" />
+
+        <a href="{{ path('gallery_admin_rotate_image', { id: image.id }) }}" class="rotate btn btn-success">
+            <i class="fa fa-rotate-right" aria-hidden="true"></i>
+            Otočit +90°
+        </a>
+        <a href="{{ path('gallery_admin_delete_image', { id: image.id }) }}" class="delete btn btn-danger">
+            <i class="fa fa-minus-circle" aria-hidden="true"></i>
+            Smazat
+        </a>
+        <div class="drag"><i class="fa fa-2x fa-arrows-alt" aria-hidden="true"></i></div>
+    </div>
+{% endfor %}
+</div>
+
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>

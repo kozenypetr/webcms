@@ -42,6 +42,7 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
       - form_div_layout.html.twig
+      - '@SonataCore/Form/datepicker.html.twig'
 #      - bootstrap_3_layout.html.twig
     globals:
         widgets: '@cms.variables.widgets'
@@ -110,6 +111,18 @@ sonata_admin:
         user_block:  'AdminBundle::Core/user_block.html.twig'
     security:
         handler: sonata.admin.security.handler.role
+    assets:
+      extra_stylesheets:
+        - vendor/tinymce/skins/lightgray/skin.min.css
+        - bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css
+#        - vendor/tinymce/skins/lightgray/content.min.css
+      extra_javascripts:
+        - vendor/tinymce/tinymce.min.js
+        - vendor/tinymce/jquery.tinymce.min.js
+        - vendor/tinymce/themes/modern/theme.min.js
+        - bundles/fosjsrouting/js/router.min.js
+        - bundles/sonatacore/vendor/moment/min/moment-with-locales.min.js
+        - bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js
     dashboard:
         groups:
             CMS:
@@ -121,7 +134,21 @@ sonata_admin:
 #                    - admin.cms.document
                     - route:        cms_admin_filemanager
                       label:        Soubory
-
+            Gallery:
+              label:               "Fotogalerie"
+              label_catalogue:      ~
+              icon:            '<i class="fa fa-image"></i>'
+              items:
+                - admin.cms.gallery_category
+                - admin.cms.gallery
+            Article:
+              label:               "Články"
+              label_catalogue:      ~
+              icon:            '<i class="fa fa-file-text-o"></i>'
+              items:
+                - admin.cms.article.category
+                - admin.cms.article.tag
+                - admin.cms.article.item
             sonata_user:
                 label:           "Uživatelé"
                 icon:            '<i class="fa fa-users"></i>'
@@ -202,6 +229,15 @@ fos_user:
     from_email:
             address: "%mailer_user%"
             sender_name: "%mailer_user%"
+
+
+stof_doctrine_extensions:
+  default_locale: cs_CZ
+  orm:
+    default:
+      sluggable: true
+      translatable: true
+      timestampable: true
 
 
 liip_imagine :

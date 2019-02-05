@@ -104,7 +104,7 @@ class Link extends Base
 
             if ($document) {
                 if (!$parameters['date']) {
-                    $parameters['date'] = $document->getCreated('d. m. Y');
+                    $parameters['date'] = $document->getCreatedAt()->format('d. m. Y');
                 }
                 if (!$parameters['title']) {
                     $parameters['title'] = $document->getName();

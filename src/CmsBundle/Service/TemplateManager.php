@@ -50,6 +50,29 @@ class TemplateManager {
         }
     }
 
+
+    /**
+     * @param string $defaultTemplate
+     * @param string $dir
+     *
+     * @return string
+     */
+    public function getTemplate(string $defaultTemplate, $module = 'Article') {
+
+        $templates = [$defaultTemplate];
+
+        foreach ($templates as $key => $file) {
+            foreach ([$this->host, self::DEFAULT_TEMPLATE_DIR] as $dir) {
+                if (file_exists($this->templateDir . $dir . '/' . $module . '/' . $file)) {
+                    return sprintf("CmsBundle:Templates/%s/" . $module . ":", $dir) . $file;
+                }
+            }
+        }
+
+        // @TODO: vyjimka, ze neexistuje zadna sablona
+    }
+
+
     /**
      * @param string $defaultTemplate
      * @param \CmsBundle\Entity\Widget $widget

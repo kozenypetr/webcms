@@ -74,7 +74,7 @@ class Menu extends Base
                 // najdeme dokument
                 $document = $this->em->getRepository('CmsBundle:Document')->find($documentId);
 
-                if ($document->getStatus() == 0)
+                if (!$document || ($document && $document->getStatus() == 0))
                 {
                     unset($tree[$key]);
                     continue;

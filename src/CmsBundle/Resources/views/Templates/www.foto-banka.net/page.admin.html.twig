@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="cs">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>{% block title %}{% endblock %} | Petr Baňka Fotograf</title>
+
+        <meta name="keywords" content="{% block metakeywords %}{% endblock %}">
+        <meta name="description" content="{% block metadescription %}{% endblock %}">
+        <meta name="robots" content="index,follow">
+
+        <!-- Canonical URLs -->
+        <link rel="canonical" href="https://www.foto-banka.cz/{{ document.url }}">
+
+        <!-- Open Graph -->
+        <meta property="og:site_name" content="Petr Baňka Fotograf">
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="cs_CZ">
+
+        <meta property="og:title" content="{% block ogtitle %}{% endblock %}">
+        {#<meta property="og:image" content="https://www.staveni-firma-cermak.cz/data/vlk/logo_3.png">#}
+        <meta property="og:description" content="{% block ogmetadescription %}{% endblock %}">
+
+        {% block stylesheets %}
+            {% stylesheets
+                'assets/foto-banka/css/bootstrap.css'
+                'assets/foto-banka/css/normalize.css'
+                'assets/fonts/font-awesome.min.css'
+
+                'assets/vendors/fancyBox/dist/jquery.fancybox.css'
+                '@CmsBundle/Resources/public/foto-banka/css/main.less'
+
+                'assets/pure/grids-min.css'
+                'assets/pure/forms-min.css'
+                'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.css'
+                'assets/tinymce/skins/lightgray/skin.min.css'
+                'assets/jquery-ui/css/jquery-ui.css'
+                'assets/jstree/themes/default/style.css'
+                'assets/remodal/remodal.css'
+                'assets/remodal/remodal-default-theme.css'
+                '@CmsBundle/Resources/public/css/cms.less'
+            %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+
+    <body class="document{{ document.id }} {{ cms_body_class() }}">
+
+        {% block body %}
+        {% endblock body %}
+
+        {# NEMAZAT- DULEZITE PRO EDITACI STRANKY #}
+        {% block cms %}
+        {% endblock cms %}
+
+
+        <div id="loader">
+            <div class="square-spin">
+                <div></div>
+            </div>
+        </div>
+
+        {% block javascripts %}
+            {% javascripts
+                'assets/vendors/jquery/dist/jquery.js'
+                'assets/vendors/bootstrap/dist/js/bootstrap.js'
+                'assets/vendors/fancyBox/dist/jquery.fancybox.js'
+
+                'bundles/fosjsrouting/js/router.js'
+                '@CmsBundle/Resources/public/foto-banka/js/main.js'
+
+                'assets/remodal/remodal.min.js'
+                'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.js'
+                'assets/vendors/jQuery-contextMenu/dist/jquery.ui.position.js'
+                'assets/vendors/jquery.cookie/jquery.cookie.js'
+                'assets/jquery-ui/js/jquery-ui.js'
+                'assets/jquery-slidereveal/jquery.slidereveal.min.js'
+                'assets/jstree/jstree.min.js'
+                'assets/vendors/fancyBox/dist/jquery.fancybox.js'
+                'assets/jquery-validation/jquery.validate.min.js'
+                'assets/jquery-validation/localization/messages_cs.js'
+
+
+                '@CmsBundle/Resources/public/js/*'
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+            <script src="/assets/tinymce/tinymce.min.js"></script>
+            <script src="/assets/tinymce/themes/modern/theme.min.js"></script>
+
+            <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+            <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+        {% endblock %}
+
+    </body>
+</html>

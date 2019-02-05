@@ -101,7 +101,7 @@ class CmsExtension extends \Twig_Extension
      * @param string $type
      * @return string HTMl regionu
      */
-    public function cmsRegionFunction(\Twig_Environment $twig, Document $document, $name)
+    public function cmsRegionFunction(\Twig_Environment $twig, Document $document = null, $name)
     {
         if (preg_match('/^global\./', $name))
         {

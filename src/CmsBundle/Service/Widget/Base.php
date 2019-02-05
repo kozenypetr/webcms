@@ -50,7 +50,7 @@ abstract class Base
 
     protected $entity;
 
-    protected $basePredefinedClasses = ['Horní odsazení' => 'indentation', 'Bez horního odsazení' => 'noindentation'];
+    protected $basePredefinedClasses = ['Bílý box' => 'white-box', 'Horní odsazení' => 'indentation', 'Bez horního odsazení' => 'noindentation'];
 
     protected $predefinedClasses = [];
 
@@ -134,7 +134,7 @@ abstract class Base
      */
     public function createForm($options = array())
     {
-        $form = $this->formFactory->createBuilder(FormType::class, $this->getParameters(), $options);
+        $form = $this->formFactory->createBuilder(FormType::class, $this->getEditParameters(), $options);
 
         $form = $this->configureForm($form);
 
@@ -236,6 +236,12 @@ abstract class Base
     public function getIcon()
     {
         return $this->icon;
+    }
+
+
+    public function getEditParameters()
+    {
+        return $this->getParameters();
     }
 
     /**

@@ -30,6 +30,7 @@ class RegionController extends Controller
     /**
      * Editace regionu
      * @Route("/edit/{id}/{name}", name="cms_region_edit")
+     * @Route("/edit/{name}", name="cms_region_edit_global")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Document $document, $name)

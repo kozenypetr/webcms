@@ -17,7 +17,46 @@ services:
             - { name: sonata.admin, manager_type: orm, group: "CMS", label: Document }
         public: true
 
-#    admin.cms.product:
+    admin.cms.gallery_category:
+      class: AdminBundle\Admin\GalleryCategoryAdmin
+      arguments: [~, CmsBundle\Entity\GalleryCategory, ~]
+      tags:
+        - { name: sonata.admin, manager_type: orm, label: Kategorie, group: "Fotoalbum", show_in_dashboard: "true" }
+      public: true
+
+    admin.cms.gallery:
+      class: AdminBundle\Admin\GalleryAdmin
+      arguments: [~, CmsBundle\Entity\Gallery, AdminBundle\Controller\CRUDController]
+      tags:
+        - { name: sonata.admin, manager_type: orm, label: Galerie, group: "Fotoalbum", show_in_dashboard: "true" }
+      calls:
+        - [ setTemplate, [edit, "AdminBundle::GalleryAdmin/edit.html.twig"]]
+      public: true
+
+    admin.cms.article.category:
+      class: AdminBundle\Admin\Article\CategoryAdmin
+      arguments: [~, CmsBundle\Entity\Article\Category, ~]
+      tags:
+        - { name: sonata.admin, manager_type: orm, label: Kategorie, group: "Články", show_in_dashboard: "true" }
+      public: true
+
+    admin.cms.article.tag:
+      class: AdminBundle\Admin\Article\TagAdmin
+      arguments: [~, CmsBundle\Entity\Article\Tag, ~]
+      tags:
+        - { name: sonata.admin, manager_type: orm, label: Tagy, group: "Články", show_in_dashboard: "true" }
+      public: true
+
+    admin.cms.article.item:
+      class: AdminBundle\Admin\Article\ItemAdmin
+      arguments: [~, CmsBundle\Entity\Article\Item, AdminBundle\Controller\CRUDController]
+      tags:
+        - { name: sonata.admin, manager_type: orm, label: Články, group: "Články", show_in_dashboard: "true" }
+      calls:
+        - [ setTemplate, [edit, "AdminBundle::Article/ItemAdmin/edit.html.twig"]]
+      public: true
+
+#   admin.cms.product:
 #        class: AppBundle\Admin\ProductAdmin
 #        arguments: [~, AppBundle\Entity\Product, ~]
 #        tags:

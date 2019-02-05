@@ -57,10 +57,11 @@ class EditorController extends Controller
         ));
     }
 
-    public function pageInfoAction($document)
+    public function pageInfoAction($document, $template)
     {
         return $this->render('CmsBundle:Editor/Panel:pageinfo.html.twig', array(
             'document' => $document,
+            'template' => $template,
             'host' => $this->get('cms.manager.domain')->getHost()
         ));
     }

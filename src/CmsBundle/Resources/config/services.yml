@@ -110,6 +110,24 @@ services:
          tags:
              -  { name: cms.widget }
 
+     cms.widget.photo.gallery:
+         class:        CmsBundle\Service\Widget\Photo\Gallery
+         autowire:     true
+         tags:
+             - { name: cms.widget }
+
+     cms.widget.photo.gallery_category:
+       class:        CmsBundle\Service\Widget\Photo\GalleryCategory
+       autowire:     true
+       tags:
+         - { name: cms.widget }
+
+     cms.widget.article.category:
+       class:        CmsBundle\Service\Widget\Article\Category
+       autowire:     true
+       tags:
+         - { name: cms.widget }
+
      app.twig.cms:
         class: CmsBundle\Twig\CmsExtension
         arguments:    ['@doctrine.orm.entity_manager', '@cms.manager.widget', '@cms.manager.template', '@request_stack', '@security.authorization_checker']

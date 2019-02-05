@@ -1,0 +1,13 @@
+{{ cms_region(null, 'global.head') }}
+
+<section class="gallery-list">
+    <div class="container">
+        {% for item in document.items %}
+            <a href="{{ path('cms_page', { url: item.url }) }}">{{ item.name }}</a>
+        {% endfor %}
+    </div>
+</section>
+
+{{ cms_region(null, 'global.galleryCategory') }}
+
+{{ cms_region(null, 'global.foot') }}

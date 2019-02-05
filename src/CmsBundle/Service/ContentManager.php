@@ -37,7 +37,7 @@ class ContentManager
     }
 
 
-    public function setDocument(Document $document)
+    public function setDocument($document)
     {
         $this->document = $document;
     }

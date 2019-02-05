@@ -37,6 +37,7 @@ class AppKernel extends Kernel
 
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

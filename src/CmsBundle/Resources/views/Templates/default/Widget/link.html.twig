@@ -1,7 +1,11 @@
 <div class="projects-box item">
   <div class="projects-thumb">
    <a href="{{ parameters.link }}">
-    <img src="{{ asset(parameters.image) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.title }}" />
+    {% if parameters.image %}
+    <img width="100%" src="{{ asset(parameters.image) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.title }}" />
+    {% else %}
+       BEZ OBRAZKU
+    {% endif %}
    </a>
   </div>
   <div class="projects-content">

@@ -1,0 +1,71 @@
+{#
+  * parameters.title
+  * parameters.annotation
+  * parameters.text | raw
+#}
+
+ <div class="projects-box item">
+  <div class="projects-thumb">
+      {#% if parameters.link %}<a href="{{ parameters.link }}">{% endif %}
+          <img src="{{ asset(parameters.image) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.title }}" />
+      {% if parameters.link %}</a>{% endif %#}
+      <a class="news-gallery-image" data-fancybox="gallery-{{ widget.id }}" title="{{ parameters.title }}" href="{{ asset(parameters.image) | imagine_filter('cms_image_large') }}">
+          <img src="{{ asset(parameters.image) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.title }}" />
+      </a>
+  </div>
+  {% if parameters.image2 or parameters.image3 or parameters.image4 or parameters.image5 %}
+  <div class="project-other-images">
+      <div class="row">
+      {% if parameters.image2 %}
+          <div class="col-md-3 col-xs-3">
+              <a class="news-gallery-image" data-fancybox="gallery-{{ widget.id }}" title="{{ parameters.title }}" href="{{ asset(parameters.image2) | imagine_filter('cms_image_large') }}">
+                  <img src="{{ asset(parameters.image2) | imagine_filter('cms_image_thumb_small') }}" alt="{{ parameters.title }}" />
+              </a>
+          </div>
+      {% endif %}
+      {% if parameters.image3 %}
+          <div class="col-md-3 col-xs-3">
+              <a class="news-gallery-image" data-fancybox="gallery-{{ widget.id }}" title="{{ parameters.title }}" href="{{ asset(parameters.image3) | imagine_filter('cms_image_large') }}">
+                    <img src="{{ asset(parameters.image3) | imagine_filter('cms_image_thumb_small') }}" alt="{{ parameters.title }}" />
+              </a>
+          </div>
+      {% endif %}
+      {% if parameters.image4 %}
+          <div class="col-md-3 col-xs-3">
+              <a class="news-gallery-image" data-fancybox="gallery-{{ widget.id }}" title="{{ parameters.title }}" href="{{ asset(parameters.image4) | imagine_filter('cms_image_large') }}">
+                    <img src="{{ asset(parameters.image4) | imagine_filter('cms_image_thumb_small') }}" alt="{{ parameters.title }}" />
+              </a>
+          </div>
+      {% endif %}
+      {% if parameters.image5 %}
+          <div class="col-md-3 col-xs-3">
+              <a class="news-gallery-image" data-fancybox="gallery-{{ widget.id }}" title="{{ parameters.title }}" href="{{ asset(parameters.image5) | imagine_filter('cms_image_large') }}">
+                    <img src="{{ asset(parameters.image5) | imagine_filter('cms_image_thumb_small') }}" alt="{{ parameters.title }}" />
+              </a>
+          </div>
+      {% endif %}
+      </div>
+  </div>
+  {% endif %}
+  <div class="projects-content">
+    <h4>
+        {% if parameters.link %}<a href="{{ parameters.link }}">{% endif %}
+            {{ parameters.title }}
+        {% if parameters.link %}</a>{% endif %}
+    </h4>
+    <div class="recent-meta"><span class="date"><i class="fa fa-file-text-o"></i> {{ parameters.date }}</span>
+    <span class="comments"><i class="fa fa-comments-o"></i> {{ parameters.subtitle }}</span></div>
+
+    {% if parameters.annotation %}
+      <p class="projects-desc">{{ parameters.annotation | raw}}</p>
+    {% endif %}
+
+    {% if parameters.text %}
+      <p class="projects-desc">{{ parameters.text | raw }}</p>
+    {% endif %}
+
+    {% if parameters.link %}
+    <a href="{{ parameters.link }}" class="btn btn-effect">Více informací <i class="icon-arrow-right"></i></a>
+    {% endif %}
+  </div>
+ </div>

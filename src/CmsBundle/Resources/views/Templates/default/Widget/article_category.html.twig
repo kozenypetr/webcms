@@ -1,0 +1,40 @@
+ {#% if  images[0] is defined %}
+
+   {% if parameters.link %}
+   <a href="{{ parameters.link }}">
+   {% endif %}
+      <img class="responsive-image{{ (parameters.classImage ? ' ' ~  parameters.classImage ~ ''  : '') | raw  }}" src="{{ asset(images[0].src) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.alt }}" />
+   {% if parameters.link %}
+      </a>
+   {% endif %}
+
+   {% if parameters.gallery %}
+      <a class="{{ parameters.gallery }}" href="{{ asset(images[0].src) | imagine_filter('cms_image_large') }}">
+   {% endif %}
+     <img class="responsive-image{{ (parameters.classImage ? ' ' ~  parameters.classImage ~ ''  : '') | raw  }}" src="{{ asset(images[0].src) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.alt }}" />
+   {% if parameters.gallery %}
+      </a>
+   {% endif %}
+
+   {% if parameters.annotation %}
+   <p class="center">{{ parameters.annotation }}</p>
+   {% endif %}
+
+ {% endif %#}
+
+ {% if parameters.category %}
+    <div class="row">
+    {% for item in parameters.category.items %}
+      <div class="category-holder {{ parameters.width }}">
+        {% if item.images[0] is defined %}
+        <img width="100%" class="image responsive-image" src="{{ asset(item.images[0].path) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.category.name }}" />
+        {% endif %}
+        <a  href="{{ path('cms_page', { url: item.url }) }}">
+          {{ item.name }}
+        </a>
+      </div>
+    {% endfor %}
+    </div>
+ {% else %}
+  Kategorie nebyla vybrána nebo neexistuje
+ {% endif %}

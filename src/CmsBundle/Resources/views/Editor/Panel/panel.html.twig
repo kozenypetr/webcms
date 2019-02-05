@@ -30,7 +30,7 @@
 
     {{ render(controller('CmsBundle:Editor/Editor:widgetList')) }}
 
-    {{ render(controller('CmsBundle:Editor/Editor:pageInfo',{ 'document': document } )) }}
+    {{ render(controller('CmsBundle:Editor/Editor:pageInfo', { 'document': document, 'template': template } )) }}
 
     {#
     <div class="document-info">
@@ -60,27 +60,39 @@
     #}
 
     <div class="document-links">
-        {% if document.lft > 1 %}
-        <a href="{{ path('cms_document_delete', {'id': document.id }) }}" class="modal-form document-delete">
-            <i class="fa fa-times" aria-hidden="true"></i><br />
-            Smazat<br />stránku
-        </a>
+        {% if document.lft is defined %}
+            {% if document.lft > 1 %}
+            <a href="{{ path('cms_document_delete', {'id': document.id }) }}" class="modal-form document-delete">
+                <i class="fa fa-times" aria-hidden="true"></i><br />
+                Smazat<br />stránku
+            </a>
+            {% endif %}
+
+            <a href="{{ path('cms_document_add', { 'parent_id': document.id }) }}" class="modal-form document-new">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i><br />
+                Přidat<br />stránku
+            </a>
+
+        {% else %}
+            <a href="{{ path('cms_document_add') }}" class="modal-form document-new">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i><br />
+                Přidat<br />stránku
+            </a>
         {% endif %}
 
-        <a href="{{ path('cms_document_add', { 'parent_id': document.id }) }}" class="modal-form document-new">
-            <i class="fa fa-plus-circle" aria-hidden="true"></i><br />
-            Přidat<br />stránku
-        </a>
 
-        <a href="{{ path('cms_document_copy', { 'id': document.id }) }}" class="modal-form document-copy">
-            <i class="fa fa-copy" aria-hidden="true"></i><br />
-            Kopírovat<br />stránku
-        </a>
 
-        <a href="{{ path('cms_document_edit', {'id': document.id }) }}" class="modal-form document-edit">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i><br />
-            Upravit<br />stránku
-        </a>
+        {% if document.lft is defined %}
+            <a href="{{ path('cms_document_copy', { 'id': document.id }) }}" class="modal-form document-copy">
+                <i class="fa fa-copy" aria-hidden="true"></i><br />
+                Kopírovat<br />stránku
+            </a>
+
+            <a href="{{ path('cms_document_edit', {'id': document.id }) }}" class="modal-form document-edit">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i><br />
+                Upravit<br />stránku
+            </a>
+        {% endif %}
     </div>
 
     <img width="60" src="/images/loading.gif" />

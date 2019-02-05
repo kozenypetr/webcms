@@ -1,4 +1,4 @@
-{% extends "CmsBundle::Templates/" ~ host ~ "/" ~ pageTemplate %}
+{% extends "CmsBundle::Templates/" ~ host ~ "/page.html.twig" %}
 
 {% block title %}{{ document.metatitle?document.metatitle:document.name }}{% endblock %}
 {% block ogtitle %}{{ document.metatitle?document.metatitle:document.name }}{% endblock %}
@@ -7,36 +7,8 @@
 {% block metakeywords %}{{ document.metakeywords }}{% endblock %}
 
 
-
-{#% block stylesheets %}
-    {% if is_granted('ROLE_ADMIN') %}
-        {% stylesheets
-        'assets/vendors/bootstrap/dist/css/bootstrap.css'
-        'assets/vendors/font-awesome/css/font-awesome.css'
-        'assets/vendors/bootstrap/dist/css/bootstrap.css'
-        'assets/vendors/bootstrap/dist/css/bootstrap-theme.css'
-        'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.css'
-        'assets/tinymce/skins/lightgray/skin.min.css'
-        'assets/tinymce/skins/lightgray/content.min.css'
-        'assets/jquery-ui/css/jquery-ui.css'
-        'assets/jstree/themes/default/style.css'
-        '@CmsBundle/Resources/public/css/cms.less'
-        %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
-    {% else %}
-        {% stylesheets
-        'assets/vendors/bootstrap/dist/css/bootstrap.css'
-        'assets/vendors/font-awesome/css/font-awesome.css'
-        %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
-    {% endif %}
-    {{  parent() }}
-{% endblock %#}
-
 {% block body %}
-    {% include document.template with {'document': document } %}
+    {% include template with {'document': document } %}
 {% endblock %}
 
 
@@ -86,51 +58,61 @@
     {% endif %}
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        {% stylesheets
+            'assets/pure/grids-min.css'
+            'assets/pure/forms-min.css'
+            'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.css'
+            'assets/tinymce/skins/lightgray/skin.min.css'
+            'assets/jquery-ui/css/jquery-ui.css'
+            'assets/jstree/themes/default/style.css'
+            'assets/remodal/remodal.css'
+            'assets/remodal/remodal-default-theme.css'
+            '@CmsBundle/Resources/public/css/cms.less'
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endif %}
+{% endblock %}
+
 
 {% block javascripts %}
-    {#% if is_granted('ROLE_ADMIN') %}
+    {{ parent() }}
 
+    {% if is_granted('ROLE_ADMIN') %}
         {% javascripts
-            'assets/vendors/jquery/dist/jquery.js'
-            'assets/vendors/bootstrap/dist/js/bootstrap.js'
+            'bundles/fosjsrouting/js/router.js'
+            'assets/remodal/remodal.min.js'
             'assets/vendors/jQuery-contextMenu/dist/jquery.contextMenu.js'
             'assets/vendors/jQuery-contextMenu/dist/jquery.ui.position.js'
             'assets/vendors/jquery.cookie/jquery.cookie.js'
             'assets/jquery-ui/js/jquery-ui.js'
-            'assets/jquery-ui/js/jquery-ui.js'
             'assets/jquery-slidereveal/jquery.slidereveal.min.js'
-            'assets/tinymce/tinymce.min.js'
-            'assets/tinymce/jquery.tinymce.min.js'
-            'assets/tinymce/themes/modern/theme.min.js'
-            'assets/vendors/interactjs/interact.js'
             'assets/jstree/jstree.min.js'
-            'bundles/fosjsrouting/js/router.js'
+            'assets/vendors/fancyBox/dist/jquery.fancybox.js'
+            'assets/jquery-validation/jquery.validate.min.js'
+            'assets/jquery-validation/localization/messages_cs.js'
             '@CmsBundle/Resources/public/js/*'
         %}
-        <script src="{{ asset_url }}"></script>
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
+
+        <script src="/assets/tinymce/tinymce.min.js"></script>
+        <script src="/assets/tinymce/themes/modern/theme.min.js"></script>
         <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-    {% else %}
-        {% javascripts
-            'assets/vendors/jquery/dist/jquery.js'
-            'assets/vendors/bootstrap/dist/js/bootstrap.js'
-        %}
-        <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-    {% endif %}
-    #}
-    {{ parent() }}
 
-    {% if is_granted('ROLE_ADMIN') %}
-    <script type="text/javascript">
-        var adminUrl = Array();
-        adminUrl['widget_add'] = '{{ path('cms_widget_add') }}';
-        adminUrl['widget_sort'] = '{{ path('cms_widget_sort') }}';
-        adminUrl['document_add'] = '{{ path('cms_document_add') }}';
+        <script type="text/javascript">
+            var adminUrl = Array();
+            adminUrl['widget_add'] = '{{ path('cms_widget_add') }}';
+            adminUrl['widget_sort'] = '{{ path('cms_widget_sort') }}';
+            adminUrl['document_add'] = '{{ path('cms_document_add') }}';
 
-        var adminParam = Array();
-        adminParam['document_id'] = '{{ document.id }}';
-        adminParam['url'] = '{{ document.url }}';
-    </script>
+            var adminParam = Array();
+            adminParam['document_id'] = '{{ document.id }}';
+            adminParam['url'] = '{{ document.url }}';
+        </script>
     {% endif %}
 {% endblock %}

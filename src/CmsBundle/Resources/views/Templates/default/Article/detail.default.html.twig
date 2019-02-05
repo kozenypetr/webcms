@@ -1,0 +1,29 @@
+{{ cms_region(null, 'global.head') }}
+
+{{ cms_region(null, 'global.breadcrumb') }}
+
+<section class="gallery-list">
+    <div class="container">
+     <h1>{{ document.name }}</h1>
+
+     {{ document.description }}
+
+     {% if document.images %}
+         <div class="gallery row">
+             {% for image in document.images %}
+                 <div class="image-holder col-md-3">
+                     <a class="image-link" data-fancybox="gallery-{{ document.id }}" href="{{ asset(image.path) | imagine_filter('cms_image_large') }}">
+                         <img width="100%" class="image responsive-image{#{ (parameters.classImage ? ' ' ~  parameters.classImage ~ ''  : '') | raw  }#}" src="{{ asset(image.path) | imagine_filter('cms_image_thumb') }}" alt="{{ document.name }}" />
+                     </a>
+                 </div>
+             {% endfor %}
+         </div>
+     {% else %}
+         Galerie neobsahuje žádné fotky
+     {% endif %}
+    </div>
+</section>
+
+{{ cms_region(null, 'global.galleryDetail') }}
+
+{{ cms_region(null, 'global.foot') }}

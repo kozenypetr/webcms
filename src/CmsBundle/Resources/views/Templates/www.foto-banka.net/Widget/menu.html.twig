@@ -1,0 +1,30 @@
+{% macro menu_links(tree, class) %}
+    {% import _self as self %}
+    <ul{% if (class) %} class="{{ class }}"{% endif %}>
+        {% for item in tree %}
+            <li>
+                {% if (not item.link is null) %}
+                <a href="{{ (item.link == 'path')?path('cms_page', { url:  item.link }):(item.link | raw) }}">
+                {% endif %}
+
+                {{ item.title }}
+
+                {% if (not item.link is null) %}</a>{% endif %}
+
+                {% if item.children %}
+                    {{ self.menu_links(item.children, 'dropdown') }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% import _self as macro %}
+
+
+<!--  Brand and toggle menu for mobile ends  -->
+<nav id="nav-menu-1">
+    {{ macro.menu_links(parameters.tree, '') }}
+</nav>
+
+{#{ macro.menu_links(parameters.tree, 'wpb-mobile-menu') }#}

@@ -1,5 +1,6 @@
 // TOOLBARS
 .widget-toolbar, .region-toolbar {
+  font-family: Arial;
   display: none;
   z-index: 100;
   position: absolute;
@@ -55,7 +56,7 @@
   }
 
   i {
-    font-size: 23px;
+    font-size: 26px;
     cursor: pointer;
   }
 
@@ -149,6 +150,7 @@
 
 // PANEL
 #cms-panel {
+  font-family: Arial !important;
   border-left-width: 0;
   border-right-width: 0;
   position: fixed;
@@ -185,7 +187,7 @@
       color: #fff;
       text-decoration: none;
       text-align: center;
-      font-size: 16px;
+      font-size: 14px;
       padding-top: 3px;
     }
 
@@ -220,7 +222,7 @@
       padding-top: 6px;
       background-color: #2b669a;
       cursor: pointer;
-      font-size: 15px;
+      font-size: 14px;
       color: #fff;
     }
   }
@@ -479,7 +481,7 @@ body {
 .panel-pageinfo {
   float: left;
   height: 100%;
-  width: 450px;
+  width: 510px;
   margin: 5px;
 
 
@@ -494,7 +496,7 @@ body {
 
 
 #remodal {
-
+  font-family: Arial;
   .tab {
     min-height: 500px;
     text-align: left;
@@ -506,6 +508,9 @@ body {
 
     label {
       margin-top: 15px !important;
+      display: inline-block;
+      margin-right: 20px;
+      vertical-align: bottom;
     }
 
     .ui-tabs-anchor {
@@ -543,6 +548,10 @@ body {
   }
 
   h3.ui-state-active { color: #fff !important; }
+}
+
+.clear {
+  clear: both;
 }
 
 

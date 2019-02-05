@@ -526,53 +526,7 @@ class Document
         return $this->status;
     }
 
-    /**
-     * Set created.
-     *
-     * @param \DateTime $created
-     *
-     * @return Document
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
 
-        return $this;
-    }
-
-    /**
-     * Get created.
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated.
-     *
-     * @param \DateTime|null $updated
-     *
-     * @return Document
-     */
-    public function setUpdated($updated = null)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated.
-     *
-     * @return \DateTime|null
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
 
     /**
      * Set metatitle.
