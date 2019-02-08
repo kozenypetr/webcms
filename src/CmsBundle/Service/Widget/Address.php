@@ -16,7 +16,7 @@ class Address extends Base
 
   protected $template = 'address.html.twig';
 
-  protected $icon = 'fa-address-card';
+  protected $icon = 'fa-user';
 
   protected $default = array(
       'title'         => 'Nadpis',

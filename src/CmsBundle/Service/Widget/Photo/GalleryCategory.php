@@ -23,6 +23,8 @@ class GalleryCategory extends Base
 
     protected $icon = 'fa-image';
 
+    protected $group = 'Fotky';
+
     protected $default = array(
         'width'  => 'col-md-4',
         'classImage'  => '',

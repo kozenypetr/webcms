@@ -53,7 +53,7 @@ class EditorController extends Controller
     public function widgetListAction()
     {
         return $this->render('CmsBundle:Editor/Panel:widgets.html.twig', array(
-            'widgets' => $this->get('cms.manager.widget')->getWidgets()
+            'groups' => $this->get('cms.manager.widget')->getWidgetsByGroup()
         ));
     }
 

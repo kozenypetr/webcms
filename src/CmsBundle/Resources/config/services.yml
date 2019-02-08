@@ -18,12 +18,34 @@ services:
          class: CmsBundle\Service\ContentManager
          arguments:    ['@doctrine.orm.entity_manager', '@service_container']
 
-
+     # ZAKLADNI
+     # html editor
      cms.widget.editor:
          class:        CmsBundle\Service\Widget\Editor
          autowire: true
          tags:
              -  { name: cms.widget }
+
+     # obrazek
+     cms.widget.image:
+         class:        CmsBundle\Service\Widget\Image
+         autowire: true
+         tags:
+           - { name: cms.widget }
+
+     # nadpis
+     cms.widget.heading:
+         class:        CmsBundle\Service\Widget\Heading
+         autowire:     true
+         tags:
+           - { name: cms.widget }
+
+     # odkaz
+     cms.widget.link:
+         class:        CmsBundle\Service\Widget\Link
+         autowire:     true
+         tags:
+           - { name: cms.widget }
 
      cms.widget.html_code:
          class:        CmsBundle\Service\Widget\HtmlCode
@@ -33,12 +55,6 @@ services:
 
      cms.widget.news:
          class:        CmsBundle\Service\Widget\News
-         autowire: true
-         tags:
-             -  { name: cms.widget }
-
-     cms.widget.image:
-         class:        CmsBundle\Service\Widget\Image
          autowire: true
          tags:
              -  { name: cms.widget }
@@ -62,17 +78,7 @@ services:
          tags:
              -  { name: cms.widget }
 
-     cms.widget.heading:
-         class:        CmsBundle\Service\Widget\Heading
-         autowire:     true
-         tags:
-             -  { name: cms.widget }
 
-     cms.widget.link:
-         class:        CmsBundle\Service\Widget\Link
-         autowire:     true
-         tags:
-             -  { name: cms.widget }
 
      cms.widget.reference:
          class:        CmsBundle\Service\Widget\Reference

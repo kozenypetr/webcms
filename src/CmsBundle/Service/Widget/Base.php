@@ -62,6 +62,8 @@ abstract class Base
 
     protected $group = 'Základní';
 
+    protected $description = 'Widget';
+
     public function __construct(EntityManagerInterface $em, FormFactoryInterface $formFactory, EngineInterface $twig, TemplateManager $tm, WidgetManager $wm, ContentManager $cm)
     {
         $this->em = $em;
@@ -236,6 +238,16 @@ abstract class Base
     public function getIcon()
     {
         return $this->icon;
+    }
+
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
     }
 
 

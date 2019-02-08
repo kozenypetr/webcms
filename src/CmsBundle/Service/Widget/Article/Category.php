@@ -23,6 +23,8 @@ class Category extends Base
 
     protected $icon = 'fa-file-text-o';
 
+    protected $group = 'Články';
+
     protected $default = array(
         'width'  => 'col-md-4',
         'classImage'  => '',
