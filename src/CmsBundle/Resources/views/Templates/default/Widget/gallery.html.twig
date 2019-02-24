@@ -27,7 +27,7 @@
     {% for image in parameters.gallery.images %}
       <div class="image-holder {{ parameters.width }}">
         <a class="image-link" data-fancybox="gallery-{{ parameters.gallery.id }}" href="{{ asset(image.path) | imagine_filter('cms_image_large') }}">
-          <img class="image responsive-image{{ (parameters.classImage ? ' ' ~  parameters.classImage ~ ''  : '') | raw  }}" src="{{ asset(image.path) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.gallery.name }}" />
+          <img width="100%" class="image responsive-image{{ (parameters.classImage ? ' ' ~  parameters.classImage ~ ''  : '') | raw  }}" src="{{ asset(image.path) | imagine_filter('cms_image_thumb') }}" alt="{{ parameters.gallery.name }}" />
         </a>
       </div>
     {% endfor %}

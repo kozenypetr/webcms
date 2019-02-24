@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>{% block title %}{% endblock %} | Další cesta</title>
+
+    <meta name="keywords" content="{% block metakeywords %}{% endblock %}">
+    <meta name="description" content="{% block metadescription %}{% endblock %}">
+    <meta name="robots" content="index,follow">
+
+    <!-- Canonical URLs -->
+    <link rel="canonical" href="https://www.dalsicesta.cz/{{ document.url }}">
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="Další Cesta">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="cs_CZ">
+
+    <meta property="og:title" content="{% block ogtitle %}{% endblock %}">
+    {#<meta property="og:image" content="https://www.staveni-firma-cermak.cz/data/vlk/logo_3.png">#}
+    <meta property="og:description" content="{% block ogmetadescription %}{% endblock %}">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+    {% block stylesheets %}
+        {% stylesheets
+            'assets/dalsicesta.cz/bootstrap/css/bootstrap.min.css'
+
+
+            'assets/vendors/fancyBox/dist/jquery.fancybox.css'
+            'assets/fonts/font-awesome.min.css'
+            '@CmsBundle/Resources/public/dalsicesta.cz/css/main.less'
+        %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,300,300italic,500,700' rel='stylesheet' type='text/css'>
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+
+<body class="document{{ document.id }} {{ cms_body_class() }}">
+
+
+{% block body %}
+{% endblock body %}
+
+{# NEMAZAT- DULEZITE PRO EDITACI STRANKY #}
+{% block cms %}
+{% endblock cms %}
+
+
+{% block javascripts %}
+    {% javascripts
+        'assets/dalsicesta.cz/jquery/jquery.min.js'
+        'assets/dalsicesta.cz/bootstrap/js/bootstrap.bundle.min.js'
+
+        'assets/vendors/fancyBox/dist/jquery.fancybox.js'
+        '@CmsBundle/Resources/public/dalsicesta.cz/js/main.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+{% endblock %}
+
+</body>
+</html>
+

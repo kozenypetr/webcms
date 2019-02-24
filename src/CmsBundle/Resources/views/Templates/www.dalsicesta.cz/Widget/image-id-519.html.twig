@@ -1,0 +1,29 @@
+ {% if  parameters.image %}
+   {% if parameters.link %}
+     <a href="{{ parameters.link }}">
+   {% elseif parameters.gallery %}
+     <a class="{{ parameters.gallery }}" data-fancybox="{{ parameters.gallery }}" title="{{ parameters.annotation }}" href="{{ asset(parameters.image)  }}">
+   {% endif %}
+      <img width="100%" class="responsive-image{{ (parameters.classImage ? ' ' ~  parameters.classImage ~ ''  : '') | raw  }}" src="{{ asset(parameters.image) }}" alt="{{ parameters.alt }}" />
+   {% if parameters.link or parameters.gallery %}
+      </a>
+   {% endif %}
+
+   {% if parameters.annotation %}
+   <p class="center">{{ parameters.annotation }}</p>
+   {% endif %}
+
+{#
+  <img width="{{ parameters.width }}" src="{{ images[0].src }}" {{ (parameters.classImage ? 'class="' ~  parameters.classImage ~ '"'  : '') | raw  }} />
+#}
+     {#
+  <picture>
+      <source srcset="img_smallflower.jpg" media="(max-width: 400px)">
+      <source srcset="img_flowers.jpg">
+      <img src="img_flowers.jpg" alt="Flowers">
+  </picture>
+#}
+
+ {% else %}
+    <p class="noimage">Není vybraný obrázek</p>
+ {% endif %}

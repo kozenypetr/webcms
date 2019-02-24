@@ -1,0 +1,13 @@
+<div class="bread">
+    {% for item in parameters.path %}
+        {% if (loop.last) %}
+            <span class="current">{{ item.name }}</span>
+        {% elseif (item.class == 'nobread') %}
+            <span class="nobread">{{ item.name }}</span>
+            <span class="crumbs-spacer">|</span>
+        {% else %}
+            <a href="/{{ item.url }}">{{ item.name }}</a>
+            <span class="crumbs-spacer">|</span>
+        {% endif %}
+    {% endfor %}
+</div>

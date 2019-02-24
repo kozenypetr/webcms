@@ -116,6 +116,12 @@ services:
          tags:
              -  { name: cms.widget }
 
+     cms.widget.sponsor:
+         class:        CmsBundle\Service\Widget\Sponsor
+         autowire:     true
+         tags:
+             -  { name: cms.widget }
+
      cms.widget.photo.gallery:
          class:        CmsBundle\Service\Widget\Photo\Gallery
          autowire:     true

@@ -75,7 +75,7 @@ class ContactForm extends Base
             ->add('subject', TextType::class, array('label'=> 'Předmět'))
             ->add('message', TextareaType::class, array('label'=> 'Zpráva', 'required' => false))
             ->add('widget_id', HiddenType::class)
-            ->add('Save', SubmitType::class, array('label'=> 'Odeslat dotaz', 'attr' => ['class' => 'btn btn-effect', 'id' => 'submit']))
+            ->add('Save', SubmitType::class, array('label'=> 'Odeslat dotaz', 'attr' => ['class' => 'btn btn-success float-right', 'id' => 'submit']))
             ->getForm();
 
         $form->get('widget_id')->setData($this->entity->getId());

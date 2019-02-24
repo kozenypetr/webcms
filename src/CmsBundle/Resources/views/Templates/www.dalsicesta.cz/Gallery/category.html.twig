@@ -1,0 +1,13 @@
+{{ cms_region(null, 'global.head') }}
+
+<section class="gallery-list">
+    <div class="container">
+        {% for gallery in document.galleries %}
+            <a href="{{ path('cms_gallery_detail', { category: gallery.mainCategory.slug, url: gallery.slug }) }}">{{ gallery.name }}</a>
+        {% endfor %}
+    </div>
+</section>
+
+{{ cms_region(null, 'global.galleryCategory') }}
+
+{{ cms_region(null, 'global.foot') }}

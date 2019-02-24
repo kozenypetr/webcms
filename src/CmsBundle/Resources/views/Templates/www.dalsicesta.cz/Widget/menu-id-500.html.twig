@@ -1,0 +1,52 @@
+{% macro menu_links(tree, class, level) %}
+    {% import _self as self %}
+    <ul{% if (level == 1) %} id="top-menu" {% else %} role="menu"{% endif %}{% if (class) %} class="{{ class }}"{% endif %}>
+        {% for item in tree %}
+            <li {% if item.children %}class="dropdown"{% endif %}>
+                {% if (not item.link is null) %}
+                    {% if item.children %}
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    {% else %}
+                    <a href="{{ (item.link == 'path')?path('cms_page', { url:  item.link }):(item.link | raw) }}">
+                    {% endif %}
+                {% endif %}
+
+                {{ item.title }}
+
+                {% if item.children %}
+                <span class="fa fa-angle-down"></span>
+                {% endif %}
+
+                {% if (not item.link is null) %}</a>{% endif %}
+
+                {% if item.children %}
+                    {{ self.menu_links(item.children, 'dropdown-menu', level + 1) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% import _self as macro %}
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <!-- FOR MOBILE VIEW COLLAPSED BUTTON -->
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- LOGO -->
+            <!-- TEXT BASED LOGO -->
+            {#<a class="navbar-brand" href="index.html"><i class="fa fa-university"></i><span>Varsity</span></a>#}
+            <!-- IMG BASED LOGO  -->
+            <!-- <a class="navbar-brand" href="index.html"><img src="assets/img/logo.png" alt="logo"></a> -->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+        {{ macro.menu_links(parameters.tree, 'nav navbar-nav navbar-right main-nav', 1) }}
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>

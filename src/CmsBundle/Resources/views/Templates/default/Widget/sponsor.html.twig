@@ -1,0 +1,14 @@
+<div class="sponsor-box item white-box">
+
+  <div class="sponsor-content">
+    <h4>{{ parameters.title }}</h4>
+
+      <div class="sponsor-thumb">
+          {% if parameters.image %}
+              <img src="{{ asset(parameters.image) | imagine_filter('cms_image_thumb_small') }}" alt="{{ parameters.title }}" />
+          {% endif %}
+      </div>
+    <p class="sponsor-desc">{{ parameters.annotation | raw }}</p>
+    <a href="{{ parameters.link }}">{{ parameters.link }}</a>
+  </div>
+</div>

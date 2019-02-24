@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 class DocumentController extends Controller
 {
     /**
-     * @Route("/portfolio/{url}", name="cms_gallery_category")
+     * @Route("/fotogalerie/{url}", name="cms_gallery_category")
      */
     public function galleryCategoryAction(Request $request, $url, $category = null)
     {
@@ -48,7 +48,7 @@ class DocumentController extends Controller
 
 
     /**
-     * @Route("/portfolio/{category}/{url}", name="cms_gallery_detail")
+     * @Route("/fotogalerie/{category}/{url}", name="cms_gallery_detail")
      */
     public function galleryAction(Request $request, $url, $category)
     {

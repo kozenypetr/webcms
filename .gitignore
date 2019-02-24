@@ -21,3 +21,5 @@
 !web/media/cache/.gitkeep
 /web/data/*
 !web/data/.gitkeep
+/web/gallery/*
+!web/gallery/.gitkeep
