@@ -34,8 +34,7 @@ class ContactController extends Controller
 
         $mailText = str_replace('%dotaz%', $query, $mailText);
 
-        $message = \Swift_Message::newInstance()
-            ->setSubject($data['subject'])
+        $message = (new \Swift_Message($data['subject']))
             ->setFrom($widget->getParameter('sender'))
             ->setTo($widget->getParameter('receiver'))
             ->setBcc($data['email'])
