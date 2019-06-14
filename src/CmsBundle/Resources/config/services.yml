@@ -122,6 +122,12 @@ services:
          tags:
              -  { name: cms.widget }
 
+     cms.widget.cermak.calculator:
+         class:        CmsBundle\Service\Widget\HouseCalculator
+         autowire:     true
+         tags:
+             - { name: cms.widget }
+
      cms.widget.photo.gallery:
          class:        CmsBundle\Service\Widget\Photo\Gallery
          autowire:     true

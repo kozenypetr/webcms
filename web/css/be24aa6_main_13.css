@@ -1,0 +1,207 @@
+.widget.indentation,
+.widget.cms-widget-image {
+  margin-top: 15px;
+}
+.widget.noindentation {
+  margin-top: 0px;
+}
+.widget:after {
+  content: "";
+  clear: both;
+}
+.responsive-image {
+  width: 100%;
+  height: auto;
+}
+.center {
+  text-align: center;
+}
+.noimage {
+  height: 200px;
+  line-height: 200px;
+  text-align: center;
+  border: solid red 1px;
+}
+.news-detail {
+  text-align: center;
+}
+.news-link .news-link-image img {
+  width: 100%;
+}
+.team.region {
+  margin-bottom: 20px;
+}
+form.contact-form label.required:after {
+  content: " *";
+}
+form.contact-form label.error {
+  color: red;
+}
+form.contact-form .form-control {
+  margin-bottom: 10px;
+}
+.project-other-images div {
+  margin-bottom: 10px;
+}
+.bytove-studio-item {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 15px 15px;
+  background-color: #fafafa;
+}
+.bytove-studio-item h2 {
+  margin-top: 10px;
+  text-align: center;
+  color: #2b669a;
+  font-weight: bold;
+  text-decoration: underline;
+}
+.bytove-studio-item .bs-desc {
+  margin-top: 20px;
+  text-align: center;
+  min-height: 260px;
+}
+.bytove-studio-item .bs-desc p {
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+  line-height: 20px;
+  font-size: 15px;
+}
+.bytove-studio-item .bs-desc p:after {
+  content: '*';
+  line-height: 13px;
+  display: block;
+  padding-top: 7px;
+  font-weight: bold;
+  font-size: 18px;
+}
+.bytove-studio-item .bs-desc p:last-child:after {
+  content: "";
+}
+.bytove-studio-item .bs-other-images {
+  margin-top: 15px;
+}
+.address table {
+  border: 0;
+}
+.address table tr:nth-child(odd) {
+  background-color: #fafafa;
+}
+.address table td:last-child {
+  text-align: right;
+}
+.address table td,
+.address table tr {
+  border: 0;
+  padding: 5px 10px;
+}
+.house-calculator p {
+  text-align: center;
+}
+.house-calculator .box-option-1 p {
+  font-weight: bold;
+}
+.house-calculator .box-option-1 .option-1 {
+  height: 80px;
+  line-height: 80px;
+  border: solid #aaa 1px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 17px;
+}
+.house-calculator .box-option-1 .option-1.selected {
+  border: solid #337ab7 2px;
+  font-weight: bold;
+}
+.house-calculator .box-option-2 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+.house-calculator .box-option-2 p {
+  font-weight: bold;
+}
+.house-calculator .box-option-2 .option-2 {
+  height: 80px;
+  line-height: 80px;
+  border: solid #aaa 1px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 17px;
+}
+.house-calculator .box-option-2 .option-2.selected {
+  border: solid #337ab7 2px;
+  font-weight: bold;
+}
+.house-calculator .box-values {
+  text-align: center;
+}
+.house-calculator .box-values input {
+  text-align: center;
+  font-size: 20px;
+  color: #000;
+}
+.house-calculator .final-price {
+  background-color: rgba(52, 152, 219, 0.7);
+  color: #fff;
+  font-weight: bold;
+  font-size: 30px;
+  text-align: center;
+  height: 100px;
+  line-height: 100px;
+}
+.house-calculator .contact-link {
+  margin-top: 10px;
+  display: block;
+  text-align: center;
+  color: #fff;
+  background-color: #00A000;
+  padding: 10px 0;
+}
+.dodavka-list ul {
+  margin-left: 3.5rem;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.dodavka-list ul li:before {
+  content: "\f00c";
+  /* FontAwesome Unicode */
+  font-family: FontAwesome;
+  display: inline-block;
+  margin-left: -1.3em;
+  /* same as padding-left set on li */
+  width: 1.3em;
+  /* same as padding-left set on li */
+  color: #3498db;
+}
+.dodavka-list ul li {
+  margin-top: 10px;
+  line-height: 30px;
+}
+.box-option-desc {
+  margin-bottom: 20px;
+}
+.box-option-desc .box-option-desc-item {
+  border: solid #aaa 1px;
+  padding: 20px 10px;
+}
+.box-option-desc .box-option-desc-item a {
+  color: #3498db;
+}
+.examples {
+  margin-bottom: 30px;
+}
+.examples h2 {
+  text-align: center;
+  border-bottom: solid #aaa 1px;
+  margin-top: 30px;
+}
+.examples .example {
+  margin-top: 20px;
+}
+.title-example {
+  color: #3498db;
+}
+.calculator-contact-form h2 {
+  text-align: center;
+}

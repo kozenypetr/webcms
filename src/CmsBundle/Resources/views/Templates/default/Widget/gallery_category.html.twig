@@ -21,8 +21,8 @@
    {% endif %}
 
  {% endif %#}
-
- {% if parameters.categories %}
+ {% dump(parameters.categories) %}
+ {% if parameters.categories is defined %}
     <div class="row">
     {% for category in parameters.categories %}
       <div class="category-holder {{ parameters.width }}">

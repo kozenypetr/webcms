@@ -1,0 +1,114 @@
+<input id="bungalov-zaklad" type="hidden" value="{{ parameters.bungalov_cena_zaklad }}" />
+<input id="bungalov-standard" type="hidden" value="{{ parameters.bungalov_cena_standard }}" />
+<input id="bungalov-nadstandard" type="hidden" value="{{ parameters.bungalov_cena_nadstandard }}" />
+<input id="patrovy-zaklad" type="hidden" value="{{ parameters.patrovy_cena_zaklad }}" />
+<input id="patrovy-standard" type="hidden" value="{{ parameters.patrovy_cena_standard }}" />
+<input id="patrovy-nadstandard" type="hidden" value="{{ parameters.patrovy_cena_nadstandard }}" />
+
+
+<div class="container">
+    <div class="house-calculator">
+        <div class="box-option-1 row">
+            <p>Chcete přízemí nebo i patro?</p>
+            <div class="option-1 col-md-offset-4 col-md-2 selected" data-value="bungalov">Bungalov</div>
+            <div class="option-1 col-md-2" data-value="patrovy">Jednopatrový dům</div>
+        </div>
+
+        <div class="box-option-2 row">
+            <p>Vyberte rozsah dodávky</p>
+            <div class="option-2 col-md-2 col-md-offset-3" data-value="zaklad">Základ</div>
+            <div class="option-2 col-md-2 selected" data-value="standard">Standard</div>
+            <div class="option-2 col-md-2" data-value="nadstandard">Nadstandard</div>
+        </div>
+
+        <div class="box-option-desc row">
+            <div class="box-option-desc-item desc-zaklad col-md-6 col-md-offset-3">
+                Informace k <strong>základní</strong> dodávce
+                <br /><a href="/spocitejte-si-cenu-domu/rozsah-dodavky">více zde</a>
+            </div>
+            <div class="box-option-desc-item desc-standard col-md-6 col-md-offset-3">
+                Informace k <strong>standard</strong> dodávce
+                <br /><a href="/spocitejte-si-cenu-domu/rozsah-dodavky">více zde</a>
+            </div>
+            <div class="box-option-desc-item desc-nadstandard col-md-6 col-md-offset-3">
+                Informace k <strong>nadstandard</strong> dodávce
+                <br /><a href="/spocitejte-si-cenu-domu/rozsah-dodavky">více zde</a>
+            </div>
+        </div>
+
+        <div class="box-values form-group row">
+            <div class="col-md-4 col-md-offset-4">
+                <label class="control-label">Zadejte zastavěnou plochu v m<sup>2</sup></label>
+                <input id="house-area" type="text" class="form-control" value="100" />
+            </div>
+
+            <div class="col-md-4 col-md-offset-4 form-group">
+                <label class="control-label">Cena za dům v této velikosti</label>
+                <div class="final-price">
+                    <span id="calculator-price">3 500 000 Kč s DPH</span>
+                </div>
+
+                <a class="contact-link" href="#">Chcete vědět víc? Napište nám.</a>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <h3 class="title-example" align="center">Nemáte zatím jasnou představu o domu? Nechce se inpirovat domy, které jsme stavěli a zkuste si pro výpočet vybrat jeden s nich.</h3>
+
+    <div class="examples">
+        <h2>Bungalov</h2>
+
+        <div class="example row">
+            <div class="col-md-12">
+                <h3>Bungalov 4+kk se zastavěnou plochou 120 m<sup>2</sup></h3>
+                <p>Nějaký popis domečku</p>
+            </div>
+            <div class="col-md-4">
+                <a class="news-gallery-image thumbnail" data-fancybox="gallery-1" title="Patrový dům" href="{{ asset('/data/kalkulacka/bungalov/wojnar.jpg') | imagine_filter('cms_image_large') }}">
+                    <img src="{{ asset('/data/kalkulacka/bungalov/wojnar.jpg') | imagine_filter('cms_image_thumb') }}" alt="Patrový dům" />
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a class="news-gallery-image thumbnail" data-fancybox="gallery-1" title="Patrový dům" href="{{ asset('/data/kalkulacka/bungalov/wojnar_pudorys.jpg') | imagine_filter('cms_image_large') }}">
+                    <img src="{{ asset('/data/kalkulacka/bungalov/wojnar_pudorys.jpg') | imagine_filter('cms_image_thumb') }}" alt="Patrový dům" />
+                </a>
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div align="center" class="example-button col-md-4 col-md-offset-4" data-area="120" data-type="bungalov">
+                <a class="btn btn-success btn-lg">Zobrazit kalkulaci</a>
+            </div>
+        </div>
+
+        <h2>Patrový dům</h2>
+
+        <div class="example row">
+            <div class="col-md-12">
+                <h3>Patrový dům 4+kk se zastavěnou plochou 50 m<sup>2</sup></h3>
+                <p>Nějaký popis domečku</p>
+            </div>
+            <div class="col-md-4">
+                <a class="news-gallery-image thumbnail" data-fancybox="gallery-1" title="Patrový dům" href="{{ asset('/data/kalkulacka/patro/jirasek.jpg') | imagine_filter('cms_image_large') }}">
+                    <img src="{{ asset('/data/kalkulacka/patro/jirasek.jpg') | imagine_filter('cms_image_thumb') }}" alt="Patrový dům" />
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a class="news-gallery-image thumbnail" data-fancybox="gallery-1" title="Patrový dům" href="{{ asset('/data/kalkulacka/patro/jirasek_prizemi.jpg') | imagine_filter('cms_image_large') }}">
+                    <img src="{{ asset('/data/kalkulacka/patro/jirasek_prizemi.jpg') | imagine_filter('cms_image_thumb') }}" alt="Patrový dům" />
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a class="news-gallery-image thumbnail" data-fancybox="gallery-1" title="Patrový dům" href="{{ asset('/data/kalkulacka/patro/jirasek_patro.jpg') | imagine_filter('cms_image_large') }}">
+                    <img src="{{ asset('/data/kalkulacka/patro/jirasek_patro.jpg') | imagine_filter('cms_image_thumb') }}" alt="Patrový dům" />
+                </a>
+            </div>
+            <div align="center" class="example-button col-md-4 col-md-offset-4" data-area="50" data-type="patrovy">
+                <a class="btn btn-success btn-lg">Zobrazit kalkulaci</a>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -27,12 +27,9 @@
             {% stylesheets
                 'assets/css/bootstrap.min.css'
                 'assets/fonts/font-awesome.min.css'
-
                 'assets/fonts/simple-line-icons.css'
                 'assets/fonts/flaticon.css'
-
                 'assets/css/settings.css'
-
                 'assets/css/main.css'
                 'assets/css/responsive.css'
                 'assets/css/animate.css'
@@ -40,13 +37,13 @@
                 'assets/css/colors/river.css'
                 'assets/slick/slick-theme.css'
                 'assets/vendors/fancyBox/dist/jquery.fancybox.css'
-                '@CmsBundle/Resources/public/css/main.less'
+                '@CmsBundle/Resources/public/stavebni-firma-cermak.cz/main.less'
             %}
             <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
         {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon-sfc.ico') }}" />
     </head>
 
     <body class="document{{ document.id }} {{ cms_body_class() }}">
@@ -87,12 +84,9 @@
             'assets/js/jquery.slicknav.js'
             'assets/jquery-validation/jquery.validate.min.js'
             'assets/jquery-validation/localization/messages_cs.js'
-
             'assets/js/jquery.themepunch.tools.min.js'
-
             'assets/js/main.js'
-
-            '@CmsBundle/Resources/public/js/main.js'
+            '@CmsBundle/Resources/public/stavebni-firma-cermak.cz/main.js'
             %}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
