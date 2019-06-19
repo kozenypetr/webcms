@@ -739,3 +739,6 @@ a.nav-link:hover,
   margin-bottom: 10px;
   height: 70px;
 }
+.sponsor-box-row {
+  padding: 15px;
+}

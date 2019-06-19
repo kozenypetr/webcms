@@ -1,14 +1,15 @@
-<div class="sponsor-box item white-box">
+<div class="sponsor-box{% if parameters.row %}-row{% endif %} item white-box">
 
   <div class="sponsor-content">
     <h4>{{ parameters.title }}</h4>
-
+    {% if not parameters.row %}
       <div class="sponsor-thumb">
           {% if parameters.image %}
               <img src="{{ asset(parameters.image) | imagine_filter('cms_image_thumb_small') }}" alt="{{ parameters.title }}" />
           {% endif %}
       </div>
     <p class="sponsor-desc">{{ parameters.annotation | raw }}</p>
+    {% endif %}
     <a href="{{ parameters.link }}">{{ parameters.link }}</a>
   </div>
 </div>

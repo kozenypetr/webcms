@@ -3,6 +3,7 @@
 namespace CmsBundle\Service\Widget;
 
 use CmsBundle\Service\Widget\Base;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -36,12 +37,14 @@ class Sponsor extends Base
         'annotation'  => '',
         'subtitle'    => '',
         'link'        => '',
+        'row'       => false
     );
 
     protected function configureForm($form)
     {
         return $form
             ->add('title', TextType::class, ['label' => 'Název'])
+            ->add('row', CheckboxType::class, array('label' => 'Řádková verze'))
             ->add('annotation', TextareaType::class, ['label' => 'Popis'])
             ->add('image', TextType::class, array(
                 'label' => 'Obrázek',
